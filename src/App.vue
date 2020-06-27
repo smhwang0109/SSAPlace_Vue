@@ -3,7 +3,7 @@
     <div class="navbar2">
       <a href="#home">SSAPlace</a>
       <div class="dropdown2 menu">
-        <div class="d-flex justify-content-between">
+        <div>
           <button class="dropbtn">게시판
           </button>
           <button class="dropbtn">프로젝트 멤버 모집
@@ -16,20 +16,23 @@
         <div class="dropdown-content">
           <div class="row">
             <div class="column">
-              <a href="#">싸피게시판</a>
-              <a href="#">자유게시판</a>
-              <a href="#">취업/진로게시판</a>
-              <a href="#">구인/구직게시판</a>
-              <a href="#">코드리뷰게시판</a>
+              <router-link to="/">싸피게시판</router-link>
+              <router-link to="/">자유게시판</router-link>
+              <router-link to="/">취업/진로게시판</router-link>
+              <router-link to="/">구인/구직게시판</router-link>
+              <router-link to="/">코드리뷰게시판</router-link>
             </div>
             <div class="column">
-              <a href="#">PJT 멤버 구해요</a>
-              <a href="#">PJT 멤버 찾아요</a>
-              <!-- <a href="#">Link 3</a> -->
+              <router-link to="/">PJT 멤버 구해요</router-link>
+              <router-link to="/">PJT 멤버 찾아요</router-link>
             </div>
           </div>
         </div>
       </div>
+      <div class="d-flex justify-content-end">
+        <router-link to="/">로그아웃</router-link>
+      </div>
+
     </div>
 
     <!-- <div id="nav">
@@ -74,7 +77,7 @@
   float: left;
   font-size: 16px;
   color: white;
-  text-align: center;
+  text-align: left;
   padding: 14px 16px;
   text-decoration: none;
 }
@@ -95,6 +98,7 @@
   background-color: inherit;
   font: inherit; /* Important for vertical align on mobile phones */
   margin: 0; /* Important for vertical align on mobile phones */
+  width: 25%;
 }
 
 .dropbtn:hover {
@@ -106,7 +110,7 @@
   display: none;
   position: absolute;
   background-color: white;
-  width: 40%;
+  width: 18%;
   left:117px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -120,21 +124,21 @@
 /* Create three equal columns that floats next to each other */
 .column {
   float: left;
-  width: 25%;
+  width: 50%;
   /* padding: 10px; */
   /* background-color: #ccc; */
   background-color: white;
-  height: 330px;
+  height: 280px;
 }
 
 /* Style links inside the columns */
 .column a {
   float: none;
   color: black;
-  padding: 16px;
+  /* padding: 16px; */
   text-decoration: none;
   display: block;
-  text-align: left;
+  text-align: center;
 }
 
 /* Add a background color on hover */
