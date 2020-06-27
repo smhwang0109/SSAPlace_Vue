@@ -4,7 +4,8 @@ import VueRouter from 'vue-router'
 // rest-auth
 import SignupView from '@/views/accounts/SignupView'
 import LoginView from '@/views/accounts/LoginView'
-// import LogoutView from '@/views/accounts/LogoutView'
+import LogoutView from '@/views/accounts/LogoutView'
+
 
 Vue.use(VueRouter)
 
@@ -20,6 +21,11 @@ Vue.use(VueRouter)
     name: 'Login',
     component: LoginView
   },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: LogoutView
+  }
 ]
 
 const router = new VueRouter({

@@ -30,11 +30,10 @@
         </div>
       </div>
       <div class="d-flex justify-content-end">
-        <router-link to="/">로그아웃</router-link>
+        <router-link :to="{ name: 'Logout' }">로그아웃</router-link>
       </div>
-
     </div>
-
+    
     <router-view/>
   </div>
 </template>

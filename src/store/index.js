@@ -15,6 +15,13 @@ export default new Vuex.Store({
     authToken: cookies.get('auth-token'),
   },
   mutations: {
+    // SET_INIT(state) {
+    // },
+    // rest-auth
+    SET_TOKEN(state, token) {
+      state.authToken = token
+      cookies.set('auth-token', token)
+    },
   },
   actions: {
     postAuthData({ commit }, info) {
@@ -51,6 +58,16 @@ export default new Vuex.Store({
         to: '/'
       }
       dispatch('postAuthData', info)
+    },
+    logout({ getters, commit }) {
+      axios.post(SERVER.URL + SERVER.ROUTES.logout, null, getters.config)
+        .then(() => {
+          commit('SET_TOKEN', null)
+          cookies.remove('auth-token')
+          // commit('SET_INIT')
+          router.push({ name: 'Login'})
+        })
+        .catch(err => console.log(err.response.data))
     },
   },
   modules: {

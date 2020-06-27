@@ -20,7 +20,7 @@
         <input @keypress.enter="signup" v-model="signupData.password2" type="password" id="password2" class="inputs form-control" placeholder="Password Confirmation">
       </div>
       <div class="row mr-1 justify-content-end">
-        <button class="btn" @click="signup">Signup</button>
+        <button class="btn" @click="signup(signupData)">회원가입</button>
       </div>
   </div>
 </template>
