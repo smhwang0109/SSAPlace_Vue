@@ -3,16 +3,10 @@
     <div class="navbar2">
       <router-link to="/">SSAPlace</router-link>
       <div class="dropdown2 menu">
-        <div>
-          <button class="dropbtn">게시판
-          </button>
-          <button class="dropbtn">프로젝트 멤버 모집
-          </button>
-          <button class="dropbtn">쪽지
-          </button>
-          <button class="dropbtn">Contact Us
-          </button>
-        </div>
+        <!-- <div> -->
+          <button class="dropbtn">게시판</button>
+          <button class="dropbtn">프로젝트 멤버 모집</button>
+        <!-- </div> -->
         <div class="dropdown-content">
           <div class="row">
             <div class="column">
@@ -23,11 +17,15 @@
               <router-link to="/">코드리뷰게시판</router-link>
             </div>
             <div class="column">
-              <router-link to="/">PJT 멤버 구해요</router-link>
               <router-link to="/">PJT 멤버 찾아요</router-link>
+              <router-link to="/">PJT 팀 찾아요</router-link>
             </div>
           </div>
         </div>
+      </div>
+      <div class="menu">
+        <router-link class="separate-menu" to="/">쪽지</router-link>
+        <router-link class="separate-menu" to="/">Contact Us</router-link>
       </div>
       <div class="d-flex justify-content-end">
         <router-link :to="{ name: 'Logout' }">로그아웃</router-link>
@@ -59,7 +57,7 @@
   float: left;
   font-size: 16px;
   color: white;
-  text-align: left;
+  text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
@@ -71,7 +69,7 @@
 }
 
 /* Dropdown button */
-.dropdown2 .dropbtn {
+.dropdown2 .dropbtn{
   font-size: 16px;
   border: none;
   outline: none;
@@ -80,7 +78,7 @@
   background-color: inherit;
   font: inherit; /* Important for vertical align on mobile phones */
   margin: 0; /* Important for vertical align on mobile phones */
-  width: 25%;
+  width: 50%;
 }
 
 .dropbtn:hover {
@@ -136,7 +134,17 @@
 }
 
 .menu {
+  width:25%;
+  float: left;
+}
+
+.separate-menu {
   width: 50%;
+  margin: auto;
+}
+
+.separate-menu:hover {
+  color: cornflowerblue;
 }
 
 </style>
