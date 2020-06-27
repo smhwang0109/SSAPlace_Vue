@@ -2,10 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 // rest-auth
-// import LoginView from '@/views/accounts/LoginView'
-// import LogoutView from '@/views/accounts/LogoutView'
 import SignupView from '@/views/accounts/SignupView'
-
+import LoginView from '@/views/accounts/LoginView'
+// import LogoutView from '@/views/accounts/LogoutView'
 
 Vue.use(VueRouter)
 
@@ -15,6 +14,11 @@ Vue.use(VueRouter)
     path: '/signup',
     name: 'Signup',
     component: SignupView
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginView
   },
 ]
 

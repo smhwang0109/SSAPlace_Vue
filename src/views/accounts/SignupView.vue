@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-3">
     <h3 class="mb-3">Signup</h3>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -20,9 +20,8 @@
         <input @keypress.enter="signup" v-model="signupData.password2" type="password" id="password2" class="inputs form-control" placeholder="Password Confirmation">
       </div>
       <div class="row mr-1 justify-content-end">
-        <button class="btn " @click="signup">Signup</button>
+        <button class="btn" @click="signup">Signup</button>
       </div>
-      
   </div>
 </template>
 
@@ -53,8 +52,6 @@ export default {
 .input-group-text {
   background-color: white;
   border-style: none;
-  /* border-bottom: 1px solid #757575;
-  border-radius: 0; */
 }
 
 .inputs {

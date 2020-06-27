@@ -24,6 +24,7 @@ export default new Vuex.Store({
           router.push({path:'/'})
         })
         .catch(err => {
+        console.log(err)
           if (Object.keys(err.response.data)[0] === 'password1') {
             alert(err.response.data.password1)
           } else if (Object.keys(err.response.data)[0] === 'non_field_errors') {
@@ -39,9 +40,18 @@ export default new Vuex.Store({
       const info = {
         data: signupData,
         location: SERVER.ROUTES.signup,
+        to: '/'
       }
       dispatch('postAuthData', info)
-    }
+    },
+    login({ dispatch }, loginData) {
+      const info = {
+        data: loginData,
+        location: SERVER.ROUTES.login,
+        to: '/'
+      }
+      dispatch('postAuthData', info)
+    },
   },
   modules: {
   }

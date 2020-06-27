@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="navbar2">
-      <a href="#home">SSAPlace</a>
+      <router-link to="/">SSAPlace</router-link>
       <div class="dropdown2 menu">
         <div>
           <button class="dropbtn">게시판
@@ -47,19 +47,6 @@
   text-align: center;
   color: #2c3e50;
 }
-
-/* #nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-} */
 
 /* Navbar container */
 .navbar2 {
