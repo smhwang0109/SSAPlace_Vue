@@ -1,23 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+
+// rest-auth
+// import LoginView from '@/views/accounts/LoginView'
+// import LogoutView from '@/views/accounts/LogoutView'
+import SignupView from '@/views/accounts/SignupView'
+
 
 Vue.use(VueRouter)
 
   const routes = [
+  // rest-auth
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: '/signup',
+    name: 'Signup',
+    component: SignupView
   },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
 ]
 
 const router = new VueRouter({
@@ -25,5 +23,24 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+// router.beforeEach((to, from, next) => {
+//   const pubicPages = ['Signup'] // Login 안해도 됨
+//   const authPages = ['Signup'] // Login 되어있으면 안됨
+//   const authRequired = !pubicPages.includes(to.name) // 로그인 해야하는 페이지면 true 반환
+//   const unauthRequired = authPages.includes(to.name)
+//   const isLoggedIn = Vue.$cookies.isKey('auth-token')
+
+//   if (unauthRequired && isLoggedIn){
+//     next('/')
+//   }
+  
+//   if (authRequired && !isLoggedIn) {
+//     next({ name: 'Login' })
+//   } else {
+//     next()
+//   }
+
+// })
 
 export default router

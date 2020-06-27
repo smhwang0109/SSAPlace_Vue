@@ -35,10 +35,6 @@
 
     </div>
 
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
     <router-view/>
   </div>
 </template>
@@ -110,7 +106,7 @@
   display: none;
   position: absolute;
   background-color: white;
-  width: 18%;
+  width: 23%;
   left:117px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -154,7 +150,7 @@
 }
 
 .menu {
-  width: 40%;
+  width: 50%;
 }
 
 </style>
