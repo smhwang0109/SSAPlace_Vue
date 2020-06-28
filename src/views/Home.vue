@@ -1,11 +1,15 @@
 <template>
   <div class="container">
+    <!-- 배너 위치시키기 -->
+    <div class="banner">
+      <h3>banner</h3>
+    </div>
     <!-- 프로젝트 팀 구해요 -->
     <div class="d-flex justify-content-between mt-3">
       <h4 class="my-3">기대되는 새로운 팀</h4>
       <i @click="clickFindTeam" class="fas fa-chevron-right fa-2x arrow"></i>
     </div>
-    <div class="row">
+    <div>
       <div class="card-deck">
         <!-- Sample card 1 -->
         <div class="card">
@@ -60,7 +64,7 @@
       <h4 class="my-4">이번주 멤버 추천</h4>
        <i @click="clickFindMember" class="fas fa-chevron-right fa-2x arrow"></i>
     </div>
-    <div class="row">
+    <div>
       <div class="card-deck">
         <!-- Sample card 1 -->
         <div class="card">

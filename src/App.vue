@@ -1,39 +1,47 @@
 <template>
   <div id="app">
-    <div class="navbar2">
-      <router-link to="/">SSAPlace</router-link>
-      <div class="dropdown2 menu">
-        <!-- <div> -->
-          <button class="dropbtn">게시판</button>
-          <button class="dropbtn">프로젝트 멤버 모집</button>
-        <!-- </div> -->
-        <div class="dropdown-content">
-          <div class="row">
-            <div class="column">
-              <router-link :to="{ name: 'SSAFYBoard' }">싸피게시판</router-link>
-              <router-link :to="{ name: 'DiscussionsBoard' }">자유게시판</router-link>
-              <router-link :to="{ name: 'CareerBoard' }">취업/진로게시판</router-link>
-              <router-link :to="{ name: 'RecruitmentBoard' }">구인/구직게시판</router-link>
-              <router-link :to="{ name: 'CodeReviewBoard' }">코드리뷰게시판</router-link>
-              <router-link :to="{ name: 'ArticleForm' }">새 글 작성</router-link>
-            </div>
-            <div class="column">
-              <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>
-              <router-link :to="{ name: 'FindTeam' }">PJT 팀 찾아요</router-link>
+    <div class="navbar2 container">
+      <router-link class="logo" to="/">SSAPlace</router-link>
+        <div class="dropdown2 megamenu">
+          <button class="dropbtn col-6">게시판</button>
+          <button class="dropbtn col-6">프로젝트 멤버 모집</button>
+          <div class="dropdown-content">
+            <div class="row">
+              <div class="column">
+                <router-link :to="{ name: 'SSAFYBoard' }">싸피게시판</router-link>
+                <router-link :to="{ name: 'DiscussionsBoard' }">자유게시판</router-link>
+                <router-link :to="{ name: 'CareerBoard' }">취업/진로게시판</router-link>
+                <router-link :to="{ name: 'RecruitmentBoard' }">구인/구직게시판</router-link>
+                <router-link :to="{ name: 'CodeReviewBoard' }">코드리뷰게시판</router-link>
+                <router-link :to="{ name: 'ArticleForm' }">새 글 작성</router-link>
+              </div>
+              <div class="column">
+                <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>
+                <router-link :to="{ name: 'FindTeam' }">PJT 팀 찾아요</router-link>
+              </div>
             </div>
           </div>
         </div>
+      <router-link class="one" to="/"><i class="far fa-envelope"></i></router-link>
+      <div class="dropdown2 two">
+        <button class="dropbtn">신채린님</button>
+        <div class="dropdown-content2">
+          <div class="row">
+              <div class="column2">
+              <router-link class="profile-menu" :to="{ name: 'Profile' }">회원정보</router-link>
+              <router-link class="profile-menu" :to="{ name: 'Logout' }">로그아웃</router-link>
+            </div>
+          </div>
+          
       </div>
-      <div class="menu">
-        <router-link class="separate-menu" to="/"><i class="far fa-comments"></i> 쪽지</router-link>
-        <router-link class="separate-menu" to="/"><i class="far fa-envelope"></i> Contact Us</router-link>
       </div>
-      <div class="d-flex justify-content-end">
-        <router-link :to="{ name: 'Logout' }">로그아웃</router-link>
-      </div>
-    </div>
 
-    <router-view/>
+    </div>
+  <router-view/>
+
+    <div class="footer">
+      <router-link class="separate-menu" to="/">Contact Us</router-link>
+    </div>
 
   </div>
 </template>
@@ -47,10 +55,30 @@
   color: #2c3e50;
 }
 
+.container {
+  padding: 0;
+}
+
+.logo {
+  width: 16.66%;
+}
+
+.megamenu {
+  width: 49.98%
+}
+
+.one {
+  width: 16.66%
+}
+
+.two {
+  width: 16.66%
+}
+
 /* Navbar container */
 .navbar2 {
   overflow: hidden;
-  background-color: #333;
+  background-color: white;
   font-family: Arial;
 }
 
@@ -58,7 +86,7 @@
 .navbar2 a {
   float: left;
   font-size: 16px;
-  color: white;
+  color: black;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -75,12 +103,12 @@
   font-size: 16px;
   border: none;
   outline: none;
-  color: white;
+  color: black;
   padding: 14px 16px;
   background-color: inherit;
   font: inherit; /* Important for vertical align on mobile phones */
   margin: 0; /* Important for vertical align on mobile phones */
-  width: 50%;
+  /* width: 50%; */
 }
 
 .dropbtn:hover {
@@ -92,14 +120,29 @@
   display: none;
   position: absolute;
   background-color: white;
-  width: 23%;
-  left:117px;
+  top: 5%;
+  width: 28%;
+  /* left:117px; */
+  left: 31%;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
 
+/* Dropdown content (hidden by default) */
+.dropdown-content2 {
+  display: none;
+  position: absolute;
+  background-color: white;
+  width: 10%;
+  /* left:117px; */
+  right: 20%;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+
 /* Show the dropdown menu on hover */
-.dropdown2:hover .dropdown-content {
+.dropdown2:hover .dropdown-content, .dropdown2:hover .dropdown-content2 {
   display: block;
 }
 
@@ -135,18 +178,36 @@
   clear: both;
 }
 
-.menu {
-  width:25%;
+.column2 {
   float: left;
+  width: 100%;
+  /* padding: 10px; */
+  /* background-color: #ccc; */
+  background-color: white;
+  height: 110px;
 }
-
-.separate-menu {
-  width: 50%;
-  margin: auto;
+ 
+.column2 a {
+  float: none;
+  color: black;
+  /* padding: 16px; */
+  text-decoration: none;
+  display: block;
+  text-align: center;
 }
 
 .separate-menu:hover {
   color: cornflowerblue;
 }
+
+.profile-menu {
+  color: black;
+}
+
+.btn {
+  background-color: white;
+  color: black;
+}
+
 
 </style>
