@@ -6,6 +6,8 @@ import SignupView from '@/views/accounts/SignupView'
 import LoginView from '@/views/accounts/LoginView'
 import LogoutView from '@/views/accounts/LogoutView'
 
+// Article
+import ArticleForm from '@/views/ArticleForm'
 
 Vue.use(VueRouter)
 
@@ -25,6 +27,12 @@ Vue.use(VueRouter)
     path: '/logout',
     name: 'Logout',
     component: LogoutView
+  },
+  // Article
+  {
+    path: '/articleform',
+    name: 'ArticleForm',
+    component: ArticleForm
   }
 ]
 
