@@ -20,6 +20,9 @@ import CodeReviewBoardView from '@/views/boards/CodeReviewBoardView'
 import FindMemberView from '@/views/teams/FindMemberView'
 import FindTeamView from '@/views/teams/FindTeamView'
 
+// Article
+import ArticleForm from '@/views/ArticleForm'
+
 Vue.use(VueRouter)
 
   const routes = [
@@ -80,6 +83,11 @@ Vue.use(VueRouter)
     path: '/findTeam',
     name: 'FindTeam',
     component: FindTeamView
+  // Article
+  {
+    path: '/articleform',
+    name: 'ArticleForm',
+    component: ArticleForm
   }
 ]
 

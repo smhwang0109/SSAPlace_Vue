@@ -15,6 +15,7 @@
               <router-link :to="{ name: 'CareerBoard' }">취업/진로게시판</router-link>
               <router-link :to="{ name: 'RecruitmentBoard' }">구인/구직게시판</router-link>
               <router-link :to="{ name: 'CodeReviewBoard' }">코드리뷰게시판</router-link>
+              <router-link :to="{ name: 'ArticleForm' }">새 글 작성</router-link>
             </div>
             <div class="column">
               <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>
