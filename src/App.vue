@@ -10,10 +10,10 @@
               <div class="column">
                 <router-link :to="{ name: 'SSAFYBoard' }">싸피게시판</router-link>
                 <router-link :to="{ name: 'DiscussionsBoard' }">자유게시판</router-link>
-                <router-link :to="{ name: 'CareerBoard' }">취업/진로게시판</router-link>
+                <!-- <router-link :to="{ name: 'CareerBoard' }">취업/진로게시판</router-link>
                 <router-link :to="{ name: 'RecruitmentBoard' }">구인/구직게시판</router-link>
                 <router-link :to="{ name: 'CodeReviewBoard' }">코드리뷰게시판</router-link>
-                <router-link :to="{ name: 'ArticleForm' }">새 글 작성</router-link>
+                <router-link :to="{ name: 'ArticleForm' }">새 글 작성</router-link> -->
               </div>
               <div class="column">
                 <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>
@@ -27,13 +27,19 @@
         <button class="dropbtn">신채린님</button>
         <div class="dropdown-content2">
           <div class="row">
-              <div class="column2">
-              <router-link class="profile-menu" :to="{ name: 'Profile' }">회원정보</router-link>
-              <router-link class="profile-menu" :to="{ name: 'Logout' }">로그아웃</router-link>
+            <div class="column2">
+              <div class="d-flex justify-content-between">
+                <i class="far fa-user my-auto"></i> 
+                <router-link class="profile-menu mr-3" :to="{ name: 'Profile' }">회원정보</router-link>
+              </div>
+              <div class="d-flex justify-content-between">
+                <i class="fas fa-power-off my-auto"></i>
+                <router-link class="profile-menu mr-3" :to="{ name: 'Logout' }"> 로그아웃</router-link>
+              </div>
             </div>
           </div>
           
-      </div>
+        </div>
       </div>
 
     </div>
@@ -133,8 +139,7 @@
   display: none;
   position: absolute;
   background-color: white;
-  width: 10%;
-  /* left:117px; */
+  width: 8%;
   right: 20%;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -144,6 +149,8 @@
 /* Show the dropdown menu on hover */
 .dropdown2:hover .dropdown-content, .dropdown2:hover .dropdown-content2 {
   display: block;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 }
 
 /* Create three equal columns that floats next to each other */
@@ -153,7 +160,7 @@
   /* padding: 10px; */
   /* background-color: #ccc; */
   background-color: white;
-  height: 280px;
+  height: 110px;
 }
 
 /* Style links inside the columns */
@@ -208,6 +215,5 @@
   background-color: white;
   color: black;
 }
-
 
 </style>
