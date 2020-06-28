@@ -15,6 +15,7 @@
               <router-link to="/">취업/진로게시판</router-link>
               <router-link to="/">구인/구직게시판</router-link>
               <router-link to="/">코드리뷰게시판</router-link>
+              <router-link to="/articleform">새 글 작성</router-link>
             </div>
             <div class="column">
               <router-link to="/">PJT 멤버 찾아요</router-link>
