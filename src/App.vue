@@ -29,11 +29,11 @@
           <div class="row">
             <div class="column2">
               <div class="d-flex justify-content-between">
-                <i class="far fa-user my-auto"></i> 
+                <i class="far fa-user my-auto ml-3"></i> 
                 <router-link class="profile-menu mr-3" :to="{ name: 'Profile' }">회원정보</router-link>
               </div>
               <div class="d-flex justify-content-between">
-                <i class="fas fa-power-off my-auto"></i>
+                <i class="fas fa-power-off my-auto ml-3"></i>
                 <router-link class="profile-menu mr-3" :to="{ name: 'Logout' }"> 로그아웃</router-link>
               </div>
             </div>
@@ -126,9 +126,7 @@
   display: none;
   position: absolute;
   background-color: white;
-  top: 5%;
   width: 28%;
-  /* left:117px; */
   left: 31%;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -140,7 +138,7 @@
   position: absolute;
   background-color: white;
   width: 8%;
-  right: 20%;
+  right: 22%;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
