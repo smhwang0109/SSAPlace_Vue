@@ -10,11 +10,11 @@
         <div class="dropdown-content">
           <div class="row">
             <div class="column">
-              <router-link to="/">싸피게시판</router-link>
-              <router-link to="/">자유게시판</router-link>
-              <router-link to="/">취업/진로게시판</router-link>
-              <router-link to="/">구인/구직게시판</router-link>
-              <router-link to="/">코드리뷰게시판</router-link>
+              <router-link :to="{ name: 'SSAFYBoard' }">싸피게시판</router-link>
+              <router-link :to="{ name: 'DiscussionsBoard' }">자유게시판</router-link>
+              <router-link :to="{ name: 'CareerBoard' }">취업/진로게시판</router-link>
+              <router-link :to="{ name: 'RecruitmentBoard' }">구인/구직게시판</router-link>
+              <router-link :to="{ name: 'CodeReviewBoard' }">코드리뷰게시판</router-link>
             </div>
             <div class="column">
               <router-link to="/">PJT 멤버 찾아요</router-link>

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h3>게시판</h3>
+    <h5>게시판</h5>
     <div class="row">
       <div class="col-6">
         <div class="d-flex justify-content-between headers">
@@ -16,7 +16,7 @@
       <div class="col-6">
         <div class="d-flex justify-content-between headers">
           <h4>자유게시판</h4>
-          <h4>+</h4>
+          <h4 @click="clickDiscussionsBoard">+</h4>
         </div>
         <!-- v-for 사용해 게시판 최신글 (4~5개) 노출시키기 -->
         <div class="d-flex justify-content-between">
@@ -27,7 +27,7 @@
       <div class="col-6"> 
         <div class="d-flex justify-content-between headers">
           <h4>취업/진로게시판</h4>
-          <h4>+</h4>
+          <h4 @click="clickCareerBoard">+</h4>
         </div>
         <!-- v-for 사용해 게시판 최신글 (4~5개) 노출시키기 -->
         <div class="d-flex justify-content-between">
@@ -38,7 +38,7 @@
       <div class="col-6"> 
         <div class="d-flex justify-content-between headers">
           <h4>구인/구직게시판</h4>
-          <h4>+</h4>
+          <h4 @click="clickRecruitmentBoard">+</h4>
         </div>
         <!-- v-for 사용해 게시판 최신글 (4~5개) 노출시키기 -->
         <div class="d-flex justify-content-between">
@@ -56,6 +56,15 @@ export default {
   methods: {
     clickSSAFYBoard() {
       this.$router.push({name: 'SSAFYBoard'})
+    },
+    clickDiscussionsBoard() {
+      this.$router.push({name: 'DiscussionsBoard'})
+    },
+    clickCareerBoard() {
+      this.$router.push({name: 'CareerBoard'})
+    },
+    clickRecruitmentBoard() {
+      this.$router.push({name: 'RecruitmentBoard'})
     }
   }
 }

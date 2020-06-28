@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>코드 리뷰 게시판</h3>
+    <h1>코드 리뷰 게시판</h1>
   </div>
 </template>
 

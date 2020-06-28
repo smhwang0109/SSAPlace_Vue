@@ -11,6 +11,10 @@ import LogoutView from '@/views/accounts/LogoutView'
 
 // Boards
 import SSAFYBoardView from '@/views/boards/SSAFYBoardView'
+import CareerBoardView from '@/views/boards/CareerBoardView'
+import DiscussionsBoardView from '@/views/boards/DiscussionsBoardView'
+import RecruitmentBoardView from '@/views/boards/RecruitmentBoardView'
+import CodeReviewBoardView from '@/views/boards/CodeReviewBoardView'
 
 
 Vue.use(VueRouter)
@@ -42,6 +46,26 @@ Vue.use(VueRouter)
     path: '/SSAFYBoard',
     name: 'SSAFYBoard',
     component: SSAFYBoardView
+  },
+  {
+    path: '/CareerBoard',
+    name: 'CareerBoard',
+    component: CareerBoardView
+  },
+  {
+    path: '/DiscussionsBoard',
+    name: 'DiscussionsBoard',
+    component: DiscussionsBoardView
+  },
+  {
+    path: '/RecruitmentBoard',
+    name: 'RecruitmentBoard',
+    component: RecruitmentBoardView
+  },
+  {
+    path: '/CodeReviewBoard',
+    name: 'CodeReviewBoard',
+    component: CodeReviewBoardView
   }
 ]
 
