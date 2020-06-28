@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-3">
-    <h3 class="mb-3">Signup</h3>
+    <h3 class="mb-3">회원가입</h3>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>

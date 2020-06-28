@@ -1,15 +1,26 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+// Home (main page)
+import Home from '@/views/Home.vue'
+
 // rest-auth
 import SignupView from '@/views/accounts/SignupView'
 import LoginView from '@/views/accounts/LoginView'
 import LogoutView from '@/views/accounts/LogoutView'
 
+// Boards
+import SSAFYBoardView from '@/views/boards/SSAFYBoardView'
+
 
 Vue.use(VueRouter)
 
   const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
   // rest-auth
   {
     path: '/signup',
@@ -25,6 +36,12 @@ Vue.use(VueRouter)
     path: '/logout',
     name: 'Logout',
     component: LogoutView
+  },
+  // Boards
+  {
+    path: '/SSAFYBoard',
+    name: 'SSAFYBoard',
+    component: SSAFYBoardView
   }
 ]
 

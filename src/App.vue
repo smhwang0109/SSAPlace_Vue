@@ -24,19 +24,20 @@
         </div>
       </div>
       <div class="menu">
-        <router-link class="separate-menu" to="/">쪽지</router-link>
-        <router-link class="separate-menu" to="/">Contact Us</router-link>
+        <router-link class="separate-menu" to="/"><i class="far fa-comments"></i> 쪽지</router-link>
+        <router-link class="separate-menu" to="/"><i class="far fa-envelope"></i> Contact Us</router-link>
       </div>
       <div class="d-flex justify-content-end">
         <router-link :to="{ name: 'Logout' }">로그아웃</router-link>
       </div>
     </div>
-    
+
     <router-view/>
+
   </div>
 </template>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -146,4 +147,5 @@
 .separate-menu:hover {
   color: cornflowerblue;
 }
+
 </style>
