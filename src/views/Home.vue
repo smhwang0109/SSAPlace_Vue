@@ -95,7 +95,7 @@
           </div>
         </div>
         <!-- sample card3 -->
-         <div class="card">
+        <div class="card">
           <img src="https://picsum.photos/seed/picsum/400/120" class="card-img-top" alt="image" >
           <div class="card-body">
             <h5 class="card-title">금융 핀테크 웹사이트 개발</h5>
@@ -123,12 +123,12 @@
         <div class="card">
           <div class="card-header">
             <div class="member-name d-flex justify-content-between">
-              <p>신채린</p>
-              <p class="position">Front End Developer</p>
+              <p class="col-5 p-0">신채린</p>
+              <p class="position col-7 p-0 text-right">Front End Developer</p>
             </div>
             <small>
               <i class="fas fa-map-marker-alt"></i>
-              서울특별시 강남구/3기
+            서울특별시 강남구/3기
             </small>
           </div>
           <div class="card-body">
@@ -144,8 +144,8 @@
         <div class="card">
           <div class="card-header">
             <div class="member-name d-flex justify-content-between">
-              <p>신채린</p>
-              <p class="position">Front End Developer</p>
+              <p class="col-5 p-0">황수민</p>
+              <p class="position col-7 p-0 text-right">Front End Developer</p>
             </div>
             <small>
               <i class="fas fa-map-marker-alt"></i>
@@ -154,7 +154,7 @@
           </div>
           <div class="card-body">
             <h5 class="card-title position-title">프론트엔드 개발자, 웹 개발자</h5>
-            <p class="card-text">1학기 프로젝트 우수상, 기획 경험, 디자인, 포토샵, Django, Vue 모두 가능 </p>
+            <p class="card-text">1학기 프로젝트 최우수상, 기획 경험, 디자인, 포토샵, Django, Vue 모두 가능 </p>
           </div>
           <div class="card-footer d-flex justify-content-between">
             <small class="text-muted">2시간 전</small>
@@ -165,8 +165,8 @@
         <div class="card">
           <div class="card-header">
             <div class="member-name d-flex justify-content-between">
-              <p>신채린</p>
-              <p class="position">Front End Developer</p>
+              <p class="col-5 p-0">박선환</p>
+              <p class="position col-7 p-0 text-right">Front End Developer</p>
             </div>
             <small>
               <i class="fas fa-map-marker-alt"></i>
@@ -175,7 +175,7 @@
           </div>
           <div class="card-body">
             <h5 class="card-title position-title">프론트엔드 개발자, 웹 개발자</h5>
-            <p class="card-text">1학기 프로젝트 우수상, 기획 경험, 디자인, 포토샵, Django, Vue 모두 가능 </p>
+            <p class="card-text">1학기 프로젝트 최우수상, 기획 경험, 디자인, 포토샵, Django, Vue 모두 가능 </p>
           </div>
           <div class="card-footer d-flex justify-content-between">
             <small class="text-muted">2시간 전</small>
@@ -262,4 +262,11 @@ export default {
   color: white;
   opacity: 0.7;
 }
+
+.card-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: .5rem;
+}
+
 </style>
