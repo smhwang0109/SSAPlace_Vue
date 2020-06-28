@@ -16,6 +16,9 @@ import DiscussionsBoardView from '@/views/boards/DiscussionsBoardView'
 import RecruitmentBoardView from '@/views/boards/RecruitmentBoardView'
 import CodeReviewBoardView from '@/views/boards/CodeReviewBoardView'
 
+// Teams
+import FindMemberView from '@/views/teams/FindMemberView'
+import FindTeamView from '@/views/teams/FindTeamView'
 
 Vue.use(VueRouter)
 
@@ -66,6 +69,17 @@ Vue.use(VueRouter)
     path: '/CodeReviewBoard',
     name: 'CodeReviewBoard',
     component: CodeReviewBoardView
+  },
+  // Teams
+  {
+    path: '/findMember',
+    name: 'FindMember',
+    component: FindMemberView
+  },
+  {
+    path: '/findTeam',
+    name: 'FindTeam',
+    component: FindTeamView
   }
 ]
 
