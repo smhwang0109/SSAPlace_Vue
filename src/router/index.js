@@ -1,10 +1,24 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+// Home (main page)
+import Home from '@/views/Home.vue'
+
 // rest-auth
 import SignupView from '@/views/accounts/SignupView'
 import LoginView from '@/views/accounts/LoginView'
 import LogoutView from '@/views/accounts/LogoutView'
+
+// Boards
+import SSAFYBoardView from '@/views/boards/SSAFYBoardView'
+import CareerBoardView from '@/views/boards/CareerBoardView'
+import DiscussionsBoardView from '@/views/boards/DiscussionsBoardView'
+import RecruitmentBoardView from '@/views/boards/RecruitmentBoardView'
+import CodeReviewBoardView from '@/views/boards/CodeReviewBoardView'
+
+// Teams
+import FindMemberView from '@/views/teams/FindMemberView'
+import FindTeamView from '@/views/teams/FindTeamView'
 
 // Article
 import ArticleForm from '@/views/ArticleForm'
@@ -12,6 +26,11 @@ import ArticleForm from '@/views/ArticleForm'
 Vue.use(VueRouter)
 
   const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
   // rest-auth
   {
     path: '/signup',
@@ -28,6 +47,42 @@ Vue.use(VueRouter)
     name: 'Logout',
     component: LogoutView
   },
+  // Boards
+  {
+    path: '/SSAFYBoard',
+    name: 'SSAFYBoard',
+    component: SSAFYBoardView
+  },
+  {
+    path: '/CareerBoard',
+    name: 'CareerBoard',
+    component: CareerBoardView
+  },
+  {
+    path: '/DiscussionsBoard',
+    name: 'DiscussionsBoard',
+    component: DiscussionsBoardView
+  },
+  {
+    path: '/RecruitmentBoard',
+    name: 'RecruitmentBoard',
+    component: RecruitmentBoardView
+  },
+  {
+    path: '/CodeReviewBoard',
+    name: 'CodeReviewBoard',
+    component: CodeReviewBoardView
+  },
+  // Teams
+  {
+    path: '/findMember',
+    name: 'FindMember',
+    component: FindMemberView
+  },
+  {
+    path: '/findTeam',
+    name: 'FindTeam',
+    component: FindTeamView
   // Article
   {
     path: '/articleform',

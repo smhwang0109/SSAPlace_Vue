@@ -10,34 +10,35 @@
         <div class="dropdown-content">
           <div class="row">
             <div class="column">
-              <router-link to="/">싸피게시판</router-link>
-              <router-link to="/">자유게시판</router-link>
-              <router-link to="/">취업/진로게시판</router-link>
-              <router-link to="/">구인/구직게시판</router-link>
-              <router-link to="/">코드리뷰게시판</router-link>
-              <router-link to="/articleform">새 글 작성</router-link>
+              <router-link :to="{ name: 'SSAFYBoard' }">싸피게시판</router-link>
+              <router-link :to="{ name: 'DiscussionsBoard' }">자유게시판</router-link>
+              <router-link :to="{ name: 'CareerBoard' }">취업/진로게시판</router-link>
+              <router-link :to="{ name: 'RecruitmentBoard' }">구인/구직게시판</router-link>
+              <router-link :to="{ name: 'CodeReviewBoard' }">코드리뷰게시판</router-link>
+              <router-link :to="{ name: 'ArticleForm' }">새 글 작성</router-link>
             </div>
             <div class="column">
-              <router-link to="/">PJT 멤버 찾아요</router-link>
-              <router-link to="/">PJT 팀 찾아요</router-link>
+              <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>
+              <router-link :to="{ name: 'FindTeam' }">PJT 팀 찾아요</router-link>
             </div>
           </div>
         </div>
       </div>
       <div class="menu">
-        <router-link class="separate-menu" to="/">쪽지</router-link>
-        <router-link class="separate-menu" to="/">Contact Us</router-link>
+        <router-link class="separate-menu" to="/"><i class="far fa-comments"></i> 쪽지</router-link>
+        <router-link class="separate-menu" to="/"><i class="far fa-envelope"></i> Contact Us</router-link>
       </div>
       <div class="d-flex justify-content-end">
         <router-link :to="{ name: 'Logout' }">로그아웃</router-link>
       </div>
     </div>
-    
+
     <router-view/>
+
   </div>
 </template>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -147,4 +148,5 @@
 .separate-menu:hover {
   color: cornflowerblue;
 }
+
 </style>
