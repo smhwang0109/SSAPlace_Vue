@@ -83,6 +83,7 @@ Vue.use(VueRouter)
     path: '/findTeam',
     name: 'FindTeam',
     component: FindTeamView
+  },
   // Article
   {
     path: '/articleform',

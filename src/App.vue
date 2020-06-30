@@ -1,39 +1,57 @@
 <template>
   <div id="app">
-    <div class="navbar2">
-      <router-link to="/">SSAPlace</router-link>
-      <div class="dropdown2 menu">
-        <!-- <div> -->
-          <button class="dropbtn">게시판</button>
-          <button class="dropbtn">프로젝트 멤버 모집</button>
-        <!-- </div> -->
-        <div class="dropdown-content">
-          <div class="row">
-            <div class="column">
-              <router-link :to="{ name: 'SSAFYBoard' }">싸피게시판</router-link>
-              <router-link :to="{ name: 'DiscussionsBoard' }">자유게시판</router-link>
-              <router-link :to="{ name: 'CareerBoard' }">취업/진로게시판</router-link>
-              <router-link :to="{ name: 'RecruitmentBoard' }">구인/구직게시판</router-link>
-              <router-link :to="{ name: 'CodeReviewBoard' }">코드리뷰게시판</router-link>
-              <router-link :to="{ name: 'ArticleForm' }">새 글 작성</router-link>
-            </div>
-            <div class="column">
-              <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>
-              <router-link :to="{ name: 'FindTeam' }">PJT 팀 찾아요</router-link>
+    <div class="navbar2 container">
+      <router-link class="logo" to="/">SSAPlace</router-link>
+        <div class="dropdown2 megamenu">
+          <button class="dropbtn col-6">게시판</button>
+          <button class="dropbtn col-6">프로젝트 멤버 모집</button>
+          <div class="dropdown-content">
+            <div class="row">
+              <div class="column">
+                <router-link :to="{ name: 'SSAFYBoard' }">싸피게시판</router-link>
+                <router-link :to="{ name: 'DiscussionsBoard' }">자유게시판</router-link>
+                <!-- <router-link :to="{ name: 'CareerBoard' }">취업/진로게시판</router-link>
+                <router-link :to="{ name: 'RecruitmentBoard' }">구인/구직게시판</router-link>
+                <router-link :to="{ name: 'CodeReviewBoard' }">코드리뷰게시판</router-link>
+                <router-link :to="{ name: 'ArticleForm' }">새 글 작성</router-link> -->
+              </div>
+              <div class="column">
+                <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>
+                <router-link :to="{ name: 'FindTeam' }">PJT 팀 찾아요</router-link>
+              </div>
             </div>
           </div>
         </div>
+      <router-link class="two message" to="/"><i class="far fa-envelope"></i></router-link>
+      <div class="dropdown2 two">
+        <button class="dropbtn">신채린님</button>
+        <div class="dropdown-content2">
+          <div class="row">
+            <div class="column2">
+              <div class="d-flex justify-content-between">
+                <i class="far fa-user my-auto ml-3"></i> 
+                <router-link class="profile-menu mr-3" :to="{ name: 'Profile' }">회원정보</router-link>
+              </div>
+              <div class="d-flex justify-content-between">
+                <i class="fas fa-power-off my-auto ml-3"></i>
+                <router-link class="profile-menu mr-3" :to="{ name: 'Logout' }"> 로그아웃</router-link>
+              </div>
+            </div>
+          </div>
+          
+        </div>
       </div>
-      <div class="menu">
-        <router-link class="separate-menu" to="/"><i class="far fa-comments"></i> 쪽지</router-link>
-        <router-link class="separate-menu" to="/"><i class="far fa-envelope"></i> Contact Us</router-link>
-      </div>
-      <div class="d-flex justify-content-end">
-        <router-link :to="{ name: 'Logout' }">로그아웃</router-link>
-      </div>
-    </div>
 
-    <router-view/>
+    </div>
+  <router-view/>
+
+    <div class="footer mt-5">
+      <p class="footer-p">© 2020 Copyright: <i class="fab fa-github"></i> <a href="https://github.com/scl2589" target="_blank">chaelinshin96</a> 
+      | <i class="fab fa-github"></i><a href="https://github.com/smhwang0109" target="_blank"> smhwang0109</a>
+      | <i class="fab fa-github"></i><a href="https://github.com/SunHwan-Park" target="_blank"> SunHwan-Park</a>
+      </p>
+      <router-link class="separate-menu" to="/">Contact Us</router-link>
+    </div>
 
   </div>
 </template>
@@ -47,10 +65,27 @@
   color: #2c3e50;
 }
 
+.container {
+  padding: 0;
+}
+
+/* navbar 비율별로 나누기 */
+.logo {
+  width: 16.66%;
+}
+
+.megamenu {
+  width: 49.98%
+}
+
+.two {
+  width: 16.66%
+}
+
 /* Navbar container */
 .navbar2 {
   overflow: hidden;
-  background-color: #333;
+  background-color: white;
   font-family: Arial;
 }
 
@@ -58,12 +93,15 @@
 .navbar2 a {
   float: left;
   font-size: 16px;
-  color: white;
+  color: black;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
 
+
+
+/* 두 dropdown이 공통으로 가지는 요소들 */
 /* The dropdown container */
 .dropdown2 {
   float: left;
@@ -75,46 +113,25 @@
   font-size: 16px;
   border: none;
   outline: none;
-  color: white;
+  color: black;
   padding: 14px 16px;
   background-color: inherit;
   font: inherit; /* Important for vertical align on mobile phones */
   margin: 0; /* Important for vertical align on mobile phones */
-  width: 50%;
+  /* width: 50%; */
 }
 
 .dropbtn:hover {
   color: cornflowerblue;
 }
 
-/* Dropdown content (hidden by default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: white;
-  width: 23%;
-  left:117px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-/* Show the dropdown menu on hover */
-.dropdown2:hover .dropdown-content {
+.dropdown2:hover .dropdown-content, .dropdown2:hover .dropdown-content2 {
   display: block;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 }
 
-/* Create three equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 50%;
-  /* padding: 10px; */
-  /* background-color: #ccc; */
-  background-color: white;
-  height: 280px;
-}
-
-/* Style links inside the columns */
-.column a {
+.column a, .column2 a {
   float: none;
   color: black;
   /* padding: 16px; */
@@ -124,8 +141,9 @@
 }
 
 /* Add a background color on hover */
-.column a:hover {
-  background-color: white;
+.column a:hover, .column2 a:hover {
+  background-color: cornflowerblue;
+  color: white;
 }
 
 /* Clear floats after the columns */
@@ -135,18 +153,81 @@
   clear: both;
 }
 
-.menu {
-  width:25%;
-  float: left;
+
+/* 아래는 Dropdown for 게시판 & 프로젝트 멤버 모집 */
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  width: 28%;
+  left: 31%;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
 }
 
-.separate-menu {
+.column {
+  float: left;
   width: 50%;
-  margin: auto;
+  /* padding: 10px; */
+  /* background-color: #ccc; */
+  background-color: white;
+  height: 10%;
 }
+
+
+
+
+/* Dropdown for 프로필 */
+/* Dropdown content (hidden by default) */
+.dropdown-content2 {
+  display: none;
+  position: absolute;
+  background-color: white;
+  width: 8%;
+  right: 21%;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.column2 {
+  float: left;
+  width: 100%;
+  background-color: white;
+  height: 10%;
+}
+
+.column2 div:hover {
+  background-color: cornflowerblue;
+  color: white;
+}
+
 
 .separate-menu:hover {
   color: cornflowerblue;
+}
+
+.profile-menu {
+  color: black;
+}
+
+.message:hover {
+  color: cornflowerblue;
+}
+
+.btn {
+  background-color: white;
+  color: black;
+}
+
+.footer {
+  background-color: black;
+  color: white;
+}
+
+.footer-p a {
+  color: white;
 }
 
 </style>
