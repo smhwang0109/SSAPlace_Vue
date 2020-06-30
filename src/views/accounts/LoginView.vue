@@ -16,10 +16,10 @@
       <input @keyup.enter="login(loginData)" v-model="loginData.password" type="password" id="password" class="inputs form-control" placeholder="Password">
     </div>
     <!-- 로그인 버튼 -->
-    <div class="d-flex justify-content-between">
-      <button class="btn" @click="toSignup">회원가입</button>
+    <div class="d-flex justify-content-end">
       <button @click="login(loginData)" class="btn">로그인</button>
     </div>
+    <small class="text-left">아직 계정이 없으신가요? <span class="signup-btn" @click="toSignup">가입하기</span></small>
   </div>
 </template>
 
@@ -66,8 +66,18 @@ export default {
   color: white;
   border: transparent;
 }
+
 .btn:hover{
   background-color: #345389;
   color: white;
+}
+
+.signup-btn {
+  color: #345389;
+  font-weight: 700;
+}
+
+.signup-btn:hover {
+  cursor: pointer;
 }
 </style>
