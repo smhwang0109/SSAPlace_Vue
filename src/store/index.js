@@ -148,7 +148,15 @@ export default new Vuex.Store({
           commit('SET_SELECTED_ARTICLE', res.data)
         })
         .catch(err => console.log(err.response.data))
-    } 
+    },
+    createArticle({ getters }, articleCreateData) {
+      axios.post(SERVER.URL + SERVER.ROUTES.boards + articleCreateData.boardName + '/', articleCreateData.body, getters.config)
+        .then(res => {
+          router.push({ name: 'ArticleDetail', params: { board_name: articleCreateData.boardName, article_id: res.data.id }})
+        })
+        .catch(err => console.log(err.response.data))
+
+    }
   },
   modules: {
   }
