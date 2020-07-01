@@ -23,6 +23,9 @@ import FindTeamView from '@/views/teams/FindTeamView'
 // Article
 import ArticleForm from '@/views/ArticleForm'
 
+// Profile
+import ProfileView from '@/views/accounts/ProfileView'
+
 Vue.use(VueRouter)
 
   const routes = [
@@ -89,7 +92,13 @@ Vue.use(VueRouter)
     path: '/articleform',
     name: 'ArticleForm',
     component: ArticleForm
-  }
+  },
+  // Profile - will change to userId after the design is done
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: ProfileView
+  },
 ]
 
 const router = new VueRouter({
