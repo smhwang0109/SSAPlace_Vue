@@ -38,6 +38,9 @@
     </div>
     <hr>
     <div class="content">
+      <!-- 본인이 소속된 팀 -->
+      <h5>팀</h5>
+      <router-link :to="{ name: 'CreateTeam' }" class="btn btn-secondary">팀 생성</router-link>
       <!-- 본인이 했던 경험/프로젝트-->
       <h5>프로젝트</h5>
       <!-- 가치관 및 성격 유형 Q&A -->

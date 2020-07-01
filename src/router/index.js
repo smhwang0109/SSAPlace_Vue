@@ -17,8 +17,9 @@ import RecruitmentBoardView from '@/views/boards/RecruitmentBoardView'
 import CodeReviewBoardView from '@/views/boards/CodeReviewBoardView'
 
 // Teams
-import FindMemberView from '@/views/teams/FindMemberView'
-import FindTeamView from '@/views/teams/FindTeamView'
+import CreateTeam from '@/views/teams/CreateTeam'
+import FindMemberView from '@/views/teams/FindMember'
+import FindTeamView from '@/views/teams/FindTeam'
 
 // Article
 import ArticleForm from '@/views/ArticleForm'
@@ -50,40 +51,54 @@ Vue.use(VueRouter)
     name: 'Logout',
     component: LogoutView
   },
+  // Accounts
+  // Profile - will change to userId after the design is done
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: ProfileView
+  },
+
   // Boards
   {
-    path: '/SSAFYBoard',
+    path: '/boards/SSAFY',
     name: 'SSAFYBoard',
     component: SSAFYBoardView
   },
   {
-    path: '/CareerBoard',
+    path: '/boards/career',
     name: 'CareerBoard',
     component: CareerBoardView
   },
   {
-    path: '/DiscussionsBoard',
+    path: '/boards/discussion',
     name: 'DiscussionsBoard',
     component: DiscussionsBoardView
   },
   {
-    path: '/RecruitmentBoard',
+    path: 'boards/recruitment',
     name: 'RecruitmentBoard',
     component: RecruitmentBoardView
   },
   {
-    path: '/CodeReviewBoard',
+    path: 'boards/codeReview',
     name: 'CodeReviewBoard',
     component: CodeReviewBoardView
   },
+
   // Teams
   {
-    path: '/findMember',
+    path: '/teams/create',
+    name: 'CreateTeam',
+    component: CreateTeam
+  },
+  {
+    path: '/teams/findMember',
     name: 'FindMember',
     component: FindMemberView
   },
   {
-    path: '/findTeam',
+    path: '/teams/findTeam',
     name: 'FindTeam',
     component: FindTeamView
   },
@@ -92,12 +107,6 @@ Vue.use(VueRouter)
     path: '/articleform',
     name: 'ArticleForm',
     component: ArticleForm
-  },
-  // Profile - will change to userId after the design is done
-  {
-    path: '/profile',
-    name: 'Profile',
-    component: ProfileView
   },
 ]
 
