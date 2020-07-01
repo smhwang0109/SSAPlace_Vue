@@ -10,19 +10,19 @@ import LoginView from '@/views/accounts/LoginView'
 import LogoutView from '@/views/accounts/LogoutView'
 
 // Boards
-import SSAFYBoardView from '@/views/boards/SSAFYBoardView'
-import CareerBoardView from '@/views/boards/CareerBoardView'
-import DiscussionsBoardView from '@/views/boards/DiscussionsBoardView'
-import RecruitmentBoardView from '@/views/boards/RecruitmentBoardView'
-import CodeReviewBoardView from '@/views/boards/CodeReviewBoardView'
+import ArticleList from '@/views/boards/ArticleList'
+import ArticleDetail from '@/views/boards/ArticleDetail'
+import ArticleCreate from '@/views/boards/ArticleCreate'
+// import CareerBoard from '@/views/boards/CareerBoard'
+// import FreeBoard from '@/views/boards/FreeBoard'
+// import RecruitmentBoard from '@/views/boards/RecruitmentBoard'
+// import CodeReviewBoard from '@/views/boards/CodeReviewBoard'
+
 
 // Teams
 import CreateTeam from '@/views/teams/CreateTeam'
 import FindMemberView from '@/views/teams/FindMember'
 import FindTeamView from '@/views/teams/FindTeam'
-
-// Article
-import ArticleForm from '@/views/ArticleForm'
 
 // Profile
 import ProfileView from '@/views/accounts/ProfileView'
@@ -61,29 +61,19 @@ Vue.use(VueRouter)
 
   // Boards
   {
-    path: '/boards/SSAFY',
-    name: 'SSAFYBoard',
-    component: SSAFYBoardView
+    path: '/boards/:board_name',
+    name: 'Boards',
+    component: ArticleList
   },
   {
-    path: '/boards/career',
-    name: 'CareerBoard',
-    component: CareerBoardView
+    path: '/boards/:board_name/:article_id',
+    name: 'ArticleDetail',
+    component: ArticleDetail
   },
   {
-    path: '/boards/discussion',
-    name: 'DiscussionsBoard',
-    component: DiscussionsBoardView
-  },
-  {
-    path: 'boards/recruitment',
-    name: 'RecruitmentBoard',
-    component: RecruitmentBoardView
-  },
-  {
-    path: 'boards/codeReview',
-    name: 'CodeReviewBoard',
-    component: CodeReviewBoardView
+    path: '/boards/create',
+    name: 'ArticleCreate',
+    component: ArticleCreate
   },
 
   // Teams
@@ -101,12 +91,6 @@ Vue.use(VueRouter)
     path: '/teams/findTeam',
     name: 'FindTeam',
     component: FindTeamView
-  },
-  // Article
-  {
-    path: '/articleform',
-    name: 'ArticleForm',
-    component: ArticleForm
   },
 ]
 

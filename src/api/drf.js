@@ -1,12 +1,22 @@
 export default {
-    URL: 'http://localhost:8080',
+    URL: 'http://localhost:8000',
     ROUTES: {
       // rest-auth
       signup: '/rest-auth/signup/',
       login: '/rest-auth/login/',
       logout: '/rest-auth/logout/',
+
+      // accounts
+      myaccount: '/accounts/myaccount/',
       
       // teams
-      collectTeams: '/teams/collect/',
+      collectTeamList: '/teams/collect/',
+      interestList: '/teams/interest/',
+      majorList: '/teams/major/',
+      roleList: '/teams/role/',
+      useLanguageList: '/teams/uselanguage/',
+
+      // boards
+      boards: '/boards/',
     }
   }

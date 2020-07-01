@@ -8,8 +8,8 @@
           <div class="dropdown-content">
             <div class="row">
               <div class="column">
-                <router-link :to="{ name: 'SSAFYBoard' }">싸피게시판</router-link>
-                <router-link :to="{ name: 'DiscussionsBoard' }">자유게시판</router-link>
+                <router-link :to="{ name: 'Boards', params: {board_name: 'ssafy'} }">싸피게시판</router-link>
+                <router-link :to="{ name: 'Boards', params: {board_name: 'free'} }">자유게시판</router-link>
                 <!-- <router-link :to="{ name: 'CareerBoard' }">취업/진로게시판</router-link>
                 <router-link :to="{ name: 'RecruitmentBoard' }">구인/구직게시판</router-link>
                 <router-link :to="{ name: 'CodeReviewBoard' }">코드리뷰게시판</router-link>
@@ -56,6 +56,24 @@
   </div>
 </template>
 
+<script>
+import { mapState, mapActions } from 'vuex'
+
+export default {
+  name: 'App',
+  computed: {
+    ...mapState(['myaccount'])
+  },
+  methods: {
+    ...mapActions(['getMyAccount'])
+  },
+  created() {
+    this.getMyAccount()
+  }
+}
+</script>
+
+
 <style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -67,6 +85,7 @@
 
 .container {
   padding: 0;
+  width: 60% !important;
 }
 
 /* navbar 비율별로 나누기 */
@@ -224,6 +243,10 @@
 .footer {
   background-color: black;
   color: white;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
 
 .footer-p a {

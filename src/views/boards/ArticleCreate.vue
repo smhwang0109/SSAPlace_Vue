@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: 'ArticleForm',
+  name: 'ArticleCreate',
   data() {
     return {
       article: {

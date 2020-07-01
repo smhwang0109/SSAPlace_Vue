@@ -1,48 +1,54 @@
 <template>
   <div>
-    <h1>싸피 게시판</h1>
-      <div>
-    <table class="table mb-5" v-if="reviews">
-      <thead>
-        <tr>
-          <!-- <th scope="col">#</th> -->
-          <th scope="col">Title</th>
-          <th scope="col">Username</th>
-          <th scope="col">Hit</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="review in paginatedData" :key="`review_${review.id}`" @click="reviewDetail(review.id)" >
-          <!-- <th data-label="ID" scope="row">{{ review.id }}</th> -->
-          <td data-label="Title"> {{ review.title }}</td>
-          <td data-label="Author">{{ review.user.username }}</td>
-          <td data-label="Hit"><i class="fas fa-star" style="color: #345389"></i> {{ review.rank }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="btn-cover" v-if="paginatedData">
-      <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">이전</button>
-      <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
-      <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">다음</button>
+    <h1 v-if="boardName=='ssafy'">싸피 게시판</h1>
+    <h1 v-else-if="boardName=='free'">자유 게시판</h1>
+    <router-link :to="{ name: 'ArticleCreate' }">
+      <button type="button" class="btn btn-primary">새 글쓰기</button>
+    </router-link>
+    <div>
+      <table class="table mb-5" v-if="articles">
+        <thead>
+          <tr>
+            <!-- <th scope="col">#</th> -->
+            <th scope="col">Title</th>
+            <th scope="col">Username</th>
+            <th scope="col">Hit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="article in paginatedData" :key="`article_${article.id}`">
+            <td data-label="Title"><router-link :to="{ name: 'ArticleDetail', params: { article_id: article.id, board_name: boardName }}">{{ article.title }}</router-link></td>
+            <td data-label="Author">{{ article.author.username }}</td>
+            <td data-label="Hit">{{ article.hit }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="btn-cover" v-if="paginatedData">
+        <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">이전</button>
+        <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
+        <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">다음</button>
+      </div>
+      <div v-else class="mt-5 text-center">
+        <h3> 게시판에 글을 작성해주세요. </h3>
+      </div>
     </div>
-    <div v-else class="mt-5 text-center">
-      <h3> 게시판에 글을 작성해주세요. </h3>
-    </div>
-  </div>
 
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
-  name: 'SSAFYBoard',
+  name: 'ArticleList',
   data() {
     return {
+      boardName: this.$route.params.board_name,
       pageNum: 0,
       pageSize: 10,
     }
   },
   methods: {
+    ...mapActions(['fetchArticles']),
     nextPage() {
       this.pageNum += 1;
     },
@@ -51,8 +57,9 @@ export default {
     },
   },
   computed: {
+    ...mapState(['articles']),
     pageCount() {
-      let listLeng = this.reviews.length,
+      let listLeng = this.articles.length,
       listSize = this.pageSize,
       page = Math.floor(listLeng/listSize);
 
@@ -60,15 +67,23 @@ export default {
       return page;
     },
     paginatedData() {
-      if (this.reviews.length >= 1){
+      if (this.articles.length >= 1){
         const start = this.pageNum * this.pageSize,
         end = start + this.pageSize;
-        return this.reviews.slice(start, end);
+        return this.articles.slice(start, end);
       } else {
         return 0
       }
     }
-  }
+  },
+  created() {
+    this.fetchArticles(this.boardName)
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.fetchArticles(to.params.board_name)
+    this.boardName = to.params.board_name
+    next();
+  },
 }
 </script>
 
