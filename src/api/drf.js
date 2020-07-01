@@ -6,5 +6,7 @@ export default {
       login: '/rest-auth/login/',
       logout: '/rest-auth/logout/',
       
+      // teams
+      collectTeams: '/teams/collect/',
     }
   }

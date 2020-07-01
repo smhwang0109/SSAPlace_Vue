@@ -43,7 +43,7 @@
       </div>
 
     </div>
-  <router-view/>
+  <router-view class="container"/>
 
     <div class="footer mt-5">
       <p class="footer-p">© 2020 Copyright: <i class="fab fa-github"></i> <a href="https://github.com/scl2589" target="_blank">chaelinshin96</a> 

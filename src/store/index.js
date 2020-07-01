@@ -13,6 +13,9 @@ export default new Vuex.Store({
   state: {
     // rest-auth
     authToken: cookies.get('auth-token'),
+
+    // teams
+    collecteams: null,
   },
   mutations: {
     // SET_INIT(state) {
@@ -21,6 +24,9 @@ export default new Vuex.Store({
     SET_TOKEN(state, token) {
       state.authToken = token
       cookies.set('auth-token', token)
+    },
+    SET_COLLECT_TEAMS(state, teams) {
+      state.collecteams = teams
     },
   },
   actions: {
@@ -69,6 +75,14 @@ export default new Vuex.Store({
         })
         .catch(err => console.log(err.response.data))
     },
+
+    fetchCollectTeams({ commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTES.collecteams)
+        .then(res => {
+          commit('SET_COLLECT_TEAMS', res.data)
+        })
+        .catch(err => console.log(err.response.data))
+    }
   },
   modules: {
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <!-- 배너 위치시키기 -->
     <div class="banner d-flex justify-content-center align-items-center">
       <h4 class="offset-1 col-5">싸피인을 위한,<br>재학생 및 졸업생들의 소통 공간</h4>
