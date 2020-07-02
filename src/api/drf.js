@@ -8,13 +8,15 @@ export default {
 
       // accounts
       myaccount: '/accounts/myaccount/',
-      
+      userList: '/accounts/',
+
       // teams
+      teamList: '/teams/',
       collectTeamList: '/teams/collect/',
       interestList: '/teams/interest/',
       majorList: '/teams/major/',
       roleList: '/teams/role/',
-      useLanguageList: '/teams/uselanguage/',
+      languageList: '/teams/language/',
 
       // boards
       boards: '/boards/',
