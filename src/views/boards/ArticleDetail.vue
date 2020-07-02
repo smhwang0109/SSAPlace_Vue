@@ -1,15 +1,15 @@
 <template>
   <div class="card mb-3">
     <div class="card-header">        
-      <p class="moviename link-hover">{{ this.$route.params.board_name }}</p>
+      <router-link :to="{ name: 'Boards', params: { board_name: articleData.boardName }}"><p class="boardname link-hover">{{ revisedBoardName }}</p></router-link>
       <h4 class="mb-0">{{ selectedArticle.title }}</h4>        
         <div class="d-flex justify-content-between pb-0 review-info">
           <small class="line-height">posted by <span class="link-hover" ><strong>{{ selectedArticle.author.username }}</strong></span> on {{selectedArticle.created_at}} & <span style="font-weight:700">edited at</span> {{selectedArticle.updated_at}}</small>
           <div  class="btn-group dropleft">
             <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
             <div class="dropdown-menu">
-              <p class="review-option give-highlight text-center border-bottom" @click="updateReview" >수정</p>
-              <p class="review-option give-highlight text-center" @click="deleteReview" >삭제</p>
+              <router-link :to="{ name: 'ArticleUpdate', params: { board_name: articleData.boardName, article_id: articleData.articleId }}"><p class="review-option give-highlight text-center border-bottom">수정</p></router-link>
+              <p @click="confirmDelete" class="review-option give-highlight text-center">삭제</p>
             </div>
           </div>
         </div>
@@ -38,10 +38,26 @@ export default {
     }
   },
   computed: {
-    ...mapState(['selectedArticle'])
+    ...mapState(['selectedArticle']),
+    revisedBoardName() {
+      if (this.articleData.boardName === 'ssafy') {
+        return '싸피 게시판'
+      } else if (this.articleData.boardName === 'free') {
+        return '자유 게시판'
+      } else {
+        return 'Undefined'
+      }
+    }
   },
   methods: {
-    ...mapActions(['selectArticle'])
+    ...mapActions(['selectArticle', 'deleteArticle']),
+    confirmDelete() {
+      if (confirm('게시물을 삭제하시겠습니까?') === true) {
+        this.deleteArticle(this.articleData)
+      } else {
+        return false
+      }
+    }
   },
   created() {
     this.selectArticle(this.articleData)
@@ -114,7 +130,7 @@ export default {
   cursor: pointer;
 }
 
-.moviename {
+.boardname {
   text-decoration: underline;
   color: rgba(0,0,0,.35);
 }

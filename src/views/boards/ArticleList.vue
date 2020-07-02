@@ -2,7 +2,7 @@
   <div>
     <h1 v-if="boardName=='ssafy'">싸피 게시판</h1>
     <h1 v-else-if="boardName=='free'">자유 게시판</h1>
-    <router-link :to="{ name: 'ArticleCreate' }">
+    <router-link :to="{ name: 'ArticleCreate', params: { board_name: boardName} }">
       <button type="button" class="btn btn-primary">새 글쓰기</button>
     </router-link>
     <div>

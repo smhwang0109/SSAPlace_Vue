@@ -13,6 +13,7 @@ import LogoutView from '@/views/accounts/LogoutView'
 import ArticleList from '@/views/boards/ArticleList'
 import ArticleDetail from '@/views/boards/ArticleDetail'
 import ArticleCreate from '@/views/boards/ArticleCreate'
+import ArticleUpdate from '@/views/boards/ArticleUpdate'
 // import CareerBoard from '@/views/boards/CareerBoard'
 // import FreeBoard from '@/views/boards/FreeBoard'
 // import RecruitmentBoard from '@/views/boards/RecruitmentBoard'
@@ -71,9 +72,14 @@ Vue.use(VueRouter)
     component: ArticleDetail
   },
   {
-    path: '/boards/create',
+    path: '/boards/:board_name/create',
     name: 'ArticleCreate',
     component: ArticleCreate
+  },
+  {
+    path: '/boards/:board_name/:article_id/update',
+    name: 'ArticleUpdate',
+    component: ArticleUpdate
   },
 
   // Teams
