@@ -24,7 +24,8 @@
         </div>
       <router-link class="two message" to="/"><i class="far fa-envelope"></i></router-link>
       <div class="dropdown2 two">
-        <button class="dropbtn">신채린님</button>
+        <!-- <button class="dropbtn">신채린님</button> -->
+        <button class="dropbtn">{{ myaccount.username }} </button>
         <div class="dropdown-content2">
           <div class="row">
             <div class="column2">
