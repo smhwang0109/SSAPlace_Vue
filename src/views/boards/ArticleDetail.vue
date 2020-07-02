@@ -15,7 +15,7 @@
         </div>
       </div>
     <div class="card-body">
-      <p class="card-text">{{ selectedArticle.content}}</p>
+      <p v-html="selectedArticle.content" class="card-text"></p>
     </div>
     <div class="card-footer text-muted">
         <!-- 댓글 목록 --> 
