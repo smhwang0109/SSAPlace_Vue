@@ -44,15 +44,15 @@
       </div>
 
     </div>
-  <router-view class="container"/>
+  <router-view class="container router-view"/>
 
-    <div class="footer mt-5">
-      <p class="footer-p">© 2020 Copyright: <i class="fab fa-github"></i> <a href="https://github.com/scl2589" target="_blank">chaelinshin96</a> 
-      | <i class="fab fa-github"></i><a href="https://github.com/smhwang0109" target="_blank"> smhwang0109</a>
-      | <i class="fab fa-github"></i><a href="https://github.com/SunHwan-Park" target="_blank"> SunHwan-Park</a>
-      </p>
-      <router-link class="separate-menu" to="/">Contact Us</router-link>
-    </div>
+  <div class="footer mt-5">
+    <p class="footer-p">© 2020 Copyright: <i class="fab fa-github"></i> <a href="https://github.com/scl2589" target="_blank">chaelinshin96</a> 
+    | <i class="fab fa-github"></i><a href="https://github.com/smhwang0109" target="_blank"> smhwang0109</a>
+    | <i class="fab fa-github"></i><a href="https://github.com/SunHwan-Park" target="_blank"> SunHwan-Park</a>
+    </p>
+    <router-link class="separate-menu" to="/">Contact Us</router-link>
+  </div>
 
   </div>
 </template>
@@ -252,6 +252,10 @@ export default {
 
 .footer-p a {
   color: white;
+}
+
+.router-view {
+  margin-bottom: 150px
 }
 
 </style>

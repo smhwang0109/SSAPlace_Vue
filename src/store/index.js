@@ -16,10 +16,12 @@ export default new Vuex.Store({
 
     // accounts
     myaccount: null,
+    users: null,
 
     // teams
     collecteams: null,
     interests: null,
+    languages: null,
 
     // boards
     articles: null,
@@ -43,6 +45,9 @@ export default new Vuex.Store({
     SET_MY_ACCOUNT(state, user) {
       state.myaccount = user
     },
+    SET_USERS(state, users) {
+      state.users = users
+    },
 
     // teams
     SET_COLLECT_TEAMS(state, teams) {
@@ -50,6 +55,9 @@ export default new Vuex.Store({
     },
     SET_INTERESTS(state, interests) {
       state.interests = interests
+    },
+    SET_LANGUAGES(state, languages) {
+      state.languages = languages
     },
 
     // boards
@@ -116,6 +124,13 @@ export default new Vuex.Store({
         })
         .catch(err => console.log(err.response.data))
     },
+    fetchUsers({ commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTES.userList)
+        .then(res => {
+          commit('SET_USERS', res.data)
+        })
+        .catch(err => console.log(err.response.data))
+    },
 
     // teams
     fetchCollectTeams({ commit }) {
@@ -130,6 +145,13 @@ export default new Vuex.Store({
       axios.get(SERVER.URL + SERVER.ROUTES.interestList)
         .then(res => {
           commit('SET_INTERESTS', res.data)
+        })
+        .catch(err => console.log(err.response.data))
+    },
+    fetchLanguages({ commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTES.languageList)
+        .then(res => {
+          commit('SET_LANGUAGES', res.data)
         })
         .catch(err => console.log(err.response.data))
     },
