@@ -1,7 +1,7 @@
 <template>
   <div class="card mb-3">
     <div class="card-header">        
-      <p class="moviename link-hover">{{ this.$route.params.board_name }}</p>
+      <p class="moviename link-hover" @click="goToBoard">{{ this.$route.params.board_name }}</p>
       <h4 class="mb-0">{{ selectedArticle.title }}</h4>        
         <div class="d-flex justify-content-between pb-0 review-info">
           <small class="line-height">posted by <span class="link-hover" ><strong>{{ selectedArticle.author.username }}</strong></span> on {{selectedArticle.created_at}} & <span style="font-weight:700">edited at</span> {{selectedArticle.updated_at}}</small>
@@ -20,13 +20,50 @@
     <div class="card-footer text-muted">
         <!-- 댓글 목록 --> 
         <p>Comments</p>
-          <hr>
-    </div>
+        <hr>
+        <div v-if="selectedArticle.ssafy_comments!=='[]'">
+          <div v-for="comment in changeStringToObject(selectedArticle.ssafy_comments)" :key="comment.pk">
+              <div class="comments d-flex justify-content-between">
+                <!-- 댓글 작성자 -->
+                <strong>{{ comment.fields['author']}}</strong>
+                
+                <!-- 댓글 수정/삭제 드롭다운 -->
+                <div class="btn-group dropleft comment-padding">
+                  <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                  <div class="dropdown-menu">
+                    <p class="give-highlight text-center border-bottom " @click="changeUpdateState(comment.id,comment.content)" >수정</p>
+                    <p class="give-highlight text-center" @click="deleteComment(comment.id)" >삭제</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 댓글 수정란 -->
+              <!-- <div v-show="comment.id == currentComment.select" class="input-group mx-1 row">
+                <textarea @keyup.enter="updateComment(comment.id, comment.content)" v-model="currentComment.content" type="content" class="col-xs-8 col-md-11" rows="5"></textarea>
+                <button @click="updateComment(comment.id,comment.content)" class="input-group-append btn justify-content-center align-items-center col-xs-4 col-md-1 text-center">제출</button>
+              </div> -->
+               <!-- 댓글 내용 -->
+              <p>{{ comment.fields['content'] }}</p>
+              <small class="comment-info">created {{ comment.fields['created_at']}} & updated {{ comment.fields['updated_at']}}</small>
+              <!-- <p class="comment-content" v-show="comment.id != currentComment.select">{{ comment.content }}</p>
+              <small class="comment-info">created {{ comment.created_at }} & updated {{ comment.updated_at }}</small>  -->
+              <hr>
+            </div>
+          </div>
+        <!-- 댓글 생성 --> 
+        <div class="input-group mx-1 row">
+          <textarea @keyup.enter="createComment" v-model="commentCreateData.content" class="col-xs-8 col-md-11" type="content" placeholder="댓글을 작성해주세요." rows="5" ></textarea>
+          <button class="input-group-append btn justify-content-center align-items-center col-xs-4 col-md-1 text-center" @click="createComment">작성</button>
+        </div>
+        </div>
+        
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import axios from 'axios'
+import SERVER from '@/api/drf.js'
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
   name: 'ArticleDetail',
   data() {
@@ -34,18 +71,46 @@ export default {
       articleData: {
         boardName: this.$route.params.board_name,
         articleId: this.$route.params.article_id,
+      },
+      commentCreateData: {
+        // boardName: this.$route.params.board_name,
+        content: null,
       }
     }
   },
   computed: {
-    ...mapState(['selectedArticle'])
+    ...mapState(['selectedArticle']),
+    ...mapGetters(['config'])
   },
   methods: {
-    ...mapActions(['selectArticle'])
+    ...mapActions(['selectArticle','createComment']),
+    goToBoard(){
+      this.$router.push({ name: 'Boards', params: {board_name: this.$route.params.board_name}})
+    },
+    changeStringToObject(S) {
+      const O = JSON.parse(S);
+      return O
+    },
+    createComment() {
+      axios.post(SERVER.URL + SERVER.ROUTES.boards + this.$route.params.board_name  + '/' + this.$route.params.article_id + "/comments/",this.commentCreateData, this.config)
+        .then( () => {
+          this.selectArticle(this.articleData)
+          this.commentCreateData.content = null
+        })
+        .catch( (err) => {
+          console.log(err)
+        })
+    },
+
   },
   created() {
     this.selectArticle(this.articleData)
-  }
+    this.getComment()
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.boardName = to.params.board_name
+    next();
+  },
 }
 </script>
 

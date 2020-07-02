@@ -26,6 +26,7 @@ export default new Vuex.Store({
     // boards
     articles: null,
     selectedArticle: null,
+    // comments: null,
   },
   getters: {
     isLoggedIn: state => !!state.authToken,
@@ -66,7 +67,10 @@ export default new Vuex.Store({
     },
     SET_SELECTED_ARTICLE(state, article) {
       state.selectedArticle = article
-    }
+    },
+    // SET_COMMENTS(state, comments) {
+    //   state.comments = comments
+    // }
   },
   actions: {
     // rest-auth
@@ -182,8 +186,25 @@ export default new Vuex.Store({
             console.log("null null")
           }
         })
-
-    }
+    },
+    // createComment({ getters }, commentCreateData) {
+    //   console.log("COMMENT CREATE", commentCreateData)
+    //   axios.post(SERVER.URL + SERVER.ROUTES.boards + commentCreateData.boardName + '/' + 'comments/', commentCreateData.content, getters.config)
+    //     .then(res => {
+    //       router.push({ name: 'ArticleDetail', params: { board_name: commentCreateData.boardName, article_id: res.data.id }})
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // }
+    // fetchComments({ commit }, commentData) {
+    //   axios.get(SERVER.URL + SERVER.ROUTES.boards + commentData.boardName + '/' +commentData.articleID + '/' + 'comments/')
+    //     .then(res => {
+    //       commit('SET_COMMENTS', res.data)
+    //     })
+    //     .catch(err => console.log(err.repsonse.data))
+    // }
+    
   },
   modules: {
   }
