@@ -176,7 +176,12 @@ export default new Vuex.Store({
         .then(res => {
           router.push({ name: 'ArticleDetail', params: { board_name: articleCreateData.boardName, article_id: res.data.id }})
         })
-        .catch(err => console.log(err.response.data))
+        .catch(err => {
+          console.log(err)
+          if (articleCreateData.boardName === null){
+            console.log("null null")
+          }
+        })
 
     }
   },

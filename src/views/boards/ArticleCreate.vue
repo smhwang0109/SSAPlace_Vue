@@ -1,24 +1,28 @@
 <template>
   <div class="container my-3">
-    <h1>새 글 작성 Test</h1>
-    <hr>
-    <div class="dropdown d-flex justify-content-center">
+    <v-app>
+    <div class="dropdown d-flex">
       <button class="btn btn-secondary dropdown-toggle mx-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        게시판
+        <span v-if="selectedBoard">{{ selectedBoard }}</span>
+        <span v-else>게시판</span>
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" @click="selectBoard('ssafy')">싸피 게시판</a>
         <a class="dropdown-item" @click="selectBoard('free')">자유 게시판</a>
       </div>
-      <h5 class="mx-2">{{ selectedBoard }}</h5>
     </div>
+
     <div class="title">
-      <input v-model="articleCreateData.body.title" id="title" class="w-100" type="text" placeholder="제목을 입력해주세요 :)">
+      <input v-model="articleCreateData.body.title" id="title" class="w-100 inputs" type="text" placeholder="제목을 입력해주세요 :)">
     </div>
     <div class="editor-page my-3">
       <div id="summernote"></div>
     </div>
-    <button type="button" class="btn btn-primary" @click="articleCreateSave">Save</button>
+    <div class="d-flex justify-content-between">
+      <small class="goBack" @click="clickBack">뒤로가기</small>
+      <button type="button" class="btn btn-primary" @click="articleCreateSave">작성하기</button>
+    </div>
+  </v-app>
   </div>
 </template>
 
@@ -34,8 +38,9 @@ export default {
         body: {
           title: null,
           content: null
-        }
-      }
+        },
+      },
+      
     }
   },
   methods: {
@@ -51,6 +56,9 @@ export default {
     articleCreateSave() {
       this.articleCreateData.body.content = window.$('#summernote').summernote('code')
       this.createArticle(this.articleCreateData)
+    },
+    clickBack() {
+      this.$router.go(-1)
     }
   },
   mounted() {
@@ -58,9 +66,51 @@ export default {
       placeholder: '내용을 작성해주세요 :)',
       height: 300,
     });
+    window.$('#summernote').summernote('justifyLeft');
   }
 }
 </script>
 
-<style>
+<style scoped>
+
+.btn {
+  color: black;
+  background-color: skyblue;
+  border-style: none;
+}
+
+#dropdownMenuButton {
+  margin: 0 !important;
+}
+
+.inputs {
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #757575;
+  width: 70%;
+  padding: 0.5rem;
+
+}
+.inputs:focus {
+  outline: none;
+}
+
+textarea {
+  text-align: left;
+}
+
+::-webkit-resizer {
+  display: none;
+}
+
+.summernote .note-editable {
+  text-align: left;
+}
+
+.goBack {
+  text-decoration: underline;
+}
+.goBack:hover {
+  cursor:pointer;
+}
 </style>

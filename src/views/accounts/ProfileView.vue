@@ -6,7 +6,7 @@
       </div>
       <div class="col-8 mt-5 pl-5">
         <div class="d-flex justify-content-between">
-          <h3 class="">신채린</h3>
+          <h3 class="">{{ myaccount.username }}</h3>
           <div>
             <!-- github 주소 -->
             <i class="fab fa-github mr-3 sites"></i> 
@@ -50,8 +50,18 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Profile',
+  computed: {
+    ...mapState(['myaccount'])
+  },
+  methods: {
+    ...mapActions(['getMyAccount'])
+  },
+  created() {
+    this.getMyAccount()
+  }
 }
 </script>
 
