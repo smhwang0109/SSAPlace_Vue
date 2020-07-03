@@ -79,6 +79,11 @@ export default {
   created() {
     this.fetchArticles(this.boardName)
   },
+  beforeRouteUpdate (to, from, next) {
+    this.fetchArticles(to.params.board_name)
+    this.boardName = to.params.board_name
+    next();
+  },
 }
 </script>
 
