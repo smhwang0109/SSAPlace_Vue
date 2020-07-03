@@ -135,6 +135,7 @@
             <v-col cols="12">
               <v-autocomplete
                 v-model="teamData.interests"
+                v-if="interests"
                 :items="interests"
                 chips
                 hide-selected
@@ -186,6 +187,7 @@
             <v-col cols="12">
               <v-autocomplete
                 v-model="teamData.front_language"
+                v-if="languages"
                 :items="languages"
                 chips
                 hide-selected
@@ -226,6 +228,7 @@
             <v-col cols="12">
               <v-autocomplete
                 v-model="teamData.back_language"
+                v-if="languages"
                 :items="languages"
                 chips
                 hide-selected                
@@ -374,11 +377,6 @@ export default {
     validate() {
       this.$refs.form.validate()
     },
-    nullValid(data) {
-      if (!data) {
-        return '필수 항목입니다.'
-      }
-    }
   },
 
   created() {

@@ -33,8 +33,10 @@ export default new Vuex.Store({
     config: state => ({ headers: { Authorization: `Token ${state.authToken}`}}),    
   },
   mutations: {
-    // SET_INIT(state) {
-    // },
+    SET_INIT(state) {
+      state.authToken = null
+      state.myaccount = null
+    },
 
     // rest-auth
     SET_TOKEN(state, token) {
@@ -74,10 +76,11 @@ export default new Vuex.Store({
   },
   actions: {
     // rest-auth
-    postAuthData({ commit }, info) {
+    postAuthData({ commit, dispatch }, info) {
       axios.post(SERVER.URL + info.location, info.data)
         .then(res => {
           commit('SET_TOKEN', res.data.key)
+          dispatch('getMyAccount')
           router.push({path:'/'})
         })
         .catch(err => {
@@ -114,7 +117,7 @@ export default new Vuex.Store({
         .then(() => {
           commit('SET_TOKEN', null)
           cookies.remove('auth-token')
-          // commit('SET_INIT')
+          commit('SET_INIT')
           router.push({ name: 'Login'})
         })
         .catch(err => console.log(err.response.data))
@@ -171,6 +174,7 @@ export default new Vuex.Store({
     selectArticle({ commit }, articleData) {
       axios.get(SERVER.URL + SERVER.ROUTES.boards + articleData.boardName + '/' + articleData.articleId + '/')
         .then(res => {
+          res.data.articleData = articleData
           commit('SET_SELECTED_ARTICLE', res.data)
         })
         .catch(err => console.log(err.response.data))
@@ -205,6 +209,28 @@ export default new Vuex.Store({
     //     .catch(err => console.log(err.repsonse.data))
     // }
     
+    updateArticle({ getters }, articleUpdateData) {
+      const articleData = articleUpdateData.articleData
+      axios.put(SERVER.URL + SERVER.ROUTES.boards + articleData.boardName + '/' + articleData.articleId + '/', articleUpdateData.body, getters.config)
+        .then(res => {
+          router.push({ name: 'ArticleDetail', params: { board_name: articleData.boardName, article_id: res.data.id }})
+        })
+        .catch(err => {
+          console.log(err)
+          if (articleData.boardName === null){
+            console.log("null null")
+          }
+        })
+    },
+    deleteArticle({ getters }, articleData) {
+      axios.delete(SERVER.URL + SERVER.ROUTES.boards + articleData.boardName + '/' + articleData.articleId + '/', null, getters.config)
+        .then(() => {
+          router.push({ name: 'Boards', params: { board_name: articleData.boardName }})
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   },
   modules: {
   }

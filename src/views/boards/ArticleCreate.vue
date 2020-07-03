@@ -61,6 +61,9 @@ export default {
       this.$router.go(-1)
     }
   },
+  created() {
+    this.selectBoard(this.$route.params.board_name)
+  },
   mounted() {
     window.$('#summernote').summernote({
       placeholder: '내용을 작성해주세요 :)',

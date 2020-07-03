@@ -10,10 +10,6 @@
               <div class="column">
                 <router-link :to="{ name: 'Boards', params: {board_name: 'ssafy'} }">싸피게시판</router-link>
                 <router-link :to="{ name: 'Boards', params: {board_name: 'free'} }">자유게시판</router-link>
-                <!-- <router-link :to="{ name: 'CareerBoard' }">취업/진로게시판</router-link>
-                <router-link :to="{ name: 'RecruitmentBoard' }">구인/구직게시판</router-link>
-                <router-link :to="{ name: 'CodeReviewBoard' }">코드리뷰게시판</router-link>
-                <router-link :to="{ name: 'ArticleForm' }">새 글 작성</router-link> -->
               </div>
               <div class="column">
                 <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>
@@ -23,9 +19,9 @@
           </div>
         </div>
       <router-link class="two message" to="/"><i class="far fa-envelope"></i></router-link>
-      <div class="dropdown2 two">
-        <!-- <button class="dropbtn">신채린님</button> -->
-        <button  class="dropbtn">{{ myaccount.username }} </button>
+
+      <div v-if="isLoggedIn" class="dropdown2 two">
+        <button class="dropbtn">{{ myaccount.username }} </button>
         <div class="dropdown-content2">
           <div class="row">
             <div class="column2">
@@ -39,8 +35,10 @@
               </div>
             </div>
           </div>
-          
         </div>
+      </div>
+      <div v-else>
+        <router-link :to="{ name: 'Login' }">Login</router-link>
       </div>
 
     </div>
@@ -58,18 +56,21 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'App',
   computed: {
-    ...mapState(['myaccount'])
+    ...mapState(['myaccount']),
+    ...mapGetters(['isLoggedIn'])
   },
   methods: {
     ...mapActions(['getMyAccount'])
   },
   created() {
-    this.getMyAccount()
+    if (this.isLoggedIn) {
+      this.getMyAccount()
+    }
   }
 }
 </script>
