@@ -27,6 +27,7 @@ import FindTeamView from '@/views/teams/FindTeam'
 
 // Profile
 import ProfileView from '@/views/accounts/ProfileView'
+import ProfileEditView from '@/views/accounts/ProfileEditView'
 
 Vue.use(VueRouter)
 
@@ -55,9 +56,14 @@ Vue.use(VueRouter)
   // Accounts
   // Profile - will change to userId after the design is done
   {
-    path: '/profile',
+    path: '/accounts/:user_id',
     name: 'Profile',
     component: ProfileView
+  },
+  {
+    path: '/accounts/:user_id/edit',
+    name: 'ProfileEdit',
+    component: ProfileEditView
   },
 
   // Boards
