@@ -1,23 +1,23 @@
 <template>
   <div id="app">
     <div class="navbar2 container">
-      <router-link class="logo" to="/">SSAPlace</router-link>
-        <div class="dropdown2 megamenu">
-          <button class="dropbtn col-6">게시판</button>
-          <button class="dropbtn col-6">프로젝트 멤버 모집</button>
-          <div class="dropdown-content">
-            <div class="row">
-              <div class="column">
-                <router-link :to="{ name: 'Boards', params: {board_name: 'ssafy'} }">싸피게시판</router-link>
-                <router-link :to="{ name: 'Boards', params: {board_name: 'free'} }">자유게시판</router-link>
-              </div>
-              <div class="column">
-                <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>
-                <router-link :to="{ name: 'FindTeam' }">PJT 팀 찾아요</router-link>
-              </div>
+      <router-link class="logo" to="/"><img class="img-fluid" src="@/assets/logo.png" alt="SSAPlace 로고"></router-link>
+      <div class="dropdown2 megamenu">
+        <button class="dropbtn col-6">게시판</button>
+        <button class="dropbtn col-6">프로젝트 멤버 모집</button>
+        <div class="dropdown-content">
+          <div class="row">
+            <div class="column">
+              <router-link :to="{ name: 'Boards', params: {board_name: 'ssafy'} }">싸피게시판</router-link>
+              <router-link :to="{ name: 'Boards', params: {board_name: 'free'} }">자유게시판</router-link>
+            </div>
+            <div class="column">
+              <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>
+              <router-link :to="{ name: 'FindTeam' }">PJT 팀 찾아요</router-link>
             </div>
           </div>
         </div>
+      </div>
       <router-link class="two message" to="/"><i class="far fa-envelope"></i></router-link>
 
       <div v-if="isLoggedIn" class="dropdown2 two">
