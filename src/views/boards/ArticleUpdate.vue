@@ -5,7 +5,7 @@
     </div>
     <v-app>
     <div class="title">
-      <input v-model="articleUpdateData.body.title" id="title" class="w-100 inputs" type="text" placeholder="제목을 입력해주세요 :)">
+      <input v-model="articleUpdateData.title" id="title" class="w-100 inputs" type="text" placeholder="제목을 입력해주세요 :)">
     </div>
     <div class="editor-page my-3">
       <div id="summernote"></div>
@@ -25,11 +25,8 @@ export default {
   data() {
     return {
       articleUpdateData: {
-        articleData: null,
-        body: {
-          title: null,
-          content: null
-        }
+        title: null,
+        content: null
       }
     }
   },
@@ -48,7 +45,7 @@ export default {
   methods: {
     ...mapActions(['selectArticle', 'updateArticle']),
     articleUpdateSave() {
-      this.articleUpdateData.body.content = window.$('#summernote').summernote('code')
+      this.articleUpdateData.content = window.$('#summernote').summernote('code')
       this.updateArticle(this.articleUpdateData)
     },
     clickBack() {
@@ -61,8 +58,7 @@ export default {
       height: 300,
     });
     window.$('#summernote').summernote('code', this.selectedArticle.content);
-    this.articleUpdateData.articleData = this.selectedArticle.articleData
-    this.articleUpdateData.body.title = this.selectedArticle.title
+    this.articleUpdateData.title = this.selectedArticle.title
   },
 }
 </script>
