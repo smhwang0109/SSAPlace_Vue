@@ -11,30 +11,18 @@
       </div>
     </div>
     <hr>
-    <v-row align="center py-0">
+    <v-row v-if="articles" align="center py-0">
       <v-card
         class="mx-auto w-100"
         tile
       >
         <v-list
-          :disabled="disabled"
-          :dense="dense"
-          :two-line="twoLine"
-          :three-line="threeLine"
-          :shaped="shaped"
-          :flat="flat"
-          :subheader="subheader"
-          :sub-group="subGroup"
-          :nav="nav"
-          :avatar="avatar"
-          :rounded="rounded"
           class="py-0"
         >
-          <v-list-item-group v-model="item" color="primary">
+          <v-list-item-group color="primary">
             <v-list-item
               v-for="article in paginatedData"
               :key="`article_${article.id}`"
-              :inactive="inactive"
               class="row px-3 mx-0 border-bottom"
               @click="selectArticle(article.id)"
             >
