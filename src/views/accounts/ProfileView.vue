@@ -6,7 +6,7 @@
       </div>
       <div class="col-8 mt-5 pl-5">
         <div class="d-flex justify-content-between">
-          <h3 class="">{{ myaccount.username }}</h3>
+          <h3 v-if="myaccount">{{ myaccount.username }}</h3>
           <div>
             <!-- github 주소 -->
             <i class="fab fa-github mr-3 sites"></i> 
@@ -39,8 +39,31 @@
     <hr>
     <div class="content">
       <!-- 본인이 소속된 팀 -->
-      <h5>팀</h5>
-      <router-link :to="{ name: 'CreateTeam' }" class="btn btn-secondary">팀 생성</router-link>
+      <div class="d-flex justify-content-between">
+        <h5 class="d-inline">우리 팀</h5>
+        <router-link :to="{ name: 'TeamCreate' }" class="btn btn-secondary">팀 생성</router-link>
+      </div>
+      <div class="card-deck">
+        <router-link :to="{ name: 'TeamDetail', params: { teamId: team.id } }" class="card" v-for="team in teams" :key="team.id">
+          <img src="https://picsum.photos/seed/picsum/400/120" class="card-img-top" alt="image" >
+          <div class="card-body">
+            <h5 class="card-title">{{ team.name }}</h5>
+            <span>by {{ team.leader.username }}</span>
+            <p></p>
+            <h5 class="card-subtitle mb-3">{{ team.oneline_description }}</h5>
+            <p class="card-text">
+              <span v-for="interest_id in team.interests" :key="interest_id"> {{ interests[interest_id-1]["interest"] }} /</span>
+              <span v-for="language_id in team.front_language" :key="language_id"> {{ languages[language_id-1]["language"] }} /</span>
+              <span v-for="language_id in team.back_language" :key="language_id"> {{ languages[language_id-1]["language"] }} /</span>
+              <br> 현재 구성원 {{ team.current_members }}명 / {{ team.residence }} / ~{{ team.created_at.slice(0,10) }}
+            </p>
+          </div>
+          <div class="card-footer d-flex justify-content-between">
+            <small class="text-muted">{{ team.created_at }}</small>
+            <i class="far fa-bookmark"></i>
+          </div>
+        </router-link>
+      </div>
       <!-- 본인이 했던 경험/프로젝트-->
       <h5>프로젝트</h5>
       <!-- 가치관 및 성격 유형 Q&A -->
@@ -54,13 +77,13 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Profile',
   computed: {
-    ...mapState(['myaccount'])
+    ...mapState(['myaccount', 'teams', 'users', 'interests', 'languages'])
   },
   methods: {
-    ...mapActions(['getMyAccount'])
+    ...mapActions(['fetchTeams'])
   },
   created() {
-    this.getMyAccount()
+    this.fetchTeams()
   }
 }
 </script>

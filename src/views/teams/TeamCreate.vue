@@ -285,7 +285,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import axios from 'axios'
 import router from '@/router'
 import SERVER from '@/api/drf'
@@ -308,7 +308,7 @@ export default {
         description: null,
         members: [],
         interests: null,
-        currentMembers: null,
+        current_members: null,
         residence: null,
         front_language: null,
         back_language: null
@@ -341,7 +341,6 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchUsers', 'fetchInterests', 'fetchLanguages']),
     remove (data, item) {
       const index = data.indexOf(item.id)
       if (index >= 0) data.splice(index, 1)
@@ -367,7 +366,7 @@ export default {
       })
     },
     createTeam() {
-      this.teamData.currentMembers = this.teamData.members.length
+      this.teamData.current_members = this.teamData.members.length
       axios.post(SERVER.URL + SERVER.ROUTES.teamList, this.teamData, this.config)
         .then(() => {
           router.push({ name: 'Home'})
@@ -380,15 +379,6 @@ export default {
   },
 
   created() {
-    if (!this.users) {
-      this.fetchUsers()
-    }
-    if (!this.interests) {
-      this.fetchInterests()
-    }
-    if (!this.languages) {
-      this.fetchLanguages()
-    }
     if (this.myaccount) {
       this.$nextTick(() => {
         this.leader = this.myaccount

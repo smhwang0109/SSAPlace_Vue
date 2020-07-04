@@ -21,7 +21,7 @@
       <router-link class="two message" to="/"><i class="far fa-envelope"></i></router-link>
 
       <div v-if="isLoggedIn" class="dropdown2 two">
-        <button class="dropbtn">{{ myaccount.username }} </button>
+        <button class="dropbtn" v-if="myaccount">{{ myaccount.username }} </button>
         <div class="dropdown-content2">
           <div class="row">
             <div class="column2">
@@ -65,11 +65,14 @@ export default {
     ...mapGetters(['isLoggedIn'])
   },
   methods: {
-    ...mapActions(['getMyAccount'])
+    ...mapActions(['getMyAccount', 'fetchUsers', 'fetchInterests', 'fetchLanguages'])
   },
   created() {
     if (this.isLoggedIn) {
       this.getMyAccount()
+      this.fetchUsers()
+      this.fetchInterests()
+      this.fetchLanguages()
     }
   }
 }

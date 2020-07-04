@@ -21,9 +21,11 @@ import ArticleUpdate from '@/views/boards/ArticleUpdate'
 
 
 // Teams
-import CreateTeam from '@/views/teams/CreateTeam'
-import FindMemberView from '@/views/teams/FindMember'
-import FindTeamView from '@/views/teams/FindTeam'
+import TeamCreate from '@/views/teams/TeamCreate'
+import TeamDetail from '@/views/teams/TeamDetail'
+import CollectTeamCreate from '@/views/teams/CollectTeamCreate'
+import FindMember from '@/views/teams/FindMember'
+import FindTeam from '@/views/teams/FindTeam'
 
 // Profile
 import ProfileView from '@/views/accounts/ProfileView'
@@ -52,6 +54,7 @@ Vue.use(VueRouter)
     name: 'Logout',
     component: LogoutView
   },
+
   // Accounts
   // Profile - will change to userId after the design is done
   {
@@ -85,18 +88,28 @@ Vue.use(VueRouter)
   // Teams
   {
     path: '/teams/create',
-    name: 'CreateTeam',
-    component: CreateTeam
+    name: 'TeamCreate',
+    component: TeamCreate
+  },
+  {
+    path: '/teams/:teamId',
+    name: 'TeamDetail',
+    component: TeamDetail
+  },
+  {
+    path: '/teams/:teamId/collect/create',
+    name: 'CollectTeamCreate',
+    component: CollectTeamCreate
   },
   {
     path: '/teams/findMember',
     name: 'FindMember',
-    component: FindMemberView
+    component: FindMember
   },
   {
     path: '/teams/findTeam',
     name: 'FindTeam',
-    component: FindTeamView
+    component: FindTeam
   },
 ]
 
