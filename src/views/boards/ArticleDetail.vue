@@ -1,70 +1,73 @@
 <template>
-  <div class="card mb-3">
+  <div class="card">
+
     <div class="card-header">        
-      <!-- <p class="link-hover" @click="goToBoard">{{ this.$route.params.board_name }}</p> -->
       <router-link :to="{ name: 'Boards', params: { board_name: articleData.boardName }}"><p class="boardname link-hover">{{ revisedBoardName }}</p></router-link>
       <h4 class="mb-0">{{ selectedArticle.title }}</h4>        
-        <div class="d-flex justify-content-between pb-0 review-info">
-          <small class="line-height">posted by <span class="link-hover" ><strong>{{ selectedArticle.author.username }}</strong></span> on {{selectedArticle.created_at}} & <span style="font-weight:700">edited at</span> {{selectedArticle.updated_at}}</small>
-          <div  class="btn-group dropleft">
-            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-            <div class="dropdown-menu">
-              <router-link :to="{ name: 'ArticleUpdate', params: { board_name: articleData.boardName, article_id: articleData.articleId }}"><p class="review-option give-highlight text-center border-bottom">수정</p></router-link>
-              <p @click="confirmDelete" class="review-option give-highlight text-center">삭제</p>
-            </div>
+      <div class="d-flex justify-content-between pb-0 review-info">
+        <small class="line-height">posted by <span class="link-hover" ><strong>{{ selectedArticle.author.username }}</strong></span> on {{selectedArticle.created_at}} & <span style="font-weight:700">edited at</span> {{selectedArticle.updated_at}}</small>
+        <div v-if="selectedArticle.author.id === myaccount.id" class="btn-group dropleft">
+          <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+          <div class="dropdown-menu">
+            <router-link class="escape-router-link" :to="{ name: 'ArticleUpdate', params: { board_name: articleData.boardName, article_id: articleData.articleId }}"><p class="review-option give-highlight text-center border-bottom">수정</p></router-link>
+            <p @click="confirmDeleteArticle" class="review-option give-highlight text-center">삭제</p>
           </div>
         </div>
       </div>
+    </div>
+
     <div class="card-body">
       <p v-html="selectedArticle.content" class="card-text"></p>
     </div>
-    <div class="card-footer text-muted">
-        <!-- 댓글 목록 --> 
-        <p>Comments</p>
-        <hr>
-        <div v-if="selectedArticle.ssafy_comments!=='[]'">
-          <div v-for="comment in selectedArticle.ssafy_comments" :key="comment.id">
-              <div class="comments d-flex justify-content-between">
-                <!-- 댓글 작성자 -->
-                <strong>{{ comment.author.username }}</strong>
-                
-                <!-- 댓글 수정/삭제 드롭다운 -->
-                <div class="btn-group dropleft comment-padding">
-                  <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                  <div class="dropdown-menu">
-                    <p class="give-highlight text-center border-bottom " >수정</p>
-                    <p class="give-highlight text-center" @click="deleteComment(comment.id)" >삭제</p>
-                  </div>
-                </div>
-              </div>
 
-              <!-- 댓글 수정란 -->
-              <!-- <div v-show="comment.id == currentComment.select" class="input-group mx-1 row">
-                <textarea @keyup.enter="updateComment(comment.id, comment.content)" v-model="currentComment.content" type="content" class="col-xs-8 col-md-11" rows="5"></textarea>
-                <button @click="updateComment(comment.id,comment.content)" class="input-group-append btn justify-content-center align-items-center col-xs-4 col-md-1 text-center">제출</button>
-              </div> -->
-               <!-- 댓글 내용 -->
-              <p>{{ comment.content }}</p>
-              <small class="comment-info">created {{ comment.created_at }} & updated {{ comment.updated_at }}</small>
-              <!-- <p class="comment-content" v-show="comment.id != currentComment.select">{{ comment.content }}</p>
-              <small class="comment-info">created {{ comment.created_at }} & updated {{ comment.updated_at }}</small>  -->
-              <hr>
+    <div class="card-footer text-muted">
+      <!-- 댓글 목록 --> 
+      <p>Comments</p>
+      <hr>
+      <div v-if="comments!=='[]'">
+        <div v-for="comment in comments" :key="comment.id">
+          <div class="comments d-flex justify-content-between">
+            <!-- 댓글 작성자 -->
+            <strong>{{ comment.author.username }}</strong>
+            
+            <!-- 댓글 수정/삭제 드롭다운 -->
+            <div v-if="comment.author.id === myaccount.id" class="btn-group dropleft comment-padding">
+              <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+              <div class="dropdown-menu">
+                <p class="give-highlight text-center border-bottom" @click="initUpdateComment(comment)">수정</p>
+                <p class="give-highlight text-center" @click="confirmDeleteComment(comment.id)">삭제</p>
+              </div>
             </div>
           </div>
-        <!-- 댓글 생성 --> 
-        <div class="input-group mx-1 row">
-          <textarea @keyup.enter="createComment" v-model="commentCreateData.content" class="col-xs-8 col-md-11" type="content" placeholder="댓글을 작성해주세요." rows="5" ></textarea>
-          <button class="input-group-append btn justify-content-center align-items-center col-xs-4 col-md-1 text-center" @click="createComment">작성</button>
+
+          <!-- 댓글 수정란 -->
+          <div class="mx-1 my-3 d-flex justify-content-center">
+            <div v-show="comment.id === commentUpdateData.commentId" class="input-group row">
+              <textarea @keyup.enter="saveUpdateComment" v-model="commentUpdateData.body.content" type="content" class="col-xs-8 col-md-11" rows="2"></textarea>
+              <button @click="saveUpdateComment" class="input-group-append btn justify-content-center align-items-center col-xs-4 col-md-1 text-center">수정</button>
+            </div>
+          </div>
+          <!-- 댓글 내용 -->
+          <div v-show="comment.id != commentUpdateData.commentId">
+            <p>{{ comment.content }}</p>
+            <small class="comment-info">created {{ comment.created_at }} & updated {{ comment.updated_at }}</small>
+            <hr>
+          </div>
         </div>
+      </div>
+      <!-- 댓글 생성 -->
+      <div class="mx-1 d-flex justify-content-center">
+        <div class="input-group row">
+          <textarea @keyup.enter="saveCreateComment" v-model="commentCreateData.content" class="col-xs-8 col-md-11" type="content" placeholder="댓글을 작성해주세요." rows="2" ></textarea>
+          <button class="input-group-append btn justify-content-center align-items-center col-xs-4 col-md-1 text-center" @click="saveCreateComment">작성</button>
         </div>
-        
+      </div>
+    </div>  
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import SERVER from '@/api/drf.js'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'ArticleDetail',
   data() {
@@ -74,17 +77,18 @@ export default {
         articleId: this.$route.params.article_id,
       },
       commentCreateData: {
-        // boardName: this.$route.params.board_name,
         content: null,
       },
-      commentData: {
-        content: null
+      commentUpdateData: {
+        commentId: null,
+        body: {
+          content: null
+        }
       }
     }
   },
   computed: {
-    ...mapState(['selectedArticle']),
-    ...mapGetters(['config']),
+    ...mapState(['selectedArticle', 'comments', 'myaccount']),
     revisedBoardName() {
       if (this.articleData.boardName === 'ssafy') {
         return '싸피 게시판'
@@ -96,37 +100,34 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['selectArticle','createComment', 'selectArticle', 'deleteArticle']),
-    goToBoard(){
-      this.$router.push({ name: 'Boards', params: {board_name: this.$route.params.board_name}})
+    ...mapActions(['selectArticle', 'selectArticle', 'deleteArticle', 'fetchComments', 'createComment', 'updateComment', 'deleteComment']),
+    confirmDeleteArticle() {
+      if (confirm('게시물을 삭제하시겠습니까?') === true) {
+        this.deleteArticle()
+      } else {
+        return false
+      }
     },
-    // changeStringToObject(S) {
-    //   const O = JSON.parse(S);
-    //   return O
-    // },
-    createComment() {
-      axios.post(SERVER.URL + SERVER.ROUTES.boards + this.$route.params.board_name  + '/' + this.$route.params.article_id + "/comments/",this.commentCreateData, this.config)
-        .then( () => {
-          this.selectArticle(this.articleData)
+    saveCreateComment() {
+      this.createComment(this.commentCreateData)
+        .then(() => {
           this.commentCreateData.content = null
         })
-        .catch( (err) => {
-          console.log(err)
-        })
     },
-    deleteComment(comment_id) {
-      axios.delete(SERVER.URL + SERVER.ROUTES.boards + this.$route.params.board_name + '/' + this.$route.params.article_id + "/comments/" + comment_id)
+    initUpdateComment(comment) {
+      this.commentUpdateData.commentId = comment.id
+      this.commentUpdateData.body.content = comment.content
+    },
+    saveUpdateComment() {
+      this.updateComment(this.commentUpdateData)
         .then(() => {
-            this.selectArticle(this.articleData)
-          })
-        .catch((err) => {
-          console.log(err.response.data)
+          this.commentUpdateData.commentId = null
+          this.commentUpdateData.body.content = null
         })
     },
-    
-    confirmDelete() {
-      if (confirm('게시물을 삭제하시겠습니까?') === true) {
-        this.deleteArticle(this.articleData)
+    confirmDeleteComment(commentId) {
+      if (confirm('댓글을 삭제하시겠습니까?') === true) {
+        this.deleteComment(commentId)
       } else {
         return false
       }
@@ -134,7 +135,7 @@ export default {
   },
   created() {
     this.selectArticle(this.articleData)
-    // this.getComment()
+    this.fetchComments(this.articleData)
   },
   beforeRouteUpdate (to, from, next) {
     this.boardName = to.params.board_name
@@ -145,7 +146,7 @@ export default {
 
 <style scoped>
 .btn {
-  background-color:#6f8dbf;
+  background-color:#3596F4;
   outline: transparent;
   color: white;
   border: transparent;
@@ -239,6 +240,11 @@ export default {
 
 .review-option {
   font-family: 'jua';
+}
+
+.escape-router-link {
+  color: #212529;
+  text-decoration: none;
 }
 
 textarea {

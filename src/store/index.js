@@ -26,11 +26,14 @@ export default new Vuex.Store({
     // boards
     articles: null,
     selectedArticle: null,
-    // comments: null,
+    comments: null,
   },
   getters: {
     isLoggedIn: state => !!state.authToken,
-    config: state => ({ headers: { Authorization: `Token ${state.authToken}`}}),    
+    config: state => ({ headers: { Authorization: `Token ${state.authToken}`}}),
+    
+    // boards
+    articleData: state => state.selectedArticle.articleData
   },
   mutations: {
     SET_INIT(state) {
@@ -70,9 +73,9 @@ export default new Vuex.Store({
     SET_SELECTED_ARTICLE(state, article) {
       state.selectedArticle = article
     },
-    // SET_COMMENTS(state, comments) {
-    //   state.comments = comments
-    // }
+    SET_COMMENTS(state, comments) {
+      state.comments = comments
+    }
   },
   actions: {
     // rest-auth
@@ -191,41 +194,56 @@ export default new Vuex.Store({
           }
         })
     },
-    // createComment({ getters }, commentCreateData) {
-    //   console.log("COMMENT CREATE", commentCreateData)
-    //   axios.post(SERVER.URL + SERVER.ROUTES.boards + commentCreateData.boardName + '/' + 'comments/', commentCreateData.content, getters.config)
-    //     .then(res => {
-    //       router.push({ name: 'ArticleDetail', params: { board_name: commentCreateData.boardName, article_id: res.data.id }})
-    //     })
-    //     .catch(err => {
-    //       console.log(err)
-    //     })
-    // }
-    // fetchComments({ commit }, commentData) {
-    //   axios.get(SERVER.URL + SERVER.ROUTES.boards + commentData.boardName + '/' +commentData.articleID + '/' + 'comments/')
-    //     .then(res => {
-    //       commit('SET_COMMENTS', res.data)
-    //     })
-    //     .catch(err => console.log(err.repsonse.data))
-    // }
-    
     updateArticle({ getters }, articleUpdateData) {
-      const articleData = articleUpdateData.articleData
-      axios.put(SERVER.URL + SERVER.ROUTES.boards + articleData.boardName + '/' + articleData.articleId + '/', articleUpdateData.body, getters.config)
+      axios.put(SERVER.URL + SERVER.ROUTES.boards + getters.articleData.boardName + '/' + getters.articleData.articleId + '/', articleUpdateData, getters.config)
+      .then(res => {
+        router.push({ name: 'ArticleDetail', params: { board_name: getters.articleData.boardName, article_id: res.data.id }})
+      })
+      .catch(err => {
+        console.log(err)
+        if (getters.articleData.boardName === null){
+          console.log("null null")
+        }
+      })
+    },
+    deleteArticle({ getters }) {
+      axios.delete(SERVER.URL + SERVER.ROUTES.boards + getters.articleData.boardName + '/' + getters.articleData.articleId + '/', null, getters.config)
+      .then(() => {
+        router.push({ name: 'Boards', params: { board_name: getters.articleData.boardName }})
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+    fetchComments({ commit }, articleData) {
+      axios.get(SERVER.URL + SERVER.ROUTES.boards + articleData.boardName + '/' + articleData.articleId + '/' + 'comments/')
         .then(res => {
-          router.push({ name: 'ArticleDetail', params: { board_name: articleData.boardName, article_id: res.data.id }})
+          commit('SET_COMMENTS', res.data)
+        })
+        .catch(err => console.log(err.repsonse.data))
+    },
+    createComment({ getters, dispatch }, commentCreateData) {
+      axios.post(SERVER.URL + SERVER.ROUTES.boards + getters.articleData.boardName + '/' + getters.articleData.articleId + '/' + 'comments/', commentCreateData, getters.config)
+        .then(() => {
+          dispatch('fetchComments', getters.articleData)
         })
         .catch(err => {
           console.log(err)
-          if (articleData.boardName === null){
-            console.log("null null")
-          }
         })
     },
-    deleteArticle({ getters }, articleData) {
-      axios.delete(SERVER.URL + SERVER.ROUTES.boards + articleData.boardName + '/' + articleData.articleId + '/', null, getters.config)
+    updateComment({ getters, dispatch }, commentUpdateData) {
+      axios.put(SERVER.URL + SERVER.ROUTES.boards + getters.articleData.boardName + '/' + getters.articleData.articleId + '/' + 'comments/' + commentUpdateData.commentId + '/', commentUpdateData.body, getters.config)
         .then(() => {
-          router.push({ name: 'Boards', params: { board_name: articleData.boardName }})
+          dispatch('fetchComments', getters.articleData)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    deleteComment({ getters, dispatch }, commentId) {
+      axios.delete(SERVER.URL + SERVER.ROUTES.boards + getters.articleData.boardName + '/' + getters.articleData.articleId + '/' + 'comments/' + commentId + '/', null, getters.config)
+        .then(() => {
+          dispatch('fetchComments', getters.articleData)
         })
         .catch(err => {
           console.log(err)
