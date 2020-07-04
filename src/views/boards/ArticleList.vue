@@ -1,15 +1,59 @@
 <template>
   <div>
-    <h1 v-if="boardName=='ssafy'">싸피 게시판</h1>
-    <h1 v-else-if="boardName=='free'">자유 게시판</h1>
-    <router-link :to="{ name: 'ArticleCreate', params: { board_name: boardName} }">
-      <button type="button" class="btn btn-primary">새 글쓰기</button>
-    </router-link>
+    <div class="d-flex justify-content-between">
+      <h3 class="mb-0">{{ revisedBoardName }}</h3>
+      <div>
+        <label for="searchbar"><h5 class="mb-0"><i class="fas fa-search"></i></h5></label>
+        <input id="searchbar" class="border rounded ml-2 mr-3 h-100" type="text">
+        <router-link :to="{ name: 'ArticleCreate', params: { board_name: boardName} }">
+          <button type="button" class="btn btn-primary">새 글쓰기</button>
+        </router-link>
+      </div>
+    </div>
+    <hr>
+    <v-row align="center py-0">
+      <v-card
+        class="mx-auto w-100"
+        tile
+      >
+        <v-list
+          :disabled="disabled"
+          :dense="dense"
+          :two-line="twoLine"
+          :three-line="threeLine"
+          :shaped="shaped"
+          :flat="flat"
+          :subheader="subheader"
+          :sub-group="subGroup"
+          :nav="nav"
+          :avatar="avatar"
+          :rounded="rounded"
+          class="py-0"
+        >
+          <v-list-item-group v-model="item" color="primary">
+            <v-list-item
+              v-for="article in paginatedData"
+              :key="`article_${article.id}`"
+              :inactive="inactive"
+              class="row px-3 mx-0 border-bottom"
+              @click="selectArticle(article.id)"
+            >
+              <h5 class="col-9 mb-0 text-left">{{ article.title }}</h5>
+              <div class="col-2">
+                <p class="mb-0">{{ article.author.username }}</p>
+              </div>
+              <div class="col-1">
+                <span class="badge badge-pill badge-primary">{{ article.hit }}</span>
+              </div>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-card>
+    </v-row>
     <div>
-      <table class="table mb-5" v-if="articles">
+      <!-- <table class="table mb-5" v-if="articles">
         <thead>
           <tr>
-            <!-- <th scope="col">#</th> -->
             <th scope="col">Title</th>
             <th scope="col">Username</th>
             <th scope="col">Hit</th>
@@ -22,21 +66,22 @@
             <td data-label="Hit">{{ article.hit }}</td>
           </tr>
         </tbody>
-      </table>
+      </table> -->
       <div class="btn-cover" v-if="paginatedData">
         <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">이전</button>
         <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
         <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">다음</button>
       </div>
-      <div v-else class="mt-5 text-center">
+      <!-- <div v-else class="mt-5 text-center">
         <h3> 게시판에 글을 작성해주세요. </h3>
-      </div>
+      </div> -->
     </div>
 
   </div>
 </template>
 
 <script>
+import router from '@/router'
 import { mapState, mapActions } from 'vuex'
 export default {
   name: 'ArticleList',
@@ -55,9 +100,21 @@ export default {
     prevPage() {
       this.pageNum -= 1;
     },
+    selectArticle(articleId) {
+      router.push({ name: 'ArticleDetail', params: { board_name: this.boardName, article_id: articleId }})
+    }
   },
   computed: {
     ...mapState(['articles']),
+    revisedBoardName() {
+      if (this.boardName === 'ssafy') {
+        return '싸피 게시판'
+      } else if (this.boardName === 'free') {
+        return '자유 게시판'
+      } else {
+        return 'Undefined'
+      }
+    },
     pageCount() {
       let listLeng = this.articles.length,
       listSize = this.pageSize,
