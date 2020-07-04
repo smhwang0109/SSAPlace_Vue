@@ -41,7 +41,7 @@
           </div>
 
           <!-- 댓글 수정란 -->
-          <div class="mx-1 my-3 d-flex justify-content-center">
+          <div class="mx-1 my-1 d-flex justify-content-center">
             <div v-show="comment.id === commentUpdateData.commentId" class="input-group row">
               <textarea @keyup.enter="saveUpdateComment" v-model="commentUpdateData.body.content" type="content" class="col-xs-8 col-md-11" rows="2"></textarea>
               <button @click="saveUpdateComment" class="input-group-append btn justify-content-center align-items-center col-xs-4 col-md-1 text-center">수정</button>
@@ -49,7 +49,7 @@
           </div>
           <!-- 댓글 내용 -->
           <div v-show="comment.id != commentUpdateData.commentId">
-            <p>{{ comment.content }}</p>
+            <p class="mb-2">{{ comment.content }}</p>
             <small class="comment-info">created {{ comment.created_at }} & updated {{ comment.updated_at }}</small>
             <hr>
           </div>

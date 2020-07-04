@@ -19,6 +19,8 @@ export default new Vuex.Store({
     users: null,
 
     // teams
+    teams: null,
+    team: null,
     collecteams: null,
     interests: null,
     languages: null,
@@ -56,6 +58,12 @@ export default new Vuex.Store({
     },
 
     // teams
+    SET_TEAMS(state, teams) {
+      state.teams = teams
+    },
+    SET_TEAM(state, team) {
+      state.team = team
+    },
     SET_COLLECT_TEAMS(state, teams) {
       state.collecteams = teams
     },
@@ -143,8 +151,24 @@ export default new Vuex.Store({
     },
 
     // teams
+    fetchTeams({ getters, commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTES.teamList, getters.config)
+        .then(res => {
+          console.log('된다.')
+          commit('SET_TEAMS', res.data)
+        })
+        .catch(err => console.log(err))
+    },
+    getTeam({ commit }, teamId) {
+      axios.get(SERVER.URL + SERVER.ROUTES.teamList + teamId + '/')
+        .then(res => {
+          commit('SET_TEAM', res.data)
+        })
+        .catch(err => console.log(err))
+    },
+
     fetchCollectTeams({ commit }) {
-      axios.get(SERVER.URL + SERVER.ROUTES.collecTeamList)
+      axios.get(SERVER.URL + SERVER.ROUTES.collectTeamList)
         .then(res => {
           commit('SET_COLLECT_TEAMS', res.data)
         })

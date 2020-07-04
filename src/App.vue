@@ -1,46 +1,47 @@
 <template>
   <div id="app">
     <div class="navbar2 container">
-      <router-link class="logo" to="/"><img class="img-fluid" src="@/assets/logo.png" alt="SSAPlace 로고"></router-link>
-      <div class="dropdown2 megamenu">
-        <button class="dropbtn col-6">게시판</button>
-        <button class="dropbtn col-6">프로젝트 멤버 모집</button>
-        <div class="dropdown-content">
-          <div class="row">
-            <div class="column">
-              <router-link :to="{ name: 'Boards', params: {board_name: 'ssafy'} }">싸피게시판</router-link>
-              <router-link :to="{ name: 'Boards', params: {board_name: 'free'} }">자유게시판</router-link>
-            </div>
-            <div class="column">
-              <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>
-              <router-link :to="{ name: 'FindTeam' }">PJT 팀 찾아요</router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-      <router-link class="two message" to="/"><i class="far fa-envelope"></i></router-link>
-
-      <div v-if="isLoggedIn" class="dropdown2 two">
-        <button class="dropbtn">{{ myaccount.username }} </button>
-        <div class="dropdown-content2">
-          <div class="row">
-            <div class="column2">
-              <div class="d-flex justify-content-between">
-                <i class="far fa-user my-auto ml-3"></i> 
-                <router-link class="profile-menu mr-3" :to="{ name: 'Profile', params: {user_id: myaccount.id} }">회원정보</router-link>
+      <div>
+        <router-link class="logo" to="/"><img class="img-fluid" src="@/assets/logo.png" alt="SSAPlace 로고"></router-link>
+        <div class="dropdown2 megamenu">
+          <button class="dropbtn col-6">게시판</button>
+          <button class="dropbtn col-6">프로젝트 멤버 모집</button>
+          <div class="dropdown-content">
+            <div class="row">
+              <div class="column">
+                <router-link :to="{ name: 'Boards', params: {board_name: 'ssafy'} }">싸피게시판</router-link>
+                <router-link :to="{ name: 'Boards', params: {board_name: 'free'} }">자유게시판</router-link>
               </div>
-              <div class="d-flex justify-content-between">
-                <i class="fas fa-power-off my-auto ml-3"></i>
-                <router-link class="profile-menu mr-3" :to="{ name: 'Logout' }"> 로그아웃</router-link>
+              <div class="column">
+                <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>
+                <router-link :to="{ name: 'FindTeam' }">PJT 팀 찾아요</router-link>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div v-else>
-        <router-link :to="{ name: 'Login' }">Login</router-link>
-      </div>
+        <router-link class="two message" to="/"><i class="far fa-envelope"></i></router-link>
 
+        <div v-if="isLoggedIn" class="dropdown2 two">
+          <button class="dropbtn" v-if="myaccount">{{ myaccount.username }} </button>
+          <div class="dropdown-content2">
+            <div class="row">
+              <div class="column2">
+                <div class="d-flex justify-content-between">
+                  <i class="far fa-user my-auto ml-3"></i> 
+                  <router-link class="profile-menu mr-3" :to="{ name: 'Profile', params: {user_id: myaccount.id} }">회원정보</router-link>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <i class="fas fa-power-off my-auto ml-3"></i>
+                  <router-link class="profile-menu mr-3" :to="{ name: 'Logout' }"> 로그아웃</router-link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-else>
+          <router-link :to="{ name: 'Login' }">Login</router-link>
+        </div>
+      </div>
     </div>
   <router-view class="container router-view"/>
 
@@ -65,11 +66,14 @@ export default {
     ...mapGetters(['isLoggedIn'])
   },
   methods: {
-    ...mapActions(['getMyAccount'])
+    ...mapActions(['getMyAccount', 'fetchUsers', 'fetchInterests', 'fetchLanguages'])
   },
   created() {
     if (this.isLoggedIn) {
       this.getMyAccount()
+      this.fetchUsers()
+      this.fetchInterests()
+      this.fetchLanguages()
     }
   }
 }
@@ -96,11 +100,11 @@ export default {
 }
 
 .megamenu {
-  width: 49.98%
+  width: 49.98%;
 }
 
 .two {
-  width: 16.66%
+  width: 16.66%;
 }
 
 /* Navbar container */
@@ -140,6 +144,11 @@ export default {
   font: inherit; /* Important for vertical align on mobile phones */
   margin: 0; /* Important for vertical align on mobile phones */
   /* width: 50%; */
+  
+}
+
+.dropdown2 {
+  margin-top: 4%;
 }
 
 .dropbtn:hover {
@@ -182,6 +191,7 @@ export default {
   display: none;
   position: absolute;
   background-color: white;
+  /* top: 14%; */
   width: 28%;
   left: 31%;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -206,8 +216,9 @@ export default {
   display: none;
   position: absolute;
   background-color: white;
-  width: 8%;
-  right: 21%;
+  /* top: 14%; */
+  width: 9%;
+  right: 20.8%;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
@@ -231,6 +242,10 @@ export default {
 
 .profile-menu {
   color: black;
+}
+
+.message {
+  margin-top: 4%;
 }
 
 .message:hover {
