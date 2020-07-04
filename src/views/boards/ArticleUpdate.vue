@@ -1,21 +1,34 @@
 <template>
-  <div class="my-3">
-    <div class="d-flex justify-content-start">
-      <router-link :to="{ name: 'Boards', params: { board_name: selectedArticle.articleData.boardName }}"><p class="boardname link-hover">{{ revisedBoardName }}</p></router-link>
-    </div>
-    <v-app>
-    <div class="title">
-      <input v-model="articleUpdateData.title" id="title" class="w-100 inputs" type="text" placeholder="제목을 입력해주세요 :)">
-    </div>
-    <div class="editor-page my-3">
-      <div id="summernote"></div>
-    </div>
-    <div class="d-flex justify-content-between">
-      <small class="goBack" @click="clickBack">뒤로가기</small>
-      <button type="button" class="btn btn-primary" @click="articleUpdateSave">수정하기</button>
-    </div>
-  </v-app>
-  </div>
+  <v-app>
+    <v-card>
+        <v-form
+          v-model="valid"
+          :lazy-validation="lazy"
+        >
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="articleUpdateData.title"
+                  color="blue-grey lighten-2"
+                  :rules="[v => !!v || '필수항목입니다.']"
+                  label="제목을 입력하세요 :)"
+                ></v-text-field>
+                </v-col>
+                <v-col cols="12" class="pt-0">
+                <div class="editor-page my-3">
+                  <div id="summernote"></div>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <small class="goBack" @click="clickBack">뒤로가기</small>
+                  <button type="button" class="btn btn-primary" @click="articleUpdateSave">수정하기</button>
+                </div>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+      </v-card>
+    </v-app>
 </template>
 
 <script>
@@ -66,8 +79,8 @@ export default {
 <style scoped>
 
 .btn {
-  color: black;
-  background-color: skyblue;
+  color: white;
+  background-color: #3596F4;
   border-style: none;
 }
 

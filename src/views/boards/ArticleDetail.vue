@@ -41,20 +41,26 @@
           </div>
 
           <!-- 댓글 수정란 -->
-          <div v-show="comment.id == commentUpdateData.commentId" class="input-group mx-1 row">
-            <textarea @keyup.enter="saveUpdateComment" v-model="commentUpdateData.body.content" type="content" class="col-xs-8 col-md-11" rows="2"></textarea>
-            <button @click="saveUpdateComment" class="input-group-append btn justify-content-center align-items-center col-xs-4 col-md-1 text-center">수정</button>
+          <div class="mx-1 my-3 d-flex justify-content-center">
+            <div v-show="comment.id === commentUpdateData.commentId" class="input-group row">
+              <textarea @keyup.enter="saveUpdateComment" v-model="commentUpdateData.body.content" type="content" class="col-xs-8 col-md-11" rows="2"></textarea>
+              <button @click="saveUpdateComment" class="input-group-append btn justify-content-center align-items-center col-xs-4 col-md-1 text-center">수정</button>
+            </div>
           </div>
           <!-- 댓글 내용 -->
-          <p v-show="comment.id != commentUpdateData.commentId">{{ comment.content }}</p>
-          <small class="comment-info">created {{ comment.created_at }} & updated {{ comment.updated_at }}</small>
-          <hr>
+          <div v-show="comment.id != commentUpdateData.commentId">
+            <p>{{ comment.content }}</p>
+            <small class="comment-info">created {{ comment.created_at }} & updated {{ comment.updated_at }}</small>
+            <hr>
+          </div>
         </div>
       </div>
-      <!-- 댓글 생성 --> 
-      <div class="input-group mx-1 row">
-        <textarea @keyup.enter="saveCreateComment" v-model="commentCreateData.content" class="col-xs-8 col-md-11" type="content" placeholder="댓글을 작성해주세요." rows="2" ></textarea>
-        <button class="input-group-append btn justify-content-center align-items-center col-xs-4 col-md-1 text-center" @click="saveCreateComment">작성</button>
+      <!-- 댓글 생성 -->
+      <div class="mx-1 d-flex justify-content-center">
+        <div class="input-group row">
+          <textarea @keyup.enter="saveCreateComment" v-model="commentCreateData.content" class="col-xs-8 col-md-11" type="content" placeholder="댓글을 작성해주세요." rows="2" ></textarea>
+          <button class="input-group-append btn justify-content-center align-items-center col-xs-4 col-md-1 text-center" @click="saveCreateComment">작성</button>
+        </div>
       </div>
     </div>  
   </div>
@@ -140,7 +146,7 @@ export default {
 
 <style scoped>
 .btn {
-  background-color:#6f8dbf;
+  background-color:#3596F4;
   outline: transparent;
   color: white;
   border: transparent;
