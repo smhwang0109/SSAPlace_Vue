@@ -55,7 +55,7 @@
               <span v-for="interest_id in team.interests" :key="interest_id"> {{ interests[interest_id-1]["interest"] }} /</span>
               <span v-for="language_id in team.front_language" :key="language_id"> {{ languages[language_id-1]["language"] }} /</span>
               <span v-for="language_id in team.back_language" :key="language_id"> {{ languages[language_id-1]["language"] }} /</span>
-              <br> 현재 구성원 {{ team.current_members }}명 / {{ team.residence }} / ~{{ team.created_at.slice(0,10) }}
+              <br> 현재 구성원 {{ team.current_members }}명 / {{ team.residence }} / ~ {{ team.created_at.slice(0,10) }}
             </p>
           </div>
           <div class="card-footer d-flex justify-content-between">

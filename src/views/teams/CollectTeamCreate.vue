@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable vue/no-use-v-if-with-v-for,vue/no-confusing-v-for-v-if -->
   <v-app>
     <v-card>
       <template v-slot:progress>
@@ -88,59 +89,85 @@
                 v-model="collectTeamData.collect_count"
                 color="blue-grey lighten-2"
                 type="number"
+                @input="checkCollectCount"
                 :rules="[
                   v => !!v || '필수항목입니다.',
-                  v => !!v && v > 0 && v < 6 || '1 이상 6이하로 입력해주세요!']"
+                  v => !!v && v > 0 && v < 6 || '1 이상 5이하로 입력해주세요!']"
                 label="모집 인원"
               ></v-text-field>
             </v-col>
           </v-row>
           <div
             v-for="collect_member in collectMemberList.slice(0, Number(collectTeamData.collect_count))"
-            :key="collect_member.id"
+            :key="collect_member.identy"
           >
             <v-divider></v-divider>
             <v-row>
+              <v-col
+                cols="12"
+                md="12"
+                class="d-flex justify-content-start"
+              >
+              <h5 class="font-weight-bold">
+                팀원 {{ collect_member.identy + 1 }}
+              </h5>
+              </v-col>
               <!-- role -->
-              <v-col cols="12">
-                <v-autocomplete
-                  v-model="collectTeamData.back_language"
-                  v-if="languages"
-                  :items="languages"
-                  chips
-                  hide-selected                
-                  color="blue-grey lighten-2"
-                  :rules="[v => !!v || '필수항목입니다.']"
-                  label="Back-end 사용 언어"
-                  item-text="language"
-                  item-value="id"
-                  multiple
-                  :search-input.sync="searchBack"
-                  @change="isBackNull()"
-                  @keypress.enter="isBackNull()"
-                >
-                  <template v-slot:selection="data">
-                    <v-chip
-                      v-bind="data.attrs"
-                      :input-value="data.selected"
-                      close
-                      @click="data.select"
-                      @click:close="remove(collectTeamData.back_language, data.item)"
-                    >
-                      {{ data.item.language }}
-                    </v-chip>
-                  </template>
-                  <template v-slot:item="data">
-                    <template v-if="typeof data.item !== 'object'">
-                      <v-list-item-content v-text="data.item"></v-list-item-content>
-                    </template>
-                    <template v-else>
-                      <v-list-item-content>
-                        <v-list-item-title v-text="data.item.language"></v-list-item-title>
-                      </v-list-item-content>
-                    </template>
-                  </template>
-                </v-autocomplete>
+              <v-col
+                cols="12"
+                md="12"
+                class="v-label theme--light d-flex justify-content-start"
+              >
+              역할
+              </v-col>
+              <v-col
+                cols="12"
+                md="12"
+                class="d-flex justify-content-around"
+                :rules="[v => !!v || '필수항목입니다.']"
+              >
+                <div>
+                  <input v-model="collect_member.role" type="radio" :id="`role-${collect_member.identy}-Front-end`" :name="`role-${collect_member.identy}`" value="Front-end" class="mr-2">
+                  <label :for="`role-${collect_member.identy}-Front-end`">Front-end</label>
+                </div>
+                <div>
+                  <input v-model="collect_member.role" type="radio" :id="`role-${collect_member.identy}-Back-end`" :name="`role-${collect_member.identy}`" value="Back-end" class="mr-2">
+                  <label :for="`role-${collect_member.identy}-Back-end`">Back-end</label>
+                </div>
+                <div>
+                  <input v-model="collect_member.role" type="radio" :id="`role-${collect_member.identy}-Full-stack`" :name="`role-${collect_member.identy}`" value="Full-stack" class="mr-2">
+                  <label :for="`role-${collect_member.identy}-Full-stack`">Full-stack</label>
+                </div>
+                <div>
+                  <input v-model="collect_member.role" type="radio" :id="`role-${collect_member.identy}-Full-stack`" :name="`role-${collect_member.identy}`" value="무관" class="mr-2" checked>
+                  <label :for="`role-${collect_member.identy}-Full-stack`">무관</label>
+                </div>
+              </v-col>
+              <!-- major -->
+              <v-col
+                cols="12"
+                md="12"
+                class="v-label theme--light d-flex justify-content-start"
+              >
+              전공 여부
+              </v-col>
+              <v-col
+                cols="12"
+                md="12"
+                class="d-flex justify-content-around"
+              >
+                <div>
+                  <input v-model="collect_member.major" type="radio" :id="`major-${collect_member.identy}-전공자`" :name="`major-${collect_member.identy}`" value="전공자" class="mr-2">
+                  <label :for="`major-${collect_member.identy}-전공자`">전공자</label>
+                </div>
+                <div>
+                  <input v-model="collect_member.major" type="radio" :id="`major-${collect_member.identy}-비전공자`" :name="`major-${collect_member.identy}`" value="비전공자" class="mr-2">
+                  <label :for="`major-${collect_member.identy}-비전공자`">비전공자</label>
+                </div>
+                <div>
+                  <input v-model="collect_member.major" type="radio" :id="`major-${collect_member.identy}-무관`" :name="`major-${collect_member.identy}`" value="무관" class="mr-2" checked>
+                  <label :for="`major-${collect_member.identy}-무관`">무관</label>
+                </div>
               </v-col>
               <!-- use_language -->
               <v-col cols="12">
@@ -156,9 +183,9 @@
                   item-text="language"
                   item-value="id"
                   multiple
-                  :search-input.sync="searchBack"
-                  @change="isBackNull()"
-                  @keypress.enter="isBackNull()"
+                  :search-input.sync="searchLanguage"
+                  @change="isLanguageNull()"
+                  @keypress.enter="isLanguageNull()"
                 >
                   <template v-slot:selection="data">
                     <v-chip
@@ -166,7 +193,7 @@
                       :input-value="data.selected"
                       close
                       @click="data.select"
-                      @click:close="remove(collectMemberData.use_language, data.item)"
+                      @click:close="remove(collect_member.use_language, data.item)"
                     >
                       {{ data.item.language }}
                     </v-chip>
@@ -186,20 +213,13 @@
               <v-col
                 cols="12"
                 md="12"
-                class="d-flex justify-content-around"
               >
-                <div>
-                  <input v-model="collect_member.major" type="radio" id="전공자" name="major" value="전공자" class="mr-2">
-                  <label for="전공자">전공자</label>
-                </div>
-                <div>
-                  <input v-model="collect_member.major" type="radio" id="비전공자" name="major" value="비전공자" class="mr-2">
-                  <label for="비전공자">비전공자</label>
-                </div>
-                <div>
-                  <input v-model="collect_member.major" type="radio" id="무관" name="major" value="무관" class="mr-2" checked>
-                  <label for="무관">무관</label>
-                </div>
+                <v-textarea
+                  v-model="collect_member.preferential"
+                  color="blue-grey lighten-2"
+                  label="우대 사항"
+                  placeholder="우대 사항이 없으시면 공란으로 두셔도 됩니다."
+                ></v-textarea>
               </v-col>
             </v-row>
           </div>
@@ -211,9 +231,9 @@
             :disabled="!valid"
             class="text-light"
             color="blue-grey darken-3"
-            @click="createTeam"
+            @click="createCollectTeam"
           >
-            팀 생성
+            모집 생성
           </v-btn>
         </v-card-actions>
       </v-form>
@@ -240,44 +260,44 @@ export default {
         collect_count: null,
       },
       collectMemberData0: {
-        id: 0,
-        role: null,
+        identy: 0,
+        role: "무관",
         use_language: null,
-        major: null,
+        major: "무관",
         preferential: null,
       },
        collectMemberData1: {
-        id: 1,
-        role: null,
+        identy: 1,
+        role: "무관",
         use_language: null,
-        major: null,
+        major: "무관",
         preferential: null,
       },
        collectMemberData2: {
-        id: 2,
-        role: null,
+        identy: 2,
+        role: "무관",
         use_language: null,
-        major: null,
+        major: "무관",
         preferential: null,
       },
        collectMemberData3: {
-        id: 3,
-        role: null,
+        identy: 3,
+        role: "무관",
         use_language: null,
-        major: null,
+        major: "무관",
         preferential: null,
       },
        collectMemberData4: {
-        id: 4,
-        role: null,
+        identy: 4,
+        role: "무관",
         use_language: null,
-        major: null,
+        major: "무관",
         preferential: null,
       },
       leader: null,
       valid: true,
       lazy: false,
-      searchBack: null,
+      searchLanguage: null,
     }
   },
   computed: {
@@ -293,14 +313,24 @@ export default {
       const index = data.indexOf(item.id)
       if (index >= 0) data.splice(index, 1)
     },
-    isBackNull() {
+    isLanguageNull() {
       this.$nextTick(() => {
-        this.searchBack = null
+        this.searchLanguage = null
       })
     },
-    createTeam() {
-      this.collectTeamData.current_members = this.collectTeamData.members.length
-      axios.post(SERVER.URL + SERVER.ROUTES.teamList, this.collectTeamData, this.config)
+    checkCollectCount() {
+      if (Number(this.collectTeamData.collect_count) > 5) {
+        this.collectTeamData.collect_count = 5
+      }
+      else if (Number(this.collectTeamData.collect_count) < 1) {
+        this.collectTeamData.collect_count = 0
+      }
+    },
+    createCollectTeam() {
+      let collectTeamList = []
+      collectTeamList.push(this.collectTeamData)
+      collectTeamList = collectTeamList.concat(this.collectMemberList.slice(0, Number(this.collectTeamData.collect_count)))
+      axios.post(SERVER.URL + `/teams/${this.$route.params['teamId']}/collect/`, collectTeamList, this.config)
         .then(() => {
           router.push({ name: 'Home'})
         })
