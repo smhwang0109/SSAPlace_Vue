@@ -92,6 +92,11 @@ Vue.use(VueRouter)
     component: TeamCreate
   },
   {
+    path: '/teams/collect',
+    name: 'CollectTeamList',
+    component: CollectTeamList
+  },
+  {
     path: '/teams/:teamId',
     name: 'TeamDetail',
     component: TeamDetail
@@ -105,11 +110,6 @@ Vue.use(VueRouter)
     path: '/teams/findMember',
     name: 'FindMember',
     component: FindMember
-  },
-  {
-    path: '/teams/collect',
-    name: 'CollectTeamList',
-    component: CollectTeamList
   },
 ]
 

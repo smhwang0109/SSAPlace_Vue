@@ -2,21 +2,28 @@
   <div>
     <h3>함께할 프로젝트 팀을 찾아볼까요?</h3>
     <div class="card-deck">
-      <div class="card" v-for="team in collecteams" :key="team.id">
-        <img src="https://picsum.photos/seed/picsum/400/120" class="card-img-top" alt="image" >
-        <div class="card-body">
-          <h5 class="card-title">금융 핀테크 웹사이트 개발</h5>
-          <span>by 올핀</span>
-          <p></p>
-          <h5 class="card-subtitle">프론트엔드 개발</h5>
-          <p class="card-text">모바일 플랫폼/초기 개발 단계/ 현재 구성원 2명/ 서울특별시 전체/ ~2020.08.20</p>
-        </div>
-        <div class="card-footer d-flex justify-content-between">
-          <small class="text-muted">2시간 전</small>
-          <i class="far fa-bookmark"></i>
-        </div>
+        <router-link :to="{ name: 'CollectTeamDetail', params: { collectTeamId: collectTeam.id } }" class="card" v-for="collectTeam in collectTeams" :key="`collectTeam-${collectTeam.id}`">
+          <img src="https://picsum.photos/seed/picsum/400/120" class="card-img-top" alt="image" >
+          <div class="card-body">
+            <h5 class="card-title">{{ collectTeam.title }}</h5>
+            <span>by {{ collectTeam.team.name }}</span>
+            <p></p>
+            <h5 class="card-subtitle mb-3">{{ collectTeam.oneline_description }}</h5>
+            <p class="card-text">
+              <span v-for="interest_id in collectTeam.team.interests" :key="`interest-${interest_id}`"> {{ interests[interest_id-1]["interest"] }} /</span>
+              <span><br> {{ collectTeam.collect_count }}명 모집 중 :</span>
+              <span v-for="collect_member in changeStringToObject(collectTeam.collect_members)" :key="`collectMember-${collect_member.pk}`"> {{ collect_member.fields.role }}({{ collect_member.fields.major }})</span>
+              <!-- <span v-for="language_id in collectTeam.collect_members" :key="language_id"> {{ languages[language_id-1]["language"] }} /</span>
+              <span v-for="language_id in team.back_language" :key="language_id"> {{ languages[language_id-1]["language"] }} /</span> -->
+              <br> 현재 구성원 {{ collectTeam.team.current_members }}명 / {{ collectTeam.team.residence }} / ~ {{ collectTeam.team.created_at.slice(0,10) }}
+            </p>
+          </div>
+          <div class="card-footer d-flex justify-content-between">
+            <small class="text-muted">{{ collectTeam.created_at }}</small>
+            <i class="far fa-bookmark"></i>
+          </div>
+        </router-link>
       </div>
-    </div>
   </div>
 </template>
 
@@ -24,12 +31,19 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: 'FindTeam',
+  name: 'CollectTeamList',
   computed: {
-    ...mapState(['collectTeams'])
+    ...mapState(['collectTeams', 'interests', 'languages'])
   },
   methods: {
-    ...mapActions(['fetchCollectTeams'])
+    ...mapActions(['fetchCollectTeams']),
+    changeStringToObject(S) {
+      const O = JSON.parse(S);
+      return O
+    },
+  },
+  created() {
+    this.fetchCollectTeams()
   }
 }
 </script>

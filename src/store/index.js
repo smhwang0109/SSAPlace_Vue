@@ -21,7 +21,7 @@ export default new Vuex.Store({
     // teams
     teams: null,
     team: null,
-    collecteams: null,
+    collectTeams: null,
     interests: null,
     languages: null,
 
@@ -65,7 +65,7 @@ export default new Vuex.Store({
       state.team = team
     },
     SET_COLLECT_TEAMS(state, teams) {
-      state.collecteams = teams
+      state.collectTeams = teams
     },
     SET_INTERESTS(state, interests) {
       state.interests = interests
