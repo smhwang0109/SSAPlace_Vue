@@ -37,12 +37,12 @@
         </div>
         <!-- 관심사/스킬 -->
         <div>
-          "내 관심사": {{ myaccount.interest_set }}
-          <h6>Core Skills</h6>
+          내 관심사: {{ myaccount.interest_set }}
+          <!-- <h6>Core Skills</h6>
           <span class="badge badge-pill badge-info mr-2">Python</span> 
           <span class="badge badge-pill badge-info mr-2">Django</span>
           <span class="badge badge-pill badge-info mr-2">JavaScript</span>
-          <span class="badge badge-pill badge-info">Vue.js</span>
+          <span class="badge badge-pill badge-info">Vue.js</span> -->
         </div>
       </div>
     </div>

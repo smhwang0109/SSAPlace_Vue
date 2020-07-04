@@ -28,7 +28,6 @@
       </v-img>
        <v-form
         v-model="valid"
-        :lazy-validation="lazy"
       >
       <v-container>
         <v-row>
@@ -163,7 +162,7 @@ export default {
   methods: {
     editProfile() {
       // this.teamData.currentMembers = this.teamData.members.length
-      axios.post(SERVER.URL + SERVER.ROUTES.userList + this.$route.params.user_id+ '/edit/', this.profileData, this.config)
+      axios.put(SERVER.URL + SERVER.ROUTES.userList + this.$route.params.user_id+ '/edit/', this.profileData, this.config)
         .then(() => {
           router.push({ name: 'Profile', params: {user_id: this.$route.params.user_id}})
         })
