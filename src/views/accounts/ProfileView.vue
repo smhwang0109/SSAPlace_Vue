@@ -55,6 +55,7 @@
         <h5 class="d-inline">우리 팀</h5>
         <router-link :to="{ name: 'TeamCreate' }" class="btn btn-secondary">팀 생성</router-link>
       </div>
+
       <div class="container-fluid mt-4">
         <div class="row">
             <div class="col-4 h-30 p-2" v-for="team in teams" :key="team.id">

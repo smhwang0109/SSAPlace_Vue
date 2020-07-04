@@ -14,7 +14,7 @@
               </div>
               <div class="column">
                 <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>
-                <router-link :to="{ name: 'FindTeam' }">PJT 팀 찾아요</router-link>
+                <router-link :to="{ name: 'CollectTeamList' }">PJT 팀 찾아요</router-link>
               </div>
             </div>
           </div>

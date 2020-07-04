@@ -25,7 +25,7 @@ import TeamCreate from '@/views/teams/TeamCreate'
 import TeamDetail from '@/views/teams/TeamDetail'
 import CollectTeamCreate from '@/views/teams/CollectTeamCreate'
 import FindMember from '@/views/teams/FindMember'
-import FindTeam from '@/views/teams/FindTeam'
+import CollectTeamList from '@/views/teams/CollectTeamList'
 
 // Profile
 import ProfileView from '@/views/accounts/ProfileView'
@@ -113,9 +113,9 @@ Vue.use(VueRouter)
     component: FindMember
   },
   {
-    path: '/teams/findTeam',
-    name: 'FindTeam',
-    component: FindTeam
+    path: '/teams/collect',
+    name: 'CollectTeamList',
+    component: CollectTeamList
   },
 ]
 
