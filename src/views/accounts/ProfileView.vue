@@ -30,7 +30,7 @@
         <div class="mb-3">
           <small v-if="myaccount.location"><i class="fas fa-map-marker-alt mb-3"></i> {{ myaccount.location}}</small>
           <small v-else><i class="fas fa-map-marker-alt mb-3"></i> 지역을 기입하지 않았습니다.</small>
-          <p v-if="myaccount.self_introduction" class="mb-0">
+          <p v-if="myaccount.self_introduction" class="mb-0 self-introduction">
             {{ myaccount.self_introduction}}
           </p>
           <p v-else>
@@ -135,5 +135,9 @@ export default {
 
 .card:hover {
   color:  #3596F4;
+}
+
+.self-introduction {
+  white-space: pre-wrap;
 }
 </style>
