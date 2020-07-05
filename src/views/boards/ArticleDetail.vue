@@ -3,11 +3,24 @@
 
     <div class="card-header">        
       <router-link :to="{ name: 'Boards', params: { board_name: articleData.boardName }}"><p class="boardname link-hover">{{ revisedBoardName }}</p></router-link>
-      <h4 class="mb-0">{{ selectedArticle.title }}</h4>        
+      <div class="d-flex justify-content-between">
+        <h4 class="mb-0">{{ selectedArticle.title }}</h4>        
+        <div class="mb-1">
+          <button type="button" class="btn hit-btn text-white p-1 pr-2 mr-2">
+            <i class="far fa-eye mx-2 mb-0"></i>
+            <span class="badge badge-light">{{ selectedArticle.hit }}</span>
+          </button>
+          <button type="button" class="btn like-btn text-white p-1 pr-2" @click="likeArticle">
+            <i v-if="isArticleLike" class="far fa-heart mx-2 mb-0"></i>
+            <i v-else class="fas fa-heart mx-2 mb-0"></i>
+            <span class="badge badge-light">{{ selectedArticle.like_users.length }}</span>
+          </button>
+        </div>
+      </div>
       <div class="d-flex justify-content-between pb-0 review-info">
         <small class="line-height">posted by <span class="link-hover" ><strong>{{ selectedArticle.author.username }}</strong></span> on {{selectedArticle.created_at}} & <span style="font-weight:700">edited at</span> {{selectedArticle.updated_at}}</small>
         <div v-if="selectedArticle.author.id === myaccount.id" class="btn-group dropleft">
-          <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+          <button type="button" class="btn btn-sm custom-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
           <div class="dropdown-menu">
             <router-link class="escape-router-link" :to="{ name: 'ArticleUpdate', params: { board_name: articleData.boardName, article_id: articleData.articleId }}"><p class="review-option give-highlight text-center border-bottom">수정</p></router-link>
             <p @click="confirmDeleteArticle" class="review-option give-highlight text-center">삭제</p>
@@ -19,7 +32,7 @@
     <div class="card-body">
       <p v-html="selectedArticle.content" class="card-text"></p>
       <div>
-        <span v-for="tag in selectedArticle.tags" :key="`tag_${tag.id}`" class="hashtag mr-2">#{{ tag.name }}</span>
+        <small v-for="tag in selectedArticle.tags" :key="`tag_${tag.id}`" class="hashtag mr-2">#{{ tag.name }}</small>
       </div>
     </div>
 
@@ -35,7 +48,7 @@
             
             <!-- 댓글 수정/삭제 드롭다운 -->
             <div v-if="comment.author.id === myaccount.id" class="btn-group dropleft comment-padding">
-              <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+              <button type="button" class="btn btn-sm custom-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
               <div class="dropdown-menu">
                 <p class="give-highlight text-center border-bottom" @click="initUpdateComment(comment)">수정</p>
                 <p class="give-highlight text-center" @click="confirmDeleteComment(comment.id)">삭제</p>
@@ -47,7 +60,7 @@
           <div class="mx-1 my-1 d-flex justify-content-center">
             <div v-show="comment.id === commentUpdateData.commentId" class="input-group row">
               <textarea @keyup.enter="saveUpdateComment" v-model="commentUpdateData.body.content" type="content" class="col-xs-8 col-md-11" rows="2"></textarea>
-              <button @click="saveUpdateComment" class="input-group-append btn justify-content-center align-items-center col-xs-4 col-md-1 text-center">수정</button>
+              <button @click="saveUpdateComment" class="input-group-append btn custom-btn justify-content-center align-items-center col-xs-4 col-md-1 text-center">수정</button>
             </div>
           </div>
           <!-- 댓글 내용 -->
@@ -62,7 +75,7 @@
       <div class="mx-1 d-flex justify-content-center">
         <div class="input-group row">
           <textarea @keyup.enter="saveCreateComment" v-model="commentCreateData.content" class="col-xs-8 col-md-11" type="content" placeholder="댓글을 작성해주세요." rows="2" ></textarea>
-          <button class="input-group-append btn justify-content-center align-items-center col-xs-4 col-md-1 text-center" @click="saveCreateComment">작성</button>
+          <button class="input-group-append btn custom-btn justify-content-center align-items-center col-xs-4 col-md-1 text-center" @click="saveCreateComment">작성</button>
         </div>
       </div>
     </div>  
@@ -70,7 +83,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   name: 'ArticleDetail',
   data() {
@@ -92,6 +105,7 @@ export default {
   },
   computed: {
     ...mapState(['selectedArticle', 'comments', 'myaccount']),
+    ...mapGetters(['isArticleLike']),
     revisedBoardName() {
       if (this.articleData.boardName === 'ssafy') {
         return '싸피 게시판'
@@ -103,7 +117,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['selectArticle', 'selectArticle', 'deleteArticle', 'fetchComments', 'createComment', 'updateComment', 'deleteComment']),
+    ...mapActions(['selectArticle', 'selectArticle', 'deleteArticle', 'fetchComments', 'createComment', 'updateComment', 'deleteComment', 'likeArticle']),
     confirmDeleteArticle() {
       if (confirm('게시물을 삭제하시겠습니까?') === true) {
         this.deleteArticle()
@@ -148,14 +162,14 @@ export default {
 </script>
 
 <style scoped>
-.btn {
+.custom-btn {
   background-color:#3596F4;
   outline: transparent;
   color: white;
   border: transparent;
 }
 
-.btn:hover{
+.custom-btn:hover{
   background-color: #345389;
   color: white;
 }
@@ -258,6 +272,25 @@ textarea {
 .hashtag {
   color: #3596F4;
   font-weight: bold;
+}
+
+.hit-btn {
+  background-color:#4aa5ff;
+  color: white;
+}
+
+.hit-btn:hover {
+  cursor: default;
+}
+
+.like-btn {
+  background-color:#ff5252;
+  color: white;
+  transition: color 0.2;
+}
+
+.like-btn:hover {
+  background-color:#e00000;
 }
 
 </style>
