@@ -82,7 +82,7 @@ export default {
 
 <style scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Nanum Gothic', 'Noto Sans KR', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -172,8 +172,7 @@ export default {
 
 /* Add a background color on hover */
 .column a:hover, .column2 a:hover {
-  background-color: cornflowerblue;
-  color: white;
+  color: #3596F4;
 }
 
 /* Clear floats after the columns */
@@ -231,8 +230,7 @@ export default {
 }
 
 .column2 div:hover {
-  background-color: cornflowerblue;
-  color: white;
+  color: #3596F4;
 }
 
 

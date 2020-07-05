@@ -27,6 +27,8 @@ export default new Vuex.Store({
 
     // boards
     articles: null,
+    ssafyArticles: null,
+    freeArticles: null,
     selectedArticle: null,
     comments: null,
   },
@@ -77,6 +79,12 @@ export default new Vuex.Store({
     // boards
     SET_ARTICLES(state, articles) {
       state.articles = articles
+    },
+    SET_SSAFY_ARTICLES(state, articles) {
+      state.ssafyArticles = articles
+    },
+    SET_FREE_ARTICLES(state, articles) {
+      state.freeArticles = articles
     },
     SET_SELECTED_ARTICLE(state, article) {
       state.selectedArticle = article
@@ -195,6 +203,12 @@ export default new Vuex.Store({
       axios.get(SERVER.URL + SERVER.ROUTES.boards + boardName + '/')
         .then(res => {
           commit('SET_ARTICLES', res.data)
+          if (boardName === 'ssafy') {
+            commit('SET_SSAFY_ARTICLES', res.data)
+          }
+          else {
+            commit('SET_FREE_ARTICLES', res.data)
+          }
         })
         .catch(err => console.log(err.response.data))
     },
