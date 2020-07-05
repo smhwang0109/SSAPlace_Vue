@@ -81,10 +81,10 @@ export default new Vuex.Store({
       state.articles = articles
     },
     SET_SSAFY_ARTICLES(state, articles) {
-      state.ssafyArticles = articles
+      state.ssafyArticles = articles.slice(0,4)
     },
     SET_FREE_ARTICLES(state, articles) {
-      state.freeArticles = articles
+      state.freeArticles = articles.slice(0,4)
     },
     SET_SELECTED_ARTICLE(state, article) {
       state.selectedArticle = article
