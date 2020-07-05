@@ -7,7 +7,6 @@
     </div>
 
      <!-- 게시판 미리 보기 -->
-    <h4 class="mt-5 mb-4">게시판</h4>
     <div class="row">
       <!-- 싸피게시판 -->
       <div class="col-6">
@@ -237,6 +236,10 @@ export default {
 /* 화살표 line-height */
 .arrow {
   line-height: 60px;
+}
+
+.arrow:hover {
+  color: #3596F4;
 }
 
 .banner {

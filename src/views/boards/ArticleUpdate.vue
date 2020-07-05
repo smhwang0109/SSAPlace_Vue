@@ -9,16 +9,44 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field
-                  v-model="articleUpdateData.title"
+                  v-model="articleUpdateData.body.title"
                   color="blue-grey lighten-2"
                   :rules="[v => !!v || '필수항목입니다.']"
                   label="제목을 입력하세요 :)"
                 ></v-text-field>
-                </v-col>
-                <v-col cols="12" class="pt-0">
+              </v-col>
+              <v-col cols="12" class="pt-0">
                 <div class="editor-page my-3">
                   <div id="summernote"></div>
                 </div>
+              </v-col>
+
+              <v-col cols="12">
+                <v-combobox
+                  v-model="articleUpdateData.tags"
+                  prepend=""
+                  :items="tags"
+                  :search-input.sync="search"
+                  hide-selected
+                  hint="최대 5개"
+                  label="태그를 추가하세요 :)"
+                  multiple
+                  persistent-hint
+                  small-chips
+                >
+                  <template v-slot:no-data>
+                    <v-list-item>
+                      <v-list-item-content>
+                        <v-list-item-title>
+                          No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </template>
+                </v-combobox>
+              </v-col>
+
+              <v-col cols=12>
                 <div class="d-flex justify-content-between">
                   <small class="goBack" @click="clickBack">뒤로가기</small>
                   <button type="button" class="btn btn-primary" @click="articleUpdateSave">수정하기</button>
@@ -38,13 +66,16 @@ export default {
   data() {
     return {
       articleUpdateData: {
-        title: null,
-        content: null
+        body: {
+          title: null,
+          content: null
+        },
+        tags: []
       }
     }
   },
   computed: {
-    ...mapState(['selectedArticle']),
+    ...mapState(['selectedArticle', 'tags']),
     revisedBoardName() {
       if (this.selectedArticle.articleData.boardName === 'ssafy') {
         return '싸피 게시판'
@@ -56,9 +87,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['selectArticle', 'updateArticle']),
+    ...mapActions(['selectArticle', 'updateArticle', 'fetchTags']),
     articleUpdateSave() {
-      this.articleUpdateData.content = window.$('#summernote').summernote('code')
+      this.articleUpdateData.body.content = window.$('#summernote').summernote('code')
       this.updateArticle(this.articleUpdateData)
     },
     clickBack() {
@@ -71,8 +102,14 @@ export default {
       height: 300,
     });
     window.$('#summernote').summernote('code', this.selectedArticle.content);
-    this.articleUpdateData.title = this.selectedArticle.title
+    this.articleUpdateData.body.title = this.selectedArticle.title;
+    this.selectedArticle.tags.forEach(tag => {
+      this.articleUpdateData.tags.push(tag.name)
+    });
   },
+  created() {
+    this.fetchTags()
+  }
 }
 </script>
 

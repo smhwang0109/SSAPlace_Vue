@@ -28,7 +28,7 @@
               <div class="column2">
                 <div class="d-flex justify-content-between">
                   <i class="far fa-user my-auto ml-3"></i> 
-                  <router-link class="profile-menu mr-3" :to="{ name: 'Profile', params: {user_id: myaccount.id} }">회원정보</router-link>
+                  <router-link class="profile-menu mr-3" :to="{ name: 'Profile', params: {userId: myaccount.id} }">회원정보</router-link>
                 </div>
                 <div class="d-flex justify-content-between">
                   <i class="fas fa-power-off my-auto ml-3"></i>
@@ -39,7 +39,7 @@
           </div>
         </div>
         <div v-else>
-          <router-link :to="{ name: 'Login' }">Login</router-link>
+          <router-link class="login" :to="{ name: 'Login' }">Login</router-link>
         </div>
       </div>
     </div>
@@ -82,7 +82,6 @@ export default {
 
 <style scoped>
 #app {
-  font-family: 'Nanum Gothic', 'Noto Sans KR', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -235,19 +234,19 @@ export default {
 
 
 .separate-menu:hover {
-  color: cornflowerblue;
+  color: #3596F4;
 }
 
 .profile-menu {
   color: black;
 }
 
-.message {
+.message, .login {
   margin-top: 4%;
 }
 
-.message:hover {
-  color: cornflowerblue;
+.message:hover, .login:hover {
+  color: #3596F4;
 }
 
 .btn {

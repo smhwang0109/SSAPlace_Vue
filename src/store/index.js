@@ -17,6 +17,7 @@ export default new Vuex.Store({
     // accounts
     myaccount: null,
     users: null,
+    profile: null,
 
     // teams
     teams: null,
@@ -58,6 +59,9 @@ export default new Vuex.Store({
     },
     SET_USERS(state, users) {
       state.users = users
+    },
+    SET_PROFILE(state, profile) {
+      state.profile = profile
     },
 
     // teams
@@ -161,12 +165,18 @@ export default new Vuex.Store({
         })
         .catch(err => console.log(err.response.data))
     },
+    getProfile({ commit }, userId) {
+      axios.get(SERVER.URL + SERVER.ROUTES.userList + userId + '/')
+        .then(res => {
+          commit('SET_USER', res.data)
+        })
+        .catch(err => console.log(err.response.data))
+    },
 
     // teams
     fetchTeams({ getters, commit }) {
       axios.get(SERVER.URL + SERVER.ROUTES.teamList, getters.config)
         .then(res => {
-          console.log('된다.')
           commit('SET_TEAMS', res.data)
         })
         .catch(err => console.log(err))
@@ -225,7 +235,7 @@ export default new Vuex.Store({
         .catch(err => console.log(err.response.data))
     },
     createArticle({ getters }, articleCreateData) {
-      axios.post(SERVER.URL + SERVER.ROUTES.boards + articleCreateData.boardName + '/', articleCreateData.body, getters.config)
+      axios.post(SERVER.URL + SERVER.ROUTES.boards + articleCreateData.boardName + '/', articleCreateData, getters.config)
         .then(res => {
           router.push({ name: 'ArticleDetail', params: { board_name: articleCreateData.boardName, article_id: res.data.id }})
         })

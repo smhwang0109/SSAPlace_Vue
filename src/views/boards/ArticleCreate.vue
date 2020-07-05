@@ -17,7 +17,7 @@
               </v-col>
               <v-col cols="2">
                 <div class="dropdown d-flex">
-                  <button class="btn dropdown-toggle mx-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn dropdown-toggle mx-2" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span v-if="selectedBoard">{{ selectedBoard }}</span>
                     <span v-else>게시판</span>
                   </button>
@@ -31,14 +31,10 @@
                 <div class="editor-page my-3">
                   <div id="summernote"></div>
                 </div>
-                <div class="d-flex justify-content-between">
-                  <small class="goBack" @click="clickBack">뒤로가기</small>
-                  <button type="button" class="btn btn-primary" @click="articleCreateSave">작성하기</button>
-                </div>
               </v-col>
               <v-col cols="12">
                 <v-combobox
-                  v-model="articleCreateData.body.tags"
+                  v-model="articleCreateData.tags"
                   :items="tags"
                   :search-input.sync="search"
                   hide-selected
@@ -58,6 +54,12 @@
                     </v-list-item>
                   </template>
                 </v-combobox>
+              </v-col>
+              <v-col cols=12>
+                <div class="d-flex justify-content-between">
+                  <small class="goBack" @click="clickBack">뒤로가기</small>
+                  <button type="button" class="btn btn-primary" @click="articleCreateSave">작성하기</button>
+                </div>
               </v-col>
             </v-row>
           </v-container>          
@@ -79,10 +81,9 @@ export default {
         body: {
           title: null,
           content: null,
-          tags: [],
         },
+        tags: [],
       },
-      tagstemp: ['tag1', 'tag2', '실험']
     }
   },
   computed: {

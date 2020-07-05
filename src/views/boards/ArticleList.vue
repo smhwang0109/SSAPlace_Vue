@@ -1,113 +1,76 @@
 <template>
   <v-app>
-    <!-- <div class="d-flex justify-content-between">
-      <h3 class="mb-0">{{ revisedBoardName }}</h3>
-      <div>
-        <label for="searchbar"><h5 class="mb-0"><i class="fas fa-search"></i></h5></label>
-        <input id="searchbar" class="border rounded ml-2 mr-3 h-100" type="text">
-        <router-link :to="{ name: 'ArticleCreate', params: { board_name: boardName} }">
-          <button type="button" class="btn btn-primary">새 글쓰기</button>
-        </router-link>
-      </div>
-    </div> -->
-    <!-- <hr> -->
-    <!-- <v-row v-if="articles" align="center py-0"> -->
-      <v-card
-        class="mx-auto w-100"
-        tile
-        v-if="articles"
+    <v-card
+      class="mx-auto w-100"
+      tile
+      v-if="articles"
+    >
+      <v-img
+        height="125"
+        :src="require(`@/assets/${boardName}_board_banner.jpg`)"
       >
-        <v-img
-          height="125"
-          :src="require(`@/assets/${boardName}_board_banner.jpg`)"
-        >
-          <v-row>
-            <v-row
-              class="pa-4"
-              align="center"
-              justify="center"
-            >
-              <v-col class="text-center">
-                <h3 class="headline text-light">{{ boardHeader.title }}</h3>
-                <span class="grey--text text--lighten-1">{{ boardHeader.description }}</span>
-              </v-col>
-            </v-row>
+        <v-row>
+          <v-row
+            class="pa-4"
+            align="center"
+            justify="center"
+          >
+            <v-col class="text-center">
+              <h3 class="headline text-light">{{ boardHeader.title }}</h3>
+              <span class="grey--text text--lighten-1">{{ boardHeader.description }}</span>
+            </v-col>
           </v-row>
-        </v-img>
+        </v-row>
+      </v-img>
 
-        <div class="board-tools border-bottom row mx-0 px-1">
-          <div class="col-6">
-            <div class="d-flex justify-content-start align-items-center">
-              <label for="searchbar"><h4 class="mb-0"><i class="fas fa-search mb-0"></i></h4></label>
-              <input type="text" class="form-control ml-2 rounded border w-100" id="searchbar">
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="d-flex justify-content-end align-items-center">
-              <router-link :to="{ name: 'ArticleCreate', params: { board_name: boardName} }">
-                <button type="button" class="btn btn-primary">새 글쓰기</button>
-              </router-link>
-            </div>
+      <div class="board-tools border-bottom row mx-0 px-1">
+        <div class="col-6">
+          <div class="d-flex justify-content-start align-items-center">
+            <label for="searchbar"><h4 class="mb-0"><i class="fas fa-search mb-0"></i></h4></label>
+            <input type="text" class="form-control ml-2 rounded border w-100" id="searchbar">
           </div>
         </div>
+        <div class="col-6">
+          <div class="d-flex justify-content-end align-items-center">
+            <router-link :to="{ name: 'ArticleCreate', params: { board_name: boardName} }">
+              <button type="button" class="btn btn-primary">새 글쓰기</button>
+            </router-link>
+          </div>
+        </div>
+      </div>
 
-        <v-list
-          class="py-0"
-        >
-          <v-list-item-group color="primary">
-            <v-list-item
-              v-for="article in paginatedData"
-              :key="`article_${article.id}`"
-              class="row px-3 mx-0 border-bottom"
-              @click="selectArticle(article.id)"
-            >
-              <div class="col-6 d-flex flex-column justify-content-center align-items-start">
-                <h4>{{ article.title }}</h4>
-                <div>
-                  <span class="text-secondary mr-2">#tag1</span>
-                  <span class="text-secondary mr-2">#tag2</span>
-                  <span class="text-secondary mr-2">#tag3</span>
-                  <span class="text-secondary mr-2">#tag4</span>
-                  <span class="text-secondary mr-2">#tag5</span>
-                </div>
+      <v-list
+        class="py-0"
+      >
+        <v-list-item-group color="primary">
+          <v-list-item
+            v-for="article in paginatedData"
+            :key="`article_${article.id}`"
+            class="row px-3 mx-0 border-bottom"
+            @click="selectArticle(article.id)"
+          >
+            <div class="col-6 d-flex flex-column justify-content-center align-items-start">
+              <h4>{{ article.title }}</h4>
+              <div>
+                <span v-for="tag in article.tags" :key="`tag_${tag.id}`" class="mr-2 hashtag">#{{ tag.name }}</span>
               </div>
-              <div class="offset-2 col-4 d-flex justify-content-around align-items-center">
-                <h5 class="mb-0"><span class="badge badge-secondary mb-0">{{ article.author.username }}</span></h5>
-                <h5 class="mb-0"><span class="badge badge-light mb-0">{{ article.created_at }}</span></h5>
-                <h5 class="mb-0"><span class="badge badge-primary mb-0">{{ article.hit }}</span></h5>
-              </div>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-      </v-card>
-    <!-- </v-row> -->
+            </div>
+            <div class="offset-2 col-4 d-flex justify-content-around align-items-center">
+              <h5 class="mb-0"><span class="badge badge-secondary mb-0">{{ article.author.username }}</span></h5>
+              <h5 class="mb-0"><span class="badge badge-light mb-0">{{ article.created_at }}</span></h5>
+              <h5 class="mb-0"><span class="badge badge-primary mb-0">{{ article.hit }}</span></h5>
+            </div>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-card>
     <div>
-      <!-- <table class="table mb-5" v-if="articles">
-        <thead>
-          <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Username</th>
-            <th scope="col">Hit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="article in paginatedData" :key="`article_${article.id}`">
-            <td data-label="Title"><router-link :to="{ name: 'ArticleDetail', params: { article_id: article.id, board_name: boardName }}">{{ article.title }}</router-link></td>
-            <td data-label="Author">{{ article.author.username }}</td>
-            <td data-label="Hit">{{ article.hit }}</td>
-          </tr>
-        </tbody>
-      </table> -->
       <div class="btn-cover" v-if="paginatedData">
         <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">이전</button>
         <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
         <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">다음</button>
       </div>
-      <!-- <div v-else class="mt-5 text-center">
-        <h3> 게시판에 글을 작성해주세요. </h3>
-      </div> -->
     </div>
-
   </v-app>
 </template>
 
@@ -311,6 +274,11 @@ table{
 
 .board-tools {
   background-color: rgb(240, 240, 240);
+}
+
+.hashtag {
+  color: #3596F4;
+  font-weight: bold;
 }
 
 </style>

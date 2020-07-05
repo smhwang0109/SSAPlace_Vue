@@ -266,28 +266,28 @@ export default {
         major: "무관",
         preferential: null,
       },
-       collectMemberData1: {
+      collectMemberData1: {
         identy: 1,
         role: "무관",
         use_language: null,
         major: "무관",
         preferential: null,
       },
-       collectMemberData2: {
+      collectMemberData2: {
         identy: 2,
         role: "무관",
         use_language: null,
         major: "무관",
         preferential: null,
       },
-       collectMemberData3: {
+      collectMemberData3: {
         identy: 3,
         role: "무관",
         use_language: null,
         major: "무관",
         preferential: null,
       },
-       collectMemberData4: {
+      collectMemberData4: {
         identy: 4,
         role: "무관",
         use_language: null,

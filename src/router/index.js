@@ -59,12 +59,12 @@ Vue.use(VueRouter)
   // Accounts
   // Profile - will change to userId after the design is done
   {
-    path: '/accounts/:user_id',
+    path: '/accounts/:userId',
     name: 'Profile',
     component: ProfileView
   },
   {
-    path: '/accounts/:user_id/edit',
+    path: '/accounts/:userId/edit',
     name: 'ProfileEdit',
     component: ProfileEditView
   },

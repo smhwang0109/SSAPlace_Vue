@@ -272,7 +272,7 @@
           <v-spacer></v-spacer>
           <v-btn
             :disabled="!valid"
-            class="text-light"
+            class="text-light button"
             color="blue-grey darken-3"
             @click="createTeam"
           >
@@ -401,4 +401,7 @@ export default {
 /* .v-label {
   left: -10px;
 } */
+.button {
+  background-color: #3596F4;
+}
 </style>

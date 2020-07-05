@@ -60,20 +60,24 @@ export default {
   border-radius: 0;
 }
 
+#password, #username {
+  font-family: Avenir;
+}
+
 .btn {
-  background-color:#6f8dbf;
+  background-color: #3596F4;
   outline: transparent;
   color: white;
   border: transparent;
 }
 
 .btn:hover{
-  background-color: #345389;
+  background-color: #3596F4;
   color: white;
 }
 
 .signup-btn {
-  color: #345389;
+  color: black;
   font-weight: 700;
 }
 

@@ -9,7 +9,6 @@ export default {
       // accounts
       myaccount: '/accounts/myaccount/',
       userList: '/accounts/',
-      // profile: 'accounts/',
 
       // teams
       teamList: '/teams/',

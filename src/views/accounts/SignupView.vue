@@ -61,12 +61,16 @@ export default {
 }
 
 .btn {
-  background-color:#6f8dbf;
+  background-color:#3596F4;
   outline: transparent;
   color: white;
   border: transparent;
 }
 .btn:hover{
-  background-color: #345389;
+  background-color: #3596F4;
+}
+
+#password1, #password2 {
+  font-family: Avenir;
 }
 </style>

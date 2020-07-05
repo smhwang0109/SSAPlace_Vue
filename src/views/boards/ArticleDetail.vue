@@ -18,6 +18,9 @@
 
     <div class="card-body">
       <p v-html="selectedArticle.content" class="card-text"></p>
+      <div>
+        <span v-for="tag in selectedArticle.tags" :key="`tag_${tag.id}`" class="hashtag mr-2">#{{ tag.name }}</span>
+      </div>
     </div>
 
     <div class="card-footer text-muted">
@@ -251,4 +254,10 @@ textarea {
   background-color: white;
   border: 1px solid black;
 }
+
+.hashtag {
+  color: #3596F4;
+  font-weight: bold;
+}
+
 </style>

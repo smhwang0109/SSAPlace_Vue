@@ -132,10 +132,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import axios from 'axios'
 import router from '@/router'
 import SERVER from '@/api/drf'
+
 export default {
   name: 'ProfileEdit',
   data() {
@@ -150,24 +151,37 @@ export default {
         homepage: null,
         self_introduction: null,
         interests: null,
-        front_language: null,
-        back_language: null
-        
-      }
+        languages: null,
+      },
+      userId : this.$route.params.userId
     }
   },
   computed: {
+    ...mapState(['myaccount', 'user', 'interests', 'languages']),
     ...mapGetters(['config'])
   },
   methods: {
     editProfile() {
-      // this.teamData.currentMembers = this.teamData.members.length
-      axios.put(SERVER.URL + SERVER.ROUTES.userList + this.$route.params.user_id+ '/edit/', this.profileData, this.config)
+      axios.put(SERVER.URL + SERVER.ROUTES.userList + this.userId + '/', this.profileData, this.config)
         .then(() => {
-          router.push({ name: 'Profile', params: {user_id: this.$route.params.user_id}})
+          router.push({ name: 'Profile', params: {userId: this.userId}})
         })
         .catch(err => console.log(err.response.data))
     },
+  },
+  created() {
+    if (this.myaccount) {
+      this.profileData.name = this.myaccount.name,
+      this.profileData.residence = this.myaccount.residence,
+      this.profileData.email = this.myaccount.email,
+      this.profileData.github = this.myaccount.github,
+      this.profileData.facebook = this.myaccount.facebook,
+      this.profileData.instagram = this.myaccount.instagram,
+      this.profileData.homepage = this.myaccount.homepage,
+      this.profileData.self_introduction = this.myaccount.self_introduction,
+      this.profileData.interests = this.myaccount.interests,
+      this.profileData.languages = this.myaccount.languages
+    }
   }
 }
 </script>
