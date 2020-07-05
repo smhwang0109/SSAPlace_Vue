@@ -36,6 +36,29 @@
                   <button type="button" class="btn btn-primary" @click="articleCreateSave">작성하기</button>
                 </div>
               </v-col>
+              <v-col cols="12">
+                <v-combobox
+                  v-model="articleCreateData.body.tags"
+                  :items="tags"
+                  :search-input.sync="search"
+                  hide-selected
+                  hint="최대 5개"
+                  label="태그를 추가하세요 :)"
+                  multiple
+                  persistent-hint
+                  small-chips
+                >
+                  <template v-slot:no-data>
+                    <v-list-item>
+                      <v-list-item-content>
+                        <v-list-item-title>
+                          No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </template>
+                </v-combobox>
+              </v-col>
             </v-row>
           </v-container>          
         </v-form>
@@ -44,7 +67,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+
 export default {
   name: 'ArticleCreate',
   data() {
@@ -54,14 +78,18 @@ export default {
         boardName: null,
         body: {
           title: null,
-          content: null
+          content: null,
+          tags: [],
         },
       },
-      
+      tagstemp: ['tag1', 'tag2', '실험']
     }
   },
+  computed: {
+    ...mapState(['tags'])
+  },
   methods: {
-    ...mapActions(['createArticle']),
+    ...mapActions(['createArticle', 'fetchTags']),
     selectBoard(boardName) {
       this.articleCreateData.boardName = boardName
       if (boardName === 'ssafy') {
@@ -80,6 +108,7 @@ export default {
   },
   created() {
     this.selectBoard(this.$route.params.board_name)
+    this.fetchTags()
   },
   mounted() {
     window.$('#summernote').summernote({

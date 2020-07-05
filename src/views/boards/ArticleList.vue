@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="d-flex justify-content-between">
+  <v-app>
+    <!-- <div class="d-flex justify-content-between">
       <h3 class="mb-0">{{ revisedBoardName }}</h3>
       <div>
         <label for="searchbar"><h5 class="mb-0"><i class="fas fa-search"></i></h5></label>
@@ -9,13 +9,48 @@
           <button type="button" class="btn btn-primary">새 글쓰기</button>
         </router-link>
       </div>
-    </div>
-    <hr>
-    <v-row v-if="articles" align="center py-0">
+    </div> -->
+    <!-- <hr> -->
+    <!-- <v-row v-if="articles" align="center py-0"> -->
       <v-card
         class="mx-auto w-100"
         tile
+        v-if="articles"
       >
+        <v-img
+          height="125"
+          :src="require(`@/assets/${boardName}_board_banner.jpg`)"
+        >
+          <v-row>
+            <v-row
+              class="pa-4"
+              align="center"
+              justify="center"
+            >
+              <v-col class="text-center">
+                <h3 class="headline text-light">{{ boardHeader.title }}</h3>
+                <span class="grey--text text--lighten-1">{{ boardHeader.description }}</span>
+              </v-col>
+            </v-row>
+          </v-row>
+        </v-img>
+
+        <div class="board-tools border-bottom row mx-0 px-1">
+          <div class="col-6">
+            <div class="d-flex justify-content-start align-items-center">
+              <label for="searchbar"><h4 class="mb-0"><i class="fas fa-search mb-0"></i></h4></label>
+              <input type="text" class="form-control ml-2 rounded border w-100" id="searchbar">
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-flex justify-content-end align-items-center">
+              <router-link :to="{ name: 'ArticleCreate', params: { board_name: boardName} }">
+                <button type="button" class="btn btn-primary">새 글쓰기</button>
+              </router-link>
+            </div>
+          </div>
+        </div>
+
         <v-list
           class="py-0"
         >
@@ -26,18 +61,26 @@
               class="row px-3 mx-0 border-bottom"
               @click="selectArticle(article.id)"
             >
-              <h5 class="col-9 mb-0 text-left">{{ article.title }}</h5>
-              <div class="col-2">
-                <p class="mb-0">{{ article.author.username }}</p>
+              <div class="col-6 d-flex flex-column justify-content-center align-items-start">
+                <h4>{{ article.title }}</h4>
+                <div>
+                  <span class="text-secondary mr-2">#tag1</span>
+                  <span class="text-secondary mr-2">#tag2</span>
+                  <span class="text-secondary mr-2">#tag3</span>
+                  <span class="text-secondary mr-2">#tag4</span>
+                  <span class="text-secondary mr-2">#tag5</span>
+                </div>
               </div>
-              <div class="col-1">
-                <span class="badge badge-pill badge-primary">{{ article.hit }}</span>
+              <div class="offset-2 col-4 d-flex justify-content-around align-items-center">
+                <h5 class="mb-0"><span class="badge badge-secondary mb-0">{{ article.author.username }}</span></h5>
+                <h5 class="mb-0"><span class="badge badge-light mb-0">{{ article.created_at }}</span></h5>
+                <h5 class="mb-0"><span class="badge badge-primary mb-0">{{ article.hit }}</span></h5>
               </div>
             </v-list-item>
           </v-list-item-group>
         </v-list>
       </v-card>
-    </v-row>
+    <!-- </v-row> -->
     <div>
       <!-- <table class="table mb-5" v-if="articles">
         <thead>
@@ -65,7 +108,7 @@
       </div> -->
     </div>
 
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -90,17 +133,23 @@ export default {
     },
     selectArticle(articleId) {
       router.push({ name: 'ArticleDetail', params: { board_name: this.boardName, article_id: articleId }})
-    }
+    },
   },
   computed: {
     ...mapState(['articles']),
-    revisedBoardName() {
+    boardHeader() {
       if (this.boardName === 'ssafy') {
-        return '싸피 게시판'
+        return {
+          title: '싸피 게시판',
+          description: '싸피와 관련된 글을 작성해보세요 :)',
+        }
       } else if (this.boardName === 'free') {
-        return '자유 게시판'
+        return {
+          title: '자유 게시판',
+          description: '자유로운 주제로 글을 작성해보세요 :)',
+        }
       } else {
-        return 'Undefined'
+        return false
       }
     },
     pageCount() {
@@ -258,6 +307,10 @@ table{
 .table thead th {
   border-top-style: none;
   
+}
+
+.board-tools {
+  background-color: rgb(240, 240, 240);
 }
 
 </style>
