@@ -8,8 +8,8 @@
         <div class="d-flex justify-content-between">
           <!-- <h3 class="">{{ myaccount.username }}</h3> -->
           <!-- 프로필 수정 버튼 -->
-          <!-- <router-link :to="{ name: 'ProfileEdit', params: {user_id: myaccount.id} }" class="btn btn-secondary">프로필 수정</router-link> -->
           <h3 v-if="myaccount">{{ myaccount.username }}</h3>
+          <router-link :to="{ name: 'ProfileEdit', params: {user_id: myaccount.id} }" class="btn btn-secondary">프로필 수정</router-link>
 
           <div>
             <!-- github 주소 -->
@@ -30,7 +30,7 @@
         <div class="mb-3">
           <small v-if="myaccount.location"><i class="fas fa-map-marker-alt mb-3"></i> {{ myaccount.location}}</small>
           <small v-else><i class="fas fa-map-marker-alt mb-3"></i> 지역을 기입하지 않았습니다.</small>
-          <p v-if="myaccount.self_introduction" class="mb-0">
+          <p v-if="myaccount.self_introduction" class="mb-0 self-introduction">
             {{ myaccount.self_introduction}}
           </p>
           <p v-else>
@@ -53,7 +53,7 @@
       <!-- 본인이 소속된 팀 -->
       <div class="d-flex justify-content-between">
         <h5 class="d-inline">우리 팀</h5>
-        <router-link :to="{ name: 'TeamCreate' }" class="btn btn-secondary">팀 생성</router-link>
+        <router-link :to="{ name: 'TeamCreate' }" class="btn">팀 생성</router-link>
       </div>
 
       <div class="container-fluid mt-4">
@@ -133,7 +133,16 @@ export default {
   /* border-style:none; */
 }
 
-.card:hover {
+/* .card:hover {
   color:  #3596F4;
+} */
+
+.self-introduction {
+  white-space: pre-wrap;
+}
+
+.btn {
+  background-color: #3596F4;
+  color: white;
 }
 </style>
