@@ -29,6 +29,7 @@ export default new Vuex.Store({
     articles: null,
     selectedArticle: null,
     comments: null,
+    tags: null
   },
   getters: {
     isLoggedIn: state => !!state.authToken,
@@ -83,6 +84,9 @@ export default new Vuex.Store({
     },
     SET_COMMENTS(state, comments) {
       state.comments = comments
+    },
+    SET_TAGS(state, tags) {
+      state.tags = tags
     }
   },
   actions: {
@@ -272,6 +276,13 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+    },
+    fetchTags({ commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTES.boards + 'tags/')
+        .then(res => {
+          commit('SET_TAGS', res.data)
+        })
+        .catch(err => console.log(err.repsonse.data))
     }
   },
   modules: {
