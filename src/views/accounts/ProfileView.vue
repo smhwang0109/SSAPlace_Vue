@@ -39,11 +39,11 @@
         <!-- 관심사/스킬 -->
         <div class="mb-3" v-if="profile.interests.length">
           <h6><strong>관심사</strong></h6>
-          <span class="badge badge-pill mr-2" v-for="interest_id in profile.interests" :key="`interest-${interest_id}`">{{ interests[interest_id-1]["interest"] }}</span>
+          <span class="badge badge-pill mr-2 interests" v-for="interest_id in profile.interests" :key="`interest-${interest_id}`">{{ interests[interest_id-1]["interest"] }}</span>
         </div>
         <div v-if="profile.languages.length">
           <h6><strong>Core Skills</strong></h6>
-          <span class="badge badge-pill mr-2" v-for="language_id in profile.languages" :key="`language-${language_id}`">{{ languages[language_id-1]["language"] }}</span>
+          <span class="badge badge-pill mr-2 languages" v-for="language_id in profile.languages" :key="`language-${language_id}`">{{ languages[language_id-1]["language"] }}</span>
         </div>
       </div>
       
@@ -66,8 +66,8 @@
                   <div class="team-title">
                     <h5 class="card-title mb-0"><strong>{{ team.name }}</strong></h5>
                   </div>
-                  <div class="mt-auto">
-                    <span class="badge badge-pill mr-2 interests" v-for="interest_id in team.interests" :key="interest_id"> {{ interests[interest_id-1]["interest"] }} </span>
+                  <div class="mt-auto team-interests">
+                    <span class="badge badge-pill mr-2" v-for="interest_id in team.interests" :key="interest_id"> {{ interests[interest_id-1]["interest"] }} </span>
                   </div>
                 </div>
                 <hr class="m-2">
@@ -209,8 +209,20 @@ export default {
   -webkit-box-orient: vertical;
 }
 
+.team-interests {
+  overflow: hidden;
+  white-space: normal;
+  height: 1.1 em;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; 
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+}
+
 .interests {
   background-color: #3596F4;
   color: white;
 }
+
 </style>
