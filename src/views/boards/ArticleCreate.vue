@@ -6,8 +6,8 @@
           :lazy-validation="lazy"
         >
           <v-container>
-            <v-row>
-              <v-col cols="10">
+            <v-row class="row">
+              <v-col cols=12 class="col-md-10">
                 <v-text-field
                   v-model="articleCreateData.body.title"
                   color="blue-grey lighten-2"
@@ -15,8 +15,8 @@
                   label="제목을 입력하세요 :)"
                 ></v-text-field>
               </v-col>
-              <v-col cols="2">
-                <div class="dropdown d-flex">
+              <v-col cols=12 class="col-md-2 d-flex justify-content-end align-items-center py-0">
+                <div class="dropdown">
                   <button class="btn dropdown-toggle mx-2" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span v-if="selectedBoard">{{ selectedBoard }}</span>
                     <span v-else>게시판</span>
@@ -142,7 +142,7 @@ export default {
 }
 
 .dropdown-menu {
-  min-width: 7.75rem;
+  min-width: 7.25rem;
 }
 
 .dropdown-menu a {
