@@ -31,7 +31,7 @@
                 @click="selectSSAFYArticle(article.id)"
               >
                 <div class="d-flex justify-content-between align-items-center w-100">
-                  <h6 class="mb-0 font-weight-bold">{{ article.title }}</h6>
+                  <h6 class="mb-0 font-weight-bold article-title">{{ article.title }}</h6>
                   <div class="d-flex justify-content-between align-items-center">
                     <p class="mb-0">{{ article.author.username }}</p>
                     <div class="ml-2 ssafy-color">
@@ -68,7 +68,7 @@
                 @click="selectFreeArticle(article.id)"
               >
                 <div class="d-flex justify-content-between align-items-center w-100">
-                  <h6 class="mb-0 font-weight-bold">{{ article.title }}</h6>
+                  <h6 class="mb-0 font-weight-bold article-title">{{ article.title }}</h6>
                   <div class="d-flex justify-content-between align-items-center">
                     <p class="mb-0  font-weight-bold">{{ article.author.username }}</p>
                   </div>
@@ -274,7 +274,7 @@ export default {
 .headers {
   border-bottom: 1px solid rgba(0, 0, 0, 0.075);
   padding: 5px;
-  background-color: rgba(0, 0, 0, 0.06);
+  background-color: rgba(0, 0, 0, 0.055);
 }
 
 .card-title {
@@ -372,5 +372,16 @@ export default {
 .like-btn {
   background-color:#ff5252;
   color: white;
+}
+
+.article-title {
+  overflow: hidden;
+  white-space: normal;
+  word-wrap: break-word;
+  margin: 0;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; 
+  -webkit-box-orient: vertical;
 }
 </style>
