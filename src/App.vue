@@ -28,7 +28,7 @@
               <div class="column2">
                 <div class="d-flex justify-content-between">
                   <i class="far fa-user my-auto ml-3"></i> 
-                  <router-link class="profile-menu mr-3" :to="{ name: 'Profile', params: {userId: myaccount.id} }">회원정보</router-link>
+                  <router-link v-if="myaccount" class="profile-menu mr-3" :to="{ name: 'Profile', params: {userId: myaccount.id} }">회원정보</router-link>
                 </div>
                 <div class="d-flex justify-content-between">
                   <i class="fas fa-power-off my-auto ml-3"></i>

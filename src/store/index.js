@@ -153,7 +153,7 @@ export default new Vuex.Store({
 
     // accounts
     getMyAccount({ getters, commit }) {
-      axios.get(SERVER.URL + SERVER.ROUTES.myaccount, getters.config)
+      axios.post(SERVER.URL + SERVER.ROUTES.myaccount, null, getters.config)
         .then(res => {
           commit('SET_MY_ACCOUNT', res.data)
         })
@@ -169,7 +169,7 @@ export default new Vuex.Store({
     getProfile({ commit }, userId) {
       axios.get(SERVER.URL + SERVER.ROUTES.userList + userId + '/')
         .then(res => {
-          commit('SET_USER', res.data)
+          commit('SET_PROFILE', res.data)
         })
         .catch(err => console.log(err.response.data))
     },
