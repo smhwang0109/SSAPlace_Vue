@@ -119,6 +119,9 @@ export default {
 </script>
 
 <style scoped>
+p {
+  text-align: left;
+}
 
 .btn {
   color: white;

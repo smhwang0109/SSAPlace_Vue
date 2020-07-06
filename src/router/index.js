@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import vueMoment from 'vue-moment'
 
 // Home (main page)
 import Home from '@/views/Home.vue'
@@ -31,7 +32,10 @@ import CollectTeamList from '@/views/teams/CollectTeamList'
 import ProfileView from '@/views/accounts/ProfileView'
 import ProfileEditView from '@/views/accounts/ProfileEditView'
 
+
+
 Vue.use(VueRouter)
+Vue.use(vueMoment)
 
   const routes = [
   {
@@ -57,7 +61,6 @@ Vue.use(VueRouter)
   },
 
   // Accounts
-  // Profile - will change to userId after the design is done
   {
     path: '/accounts/:userId',
     name: 'Profile',

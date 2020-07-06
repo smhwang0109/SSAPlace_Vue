@@ -67,6 +67,8 @@
                 <span class="badge">{{ article.like_users.length }}</span>
               </button>
             </div>
+
+            
           </v-list-item>
         </v-list-item-group>
       </v-list>
