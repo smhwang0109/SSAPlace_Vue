@@ -12,17 +12,17 @@
           <h3 v-if="profile">{{ profile.user.username }}</h3>
           <div>
             <!-- github 주소 -->
-            <a v-if="profile.github" :href="profile.github" target="_blank"><i class="fab fa-github mr-3 sites"></i> </a>
+            <a v-if="profile.github" :href="profile.github" target="_blank"><i class="fab fa-github mr-3 sites fa-2x"></i> </a>
             <!-- 포트폴리오/기술블로그 주소 -->
-            <a v-if="profile.homepage" :href="profile.homepage" target="_blank"><i class="fas fa-link mr-3 sites"></i> </a>
+            <a v-if="profile.homepage" :href="profile.homepage" target="_blank"><i class="fas fa-link mr-3 sites fa-2x"></i> </a>
             <!-- 링크드인 주소 -->
-            <a v-if="profile.linkedin" :href="profile.linkedin" target="_blank"><i class="fab fa-linkedin mr-3 sites"></i> </a>
+            <a v-if="profile.linkedin" :href="profile.linkedin" target="_blank"><i class="fab fa-linkedin mr-3 sites fa-2x"></i> </a>
             <!-- 페이스북 주소 -->
-            <a v-if="profile.facebook" :href="profile.facebook" target="_blank"><i class="fab fa-facebook mr-3 sites"></i> </a>
+            <a v-if="profile.facebook" :href="profile.facebook" target="_blank"><i class="fab fa-facebook mr-3 sites fa-2x"></i> </a>
             <!-- 인스타그램 주소 -->
-            <a v-if="profile.instagram" :href="profile.instagram" target="_blank"><i class="fab fa-instagram mr-3 sites"></i> </a>
+            <a v-if="profile.instagram" :href="profile.instagram" target="_blank"><i class="fab fa-instagram mr-3 sites fa-2x"></i> </a>
             <!-- 이메일 -->
-           <a v-if="profile.email" :href="`mailto:` + profile.email" target="_blank"> <i class="far fa-envelope sites"></i></a>
+           <a v-if="profile.email" :href="`mailto:` + profile.email" target="_blank"> <i class="far fa-envelope sites fa-2x"></i></a>
           </div>
         </div>
         <!-- 소개 및 거주지역 -->
@@ -56,7 +56,7 @@
         <router-link :to="{ name: 'TeamCreate' }" class="btn">팀 생성</router-link>
       </div>
 
-      <div class="container-fluid mt-4">
+      <div class="container-fluid mt-4" v-if="teams.length">
         <div class="row">
             <div class="col-4 h-30 p-2" v-for="team in teams" :key="team.id">
               <router-link :to="{ name: 'TeamDetail', params: { teamId: team.id } }" class="card h-100" >
@@ -66,8 +66,8 @@
                   <div class="team-title">
                     <h5 class="card-title mb-0"><strong>{{ team.name }}</strong></h5>
                   </div>
-                  <div class="interests mt-auto">
-                    <span class="badge badge-pill mr-2" v-for="interest_id in team.interests" :key="interest_id"> {{ interests[interest_id-1]["interest"] }} </span>
+                  <div class="mt-auto">
+                    <span class="badge badge-pill mr-2 interests" v-for="interest_id in team.interests" :key="interest_id"> {{ interests[interest_id-1]["interest"] }} </span>
                   </div>
                 </div>
                 <hr class="m-2">
@@ -75,12 +75,14 @@
                   <p class="card-subtitle mt-0" style="color:#979797">{{ team.oneline_description }}</p>
                 </div>
                 <hr class="m-2">
-                <p class="card-text mb-0">
+                <div class="card-text languages">
                   <span class="m-0 font-weight-bold">사용 언어</span><br>
-                  <span class="badge badge-pill mr-2" v-for="language_id in team.front_language" :key="language_id"> {{ languages[language_id-1]["language"] }} </span>
-                  <span class="badge badge-pill mr-2" v-for="language_id in team.back_language" :key="language_id"> {{ languages[language_id-1]["language"] }} </span>
+                  <div class="language-list">
+                    <span class="badge badge-pill mr-2" v-for="language_id in team.front_language" :key="language_id"> {{ languages[language_id-1]["language"] }} </span>
+                    <span class="badge badge-pill mr-2" v-for="language_id in team.back_language" :key="language_id"> {{ languages[language_id-1]["language"] }} </span>
+                  </div>
                   <!-- <br> 현재 구성원 {{ team.current_members }}명 / {{ team.residence }} / ~{{ team.created_at.slice(0,10) }} -->
-                </p>
+                </div>
                 <hr class="m-2">
                 <p class="mt-auto mb-0">
                   팀원 {{ team.current_members }}명 / {{ team.residence }}
@@ -98,6 +100,9 @@
             </router-link>
             </div>
         </div>
+      </div>
+      <div v-else class="d-flex justify-content-center mt-3">
+        <h4>아직 소속된 팀이 없습니다. 팀을 생성해주세요.</h4>
       </div>
     </div>
   </div>
@@ -133,8 +138,12 @@ export default {
   border-radius: 50%;
   max-width: 100%;
 }
+.sites, .sites:link {
+  color: black;
+}
 .sites:hover {
   cursor: pointer;
+  color: #3596F4;
 }
 /* .card-deck {
   display: grid;
@@ -187,8 +196,21 @@ export default {
   margin: 0;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3; 
+  -webkit-line-clamp: 2; 
   -webkit-box-orient: vertical;
 }
 
+.language-list {
+  overflow: hidden;
+  white-space: normal;
+  height: 1.1 em;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; 
+  -webkit-box-orient: vertical;
+}
+
+.interests {
+  background-color: #3596F4;
+  color: white;
+}
 </style>
