@@ -89,10 +89,10 @@ export default new Vuex.Store({
       state.articles = articles
     },
     SET_SSAFY_ARTICLES(state, articles) {
-      state.ssafyArticles = articles.slice(0,4)
+      state.ssafyArticles = articles.slice(0,5)
     },
     SET_FREE_ARTICLES(state, articles) {
-      state.freeArticles = articles.slice(0,4)
+      state.freeArticles = articles.slice(0,5)
     },
     SET_SELECTED_ARTICLE(state, article) {
       state.selectedArticle = article
@@ -238,8 +238,11 @@ export default new Vuex.Store({
           if (boardName === 'ssafy') {
             commit('SET_SSAFY_ARTICLES', res.data)
           }
-          else {
+          else if (boardName === 'free') {
             commit('SET_FREE_ARTICLES', res.data)
+          }
+          else {
+            return false
           }
         })
         .catch(err => console.log(err.response.data))
