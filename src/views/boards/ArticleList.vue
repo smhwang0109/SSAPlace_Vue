@@ -50,9 +50,9 @@
             @click="selectArticle(article.id)"
           >
             <div class="col-md-6 col-xs-12 d-flex flex-column justify-content-center align-items-start">
-              <h4>{{ article.title }}</h4>
-              <div>
-                <small v-for="tag in article.tags" :key="`tag_${tag.id}`" class="mr-2 hashtag">#{{ tag.name }}</small>
+              <h5 class="mb-0 article-title">{{ article.title }}</h5>
+              <div class="mt-1">
+                <small v-for="tag in article.tags" :key="`tag_${tag.id}`" class="mr-2 hashtag mb-0">#{{ tag.name }}</small>
               </div>
             </div>
             <div class="col-md-6 col-xs-12 d-flex justify-content-end align-items-center">
@@ -303,6 +303,16 @@ table{
 .like-btn {
   background-color:#ff5252;
   color: white;
+}
+
+.article-title {
+  overflow: hidden;
+  white-space: normal;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; 
+  -webkit-box-orient: vertical;
 }
 
 </style>
