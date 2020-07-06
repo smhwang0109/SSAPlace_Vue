@@ -28,23 +28,28 @@
       </v-img>
        <v-form
         v-model="valid"
+        :lazy-validation="lazy"
       >
       <v-container>
         <v-row>
+          <v-col class="text-right" cols="12">
+            <small class="text-muted">*은 필수항목입니다.</small>
+          </v-col>
           <v-col
               cols="6"
+              :rules="[v => !!v || '필수항목입니다.']"
             >
               <v-text-field
                 v-model="profileData.name"
                 color="blue-grey lighten-2"
-                label="이름"
+                label="이름 *"
               ></v-text-field>
             </v-col>
           <v-col
               cols="6"
             >
               <v-text-field
-                v-model="profileData.residence"
+                v-model="profileData.location"
                 color="blue-grey lighten-2"
                 label="거주지"
               ></v-text-field>
@@ -54,7 +59,7 @@
               md="12"
             >
               <v-textarea
-                v-model="profileData.description"
+                v-model="profileData.self_introduction"
                 color="blue-grey lighten-2"
                 label="자기소개"
               ></v-textarea>
@@ -108,10 +113,92 @@
               cols="6"
             >
               <v-text-field
-                v-model="profileData.emaie"
+                v-model="profileData.email"
                 color="blue-grey lighten-2"
                 label="이메일 주소"
               ></v-text-field>
+          </v-col>
+          <!-- interests -->
+          <v-col cols="12">
+            <v-autocomplete
+              v-model="profileData.interests"
+              v-if="interests"
+              :items="interests"
+              chips
+              hide-selected
+              color="blue-grey lighten-2"
+              :rules="[v => !!v || '필수항목입니다.']"
+              label="관심 분야 (정해진 분야가 없으면 '미정'을 입력해주세요!) *"
+              item-text="interest"
+              item-value="id"
+              multiple
+              :search-input.sync="searchInterest"
+              @change="isInterestNull()"
+              @keypress.enter="isInterestNull()"
+            >
+              <template v-slot:selection="data">
+                <v-chip
+                  v-bind="data.attrs"
+                  :input-value="data.selected"
+                  close
+                  @click="data.select"
+                  @click:close="remove(teamData.interests, data.item)"
+                >
+                  {{ data.item.interest }}
+                </v-chip>
+              </template>
+              <template v-slot:item="data">
+                <template v-if="typeof data.item !== 'object'">
+                  <v-list-item-content v-text="data.item"></v-list-item-content>
+                </template>
+                <template v-else>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="data.item.interest"></v-list-item-title>
+                  </v-list-item-content>
+                </template>
+              </template>
+            </v-autocomplete>
+          </v-col>
+          <!-- languages -->
+          <v-col cols="12">
+            <v-autocomplete
+              v-model="profileData.languages"
+              v-if="languages"
+              :items="languages"
+              chips
+              hide-selected
+              color="blue-grey lighten-2"
+              :rules="[v => !!v || '필수항목입니다.']"
+              label="사용 언어 *"
+              item-text="language"
+              item-value="id"
+              multiple
+              :search-input.sync="searchLanguage"
+              @change="isLanguageNull()"
+              @keypress.enter="isLanguageNull()"
+            >
+              <template v-slot:selection="data">
+                <v-chip
+                  v-bind="data.attrs"
+                  :input-value="data.selected"
+                  close
+                  @click="data.select"
+                  @click:close="remove(teamData.language, data.item)"
+                >
+                  {{ data.item.language }}
+                </v-chip>
+              </template>
+              <template v-slot:item="data">
+                <template v-if="typeof data.item !== 'object'">
+                  <v-list-item-content v-text="data.item"></v-list-item-content>
+                </template>
+                <template v-else>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="data.item.language"></v-list-item-title>
+                  </v-list-item-content>
+                </template>
+              </template>
+            </v-autocomplete>
           </v-col>
         </v-row>
       </v-container>
@@ -132,7 +219,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import axios from 'axios'
 import router from '@/router'
 import SERVER from '@/api/drf'
@@ -143,7 +230,7 @@ export default {
     return {
       profileData: {
         name: null,
-        residence: null,
+        location: null,
         email: null,
         github: null,
         facebook: null,
@@ -153,14 +240,19 @@ export default {
         interests: null,
         languages: null,
       },
+      searchInterest: null,
+      searchLanguage: null,
+      valid: true,
+      lazy: false,
       userId : this.$route.params.userId
     }
   },
   computed: {
-    ...mapState(['myaccount', 'user', 'interests', 'languages']),
+    ...mapState(['myaccount', 'profile', 'interests', 'languages']),
     ...mapGetters(['config'])
   },
   methods: {
+    ...mapActions(['getProfile']),
     editProfile() {
       axios.put(SERVER.URL + SERVER.ROUTES.userList + this.userId + '/', this.profileData, this.config)
         .then(() => {
@@ -168,19 +260,40 @@ export default {
         })
         .catch(err => console.log(err.response.data))
     },
+    remove (data, item) {
+      const index = data.indexOf(item.id)
+      if (index >= 0) data.splice(index, 1)
+    },
+    isInterestNull() {
+      this.$nextTick(() => {
+        this.searchInterest = null
+      })
+    },
+    isLanguageNull() {
+      this.$nextTick(() => {
+        this.searchLanguage = null
+      })
+    },
   },
   created() {
-    if (this.myaccount) {
-      this.profileData.name = this.myaccount.name,
-      this.profileData.residence = this.myaccount.residence,
-      this.profileData.email = this.myaccount.email,
-      this.profileData.github = this.myaccount.github,
-      this.profileData.facebook = this.myaccount.facebook,
-      this.profileData.instagram = this.myaccount.instagram,
-      this.profileData.homepage = this.myaccount.homepage,
-      this.profileData.self_introduction = this.myaccount.self_introduction,
-      this.profileData.interests = this.myaccount.interests,
-      this.profileData.languages = this.myaccount.languages
+    this.getProfile(this.userId)
+  },
+  mounted() {
+    if (this.profile) {
+      this.profileData.name = this.profile.name
+      this.profileData.location = this.profile.location
+      this.profileData.email = this.profile.email
+      this.profileData.github = this.profile.github
+      this.profileData.facebook = this.profile.facebook
+      this.profileData.instagram = this.profile.instagram
+      this.profileData.homepage = this.profile.homepage
+      this.profileData.self_introduction = this.profile.self_introduction
+      if (this.profile.interests.length) {
+        this.profileData.interests = this.profile.interests
+      }
+      if (this.profile.languages.length) {
+        this.profileData.languages = this.profile.languages
+      }
     }
   }
 }
