@@ -76,14 +76,13 @@ export default {
 
 <style scoped>
 .header {
-  height: 33%;
+  height: 40%;
 }
 
 .card-title{
   overflow: hidden;
   white-space: normal;
-  line-height: 1.0;
-  height: 2.0em;
+  line-height: 1.1;
   word-wrap: break-word;
   margin: 0;
   text-overflow: ellipsis;

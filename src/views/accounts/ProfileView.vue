@@ -1,14 +1,15 @@
 <template>
   <div v-if="profile" class="container mt-3">
     <div class="header row mb-3">
-      <div class="col-4">
+      <div class="col-4 col-lg-3 d-flex flex-column align-items-center">
         <img class="profile-image" src="../../assets/img_avatar2.png">
+        <div class="d-flex justify-content-center mt-auto">
+          <router-link :to="{ name: 'ProfileEdit', params: {user_id: profile.user.id} }" class="btn btn-sm update">프로필 수정</router-link>
+        </div>
       </div>
-      <div class="col-8 mt-5 pl-5">
+      <div class="col-8 col-lg-9 pl-5 mt-0 ">
         <div class="d-flex justify-content-between">
-          <!-- 프로필 수정 버튼 -->
           <h3 v-if="profile">{{ profile.user.username }}</h3>
-          <router-link :to="{ name: 'ProfileEdit', params: {user_id: profile.user.id} }" class="btn btn-secondary">프로필 수정</router-link>
           <div>
             <!-- github 주소 -->
             <a v-if="profile.github" :href="profile.github" target="_blank"><i class="fab fa-github mr-3 sites"></i> </a>
@@ -28,7 +29,7 @@
         <div class="mb-3">
           <small v-if="profile.location"><i class="fas fa-map-marker-alt mb-3"></i> {{ profile.location}}</small>
           <small v-else><i class="fas fa-map-marker-alt mb-3"></i> 지역을 기입하지 않았습니다.</small>
-          <p v-if="profile" class="mb-0 self-introduction">
+          <p v-if="profile.self_introduction" class="mb-0 self-introduction">
             {{ profile.self_introduction}}
           </p>
           <p v-else>
@@ -36,15 +37,16 @@
           </p>
         </div>
         <!-- 관심사/스킬 -->
-        <div class="mb-3">
-          <h6>관심사</h6>
-          <span class="badge badge-pill badge-info mr-2" v-for="interest_id in profile.interests" :key="`interest-${interest_id}`">{{ interests[interest_id-1]["interest"] }}</span>
+        <div class="mb-3" v-if="profile.interests.length">
+          <h6><strong>관심사</strong></h6>
+          <span class="badge badge-pill mr-2" v-for="interest_id in profile.interests" :key="`interest-${interest_id}`">{{ interests[interest_id-1]["interest"] }}</span>
         </div>
-        <div>
-          <h6>Core Skills</h6>
-          <span class="badge badge-pill badge-info mr-2" v-for="language_id in profile.languages" :key="`language-${language_id}`">{{ languages[language_id-1]["language"] }}</span>
+        <div v-if="profile.languages.length">
+          <h6><strong>Core Skills</strong></h6>
+          <span class="badge badge-pill mr-2" v-for="language_id in profile.languages" :key="`language-${language_id}`">{{ languages[language_id-1]["language"] }}</span>
         </div>
       </div>
+      
     </div>
     <hr>
     <div class="content">
@@ -60,23 +62,38 @@
               <router-link :to="{ name: 'TeamDetail', params: { teamId: team.id } }" class="card h-100" >
               <img src="https://picsum.photos/seed/picsum/400/120" class="card-img-top" alt="image" >
               <div class="card-body d-flex flex-column">
-                <h5 class="card-title">{{ team.name }}</h5>
-                <span>by {{ team.leader.username }}</span>
-                <p></p>
-                <h5 class="card-subtitle mb-3">{{ team.oneline_description }}</h5>
-                <p class="card-text">
-                  <span v-for="interest_id in team.interests" :key="interest_id"> {{ interests[interest_id-1]["interest"] }} /</span>
-                  <span v-for="language_id in team.front_language" :key="language_id"> {{ languages[language_id-1]["language"] }} /</span>
-                  <span v-for="language_id in team.back_language" :key="language_id"> {{ languages[language_id-1]["language"] }} /</span>
+                <div class="team-header d-flex flex-column">
+                  <div class="team-title">
+                    <h5 class="card-title mb-0"><strong>{{ team.name }}</strong></h5>
+                  </div>
+                  <div class="interests mt-auto">
+                    <span class="badge badge-pill mr-2" v-for="interest_id in team.interests" :key="interest_id"> {{ interests[interest_id-1]["interest"] }} </span>
+                  </div>
+                </div>
+                <hr class="m-2">
+                <div class="description">
+                  <p class="card-subtitle mt-0" style="color:#979797">{{ team.oneline_description }}</p>
+                </div>
+                <hr class="m-2">
+                <p class="card-text mb-0">
+                  <span class="m-0 font-weight-bold">사용 언어</span><br>
+                  <span class="badge badge-pill mr-2" v-for="language_id in team.front_language" :key="language_id"> {{ languages[language_id-1]["language"] }} </span>
+                  <span class="badge badge-pill mr-2" v-for="language_id in team.back_language" :key="language_id"> {{ languages[language_id-1]["language"] }} </span>
                   <!-- <br> 현재 구성원 {{ team.current_members }}명 / {{ team.residence }} / ~{{ team.created_at.slice(0,10) }} -->
                 </p>
-                <p class="mt-auto">
-                  현재 팀원 {{ team.current_members }}명 / {{ team.residence }} / ~{{ team.created_at.slice(0,10) }}
+                <hr class="m-2">
+                <p class="mt-auto mb-0">
+                  팀원 {{ team.current_members }}명 / {{ team.residence }}
+                  <!-- 팀원 {{ team.current_members }}명 / {{ team.residence }} / ~{{ team.created_at.slice(0,10) }} -->
                 </p>
               </div>
-              <div class="card-footer d-flex justify-content-between">
-                <small class="text-muted">{{ team.created_at }}</small>
-                <i class="far fa-bookmark"></i>
+              <div class="card-footer">
+                <div class="d-flex justify-content-between">
+                  <small class="text-muted">팀장 {{ team.leader.username }}</small>
+                  <!-- <small class="text-muted">{{ team.created_at }}</small> -->
+                  <i class="far fa-bookmark"></i>
+                </div>
+                
               </div>
             </router-link>
             </div>
@@ -127,7 +144,8 @@ export default {
 .card {
   text-decoration: none;
   color: black;
-  height: 380px;
+  height: 420px;
+  text-align: center;
   /* border-style:none; */
 }
 /* .card:hover {
@@ -140,4 +158,37 @@ export default {
   background-color: #3596F4;
   color: white;
 }
+
+.badge {
+  border: 1px solid #3596F4;
+}
+
+.team-header {
+  height: 30%;
+}
+
+.team-title {
+  overflow: hidden;
+  white-space: normal;
+  line-height: 1.1;
+  word-wrap: break-word;
+  margin: 0;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
+}
+.description {
+  overflow: hidden;
+  white-space: normal;
+  line-height: 1.0;
+  height: 20%;
+  word-wrap: break-word;
+  margin: 0;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; 
+  -webkit-box-orient: vertical;
+}
+
 </style>
