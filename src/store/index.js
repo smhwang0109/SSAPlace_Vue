@@ -39,7 +39,8 @@ export default new Vuex.Store({
     config: state => ({ headers: { Authorization: `Token ${state.authToken}`}}),
     
     // boards
-    articleData: state => state.selectedArticle.articleData
+    articleData: state => state.selectedArticle.articleData,
+    isArticleLike: state => state.selectedArticle.like_users.includes(state.myaccount.id)
   },
   mutations: {
     SET_INIT(state) {
@@ -307,6 +308,30 @@ export default new Vuex.Store({
           commit('SET_TAGS', res.data)
         })
         .catch(err => console.log(err.repsonse.data))
+    },
+    likeArticle({ state, getters }) {
+      axios.post(SERVER.URL + SERVER.ROUTES.boards + getters.articleData.boardName + '/' + getters.articleData.articleId + '/like/', null, getters.config)
+        .then(() => {
+          if (getters.isArticleLike) {
+            const idx = state.selectedArticle.like_users.indexOf(state.myaccount.id)
+            state.selectedArticle.like_users.splice(idx, 1)
+          } else {
+            state.selectedArticle.like_users.push(state.myaccount.id)
+          }
+        })
+        .catch(err => console.log(err.repsonse.data))
+    },
+    searchArticle({ commit, dispatch }, searchData) {
+      if (searchData.keyword) {
+        axios.get(SERVER.URL + SERVER.ROUTES.boards + searchData.boardName + '/search/' + searchData.keyword + '/')
+          .then(res => {
+            console.log(res.data)
+            commit('SET_ARTICLES', res.data)
+          })
+          .catch(err => console.log(err.repsonse.data))
+      } else {
+        dispatch('fetchArticles', searchData.boardName)
+      }
     }
   },
   modules: {

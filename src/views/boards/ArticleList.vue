@@ -27,13 +27,13 @@
         <div class="col-6">
           <div class="d-flex justify-content-start align-items-center">
             <label for="searchbar"><h4 class="mb-0"><i class="fas fa-search mb-0"></i></h4></label>
-            <input type="text" class="form-control ml-2 rounded border w-100" id="searchbar">
+            <input @keyup.enter="searchArticle(searchData)" v-model="searchData.keyword" type="text" class="form-control ml-2 rounded border w-100" id="searchbar" placeholder="제목, 내용, 태그로 게시물을 검색해보세요 :)">
           </div>
         </div>
         <div class="col-6">
           <div class="d-flex justify-content-end align-items-center">
             <router-link :to="{ name: 'ArticleCreate', params: { board_name: boardName} }">
-              <button type="button" class="btn btn-primary">새 글쓰기</button>
+              <button type="button" class="btn btn-primary custom-btn">새 글쓰기</button>
             </router-link>
           </div>
         </div>
@@ -52,13 +52,20 @@
             <div class="col-6 d-flex flex-column justify-content-center align-items-start">
               <h4>{{ article.title }}</h4>
               <div>
-                <span v-for="tag in article.tags" :key="`tag_${tag.id}`" class="mr-2 hashtag">#{{ tag.name }}</span>
+                <small v-for="tag in article.tags" :key="`tag_${tag.id}`" class="mr-2 hashtag">#{{ tag.name }}</small>
               </div>
             </div>
-            <div class="offset-2 col-4 d-flex justify-content-around align-items-center">
-              <h5 class="mb-0"><span class="badge badge-secondary mb-0">{{ article.author.username }}</span></h5>
-              <h5 class="mb-0"><span class="badge badge-light mb-0">{{ article.created_at }}</span></h5>
-              <h5 class="mb-0"><span class="badge badge-primary mb-0">{{ article.hit }}</span></h5>
+            <div class="col-6 d-flex justify-content-end align-items-center">
+              <p class="mb-0 mr-4 font-weight-bold">{{ article.author.username }}</p>
+              <p class="mb-0 mr-4 font-weight-bold">{{ article.created_at }}</p>
+              <button type="button" class="btn hit-btn text-white p-1 pr-2 mr-3">
+                <i class="far fa-eye mx-2 mb-0"></i>
+                <span class="badge badge-light">{{ article.hit }}</span>
+              </button>
+              <button type="button" class="btn like-btn text-white p-1 pr-2">
+                <i class="far fa-heart mx-2 mb-0"></i>
+                <span class="badge badge-light">{{ article.like_users.length }}</span>
+              </button>
             </div>
           </v-list-item>
         </v-list-item-group>
@@ -66,9 +73,9 @@
     </v-card>
     <div>
       <div class="btn-cover" v-if="paginatedData">
-        <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">이전</button>
+        <button :disabled="pageNum === 0" @click="prevPage" class="page-btn custom-btn">이전</button>
         <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
-        <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">다음</button>
+        <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn custom-btn">다음</button>
       </div>
     </div>
   </v-app>
@@ -84,10 +91,14 @@ export default {
       boardName: this.$route.params.board_name,
       pageNum: 0,
       pageSize: 10,
+      searchData: {
+        boardName: this.$route.params.board_name,
+        keyword: null
+      }
     }
   },
   methods: {
-    ...mapActions(['fetchArticles']),
+    ...mapActions(['fetchArticles', 'searchArticle']),
     nextPage() {
       this.pageNum += 1;
     },
@@ -139,6 +150,7 @@ export default {
   beforeRouteUpdate (to, from, next) {
     this.fetchArticles(to.params.board_name)
     this.boardName = to.params.board_name
+    this.searchData.boardName = to.params.board_name
     next();
   },
 }
@@ -246,7 +258,7 @@ table th {
   cursor: pointer;
 }
 
-button {
+.custom-btn {
   background-color:#3596F4;
   outline: transparent;
   color: white;
@@ -254,7 +266,7 @@ button {
   border-radius: 5px;
 }
 
-button:hover{
+.custom-btn:hover{
   background-color: #345389;
 }
 
@@ -279,6 +291,16 @@ table{
 .hashtag {
   color: #3596F4;
   font-weight: bold;
+}
+
+.hit-btn {
+  background-color:#4aa5ff;
+  color: white;
+}
+
+.like-btn {
+  background-color:#ff5252;
+  color: white;
 }
 
 </style>
