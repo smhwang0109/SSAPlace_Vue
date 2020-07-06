@@ -29,9 +29,7 @@
         <div class="mb-3">
           <small v-if="profile.location"><i class="fas fa-map-marker-alt mb-3"></i> {{ profile.location}}</small>
           <small v-else><i class="fas fa-map-marker-alt mb-3"></i> 지역을 기입하지 않았습니다.</small>
-          <p v-if="profile.self_introduction" class="mb-0 self-introduction">
-            {{ profile.self_introduction}}
-          </p>
+          <p v-if="profile.self_introduction" class="mb-0 self-introduction">{{ profile.self_introduction}}</p>
           <p v-else>
             안녕하세요. 저는 {{ profile.user.username }} 입니다.<br>
           </p>
@@ -209,6 +207,10 @@ export default {
   -webkit-box-orient: vertical;
 }
 
+.interests {
+  background-color: #3596F4;
+  color: white;
+}
 .team-interests {
   overflow: hidden;
   white-space: normal;
@@ -219,10 +221,4 @@ export default {
   word-wrap: break-word;
   text-overflow: ellipsis;
 }
-
-.interests {
-  background-color: #3596F4;
-  color: white;
-}
-
 </style>

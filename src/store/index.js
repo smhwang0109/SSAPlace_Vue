@@ -11,6 +11,24 @@ import Swal from 'sweetalert2'
 
 Vue.use(Vuex)
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  onOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+ })
+
+//  const swal = Swal.mixin({
+//   position: 'center',
+//   showConfirmButton: true,
+//   // title: this.errorMessages,
+// })
+
 export default new Vuex.Store({
   state: {
     // rest-auth
@@ -20,6 +38,7 @@ export default new Vuex.Store({
     myaccount: null,
     users: null,
     profile: null,
+    errorMessages:null,
 
     // teams
     teams: null,
@@ -106,39 +125,63 @@ export default new Vuex.Store({
   },
   actions: {
     // rest-auth
-    postAuthData({ commit, dispatch }, info) {
+    // 회원가입
+    postAuthData1({ commit, dispatch }, info) {
       axios.post(SERVER.URL + info.location, info.data)
         .then(res => {
           commit('SET_TOKEN', res.data.key)
           dispatch('getMyAccount')
           router.push({path:'/'})
-          const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            onOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
-              }
-           })
+          
            Toast.fire({
+            icon: 'success',
+            title: "회원가입에 성공하였습니다."
+          })
+        })
+        .catch(err => {
+          if (Object.keys(err.response.data)[0] === 'username') {
+            if ( err.response.data.username[0] === '해당 사용자 이름은 이미 존재합니다.') {
+              this.errorMessages = "해당 사용자 이름은 이미 존재합니다."
+            }
+          } else {
+            if (info.data.password1.length < 8 || info.data.password2.length < 8) {
+              this.errorMessages = '비밀번호는 8자 이상이어야 합니다.'
+            } else if (info.data.password1 !== info.data.password2) {
+              this.errorMessages = "비밀번호가 일치하지 않습니다."
+            } else if (err.response.data.non_field_errors[0] === "제공된 인증데이터(credentials)로는 로그인할 수 없습니다.") {
+              this.errorMessages = "아이디 혹은 비밀번호가 맞지 않습니다."
+            } 
+          }
+          Toast.fire({
+            icon: 'error',
+            title: this.errorMessages
+          })
+          
+        })
+    },
+    // login
+    postAuthData2({ commit, dispatch }, info) {
+      axios.post(SERVER.URL + info.location, info.data)
+        .then(res => {
+          commit('SET_TOKEN', res.data.key)
+          dispatch('getMyAccount')
+          router.push({path:'/'})
+          Toast.fire({
             icon: 'success',
             title: "로그인에 성공하였습니다."
           })
         })
         .catch(err => {
-        console.log(err)
-          if (Object.keys(err.response.data)[0] === 'password1') {
-            alert(err.response.data.password1)
-          } else if (Object.keys(err.response.data)[0] === 'non_field_errors') {
-            if (err.response.data.non_field_errors[0] === "제공된 인증데이터(credentials)로는 로그인할 수 없습니다.") {
-              alert('아이디 혹은 비밀번호가 맞지 않습니다.')
-            } else {
-              alert(err.response.data.non_field_errors)
-            }
+          if (info.data.password.length < 8 ) {
+          // if (info.data.password1.length < 8 || info.data.password2.length < 8) {
+            this.errorMessages = '비밀번호는 8자 이상이어야 합니다.'
+          } else if (err.response.data.non_field_errors[0] === "제공된 인증데이터(credentials)로는 로그인할 수 없습니다.") {
+            this.errorMessages = "아이디 혹은 비밀번호를 확인해주세요."
           }
+          Toast.fire({
+            icon: 'error',
+            title: this.errorMessages
+          })
         })
     },
     signup({ dispatch }, signupData) {
@@ -147,7 +190,7 @@ export default new Vuex.Store({
         location: SERVER.ROUTES.signup,
         to: '/'
       }
-      dispatch('postAuthData', info)
+      dispatch('postAuthData1', info)
     },
     login({ dispatch }, loginData) {
       const info = {
@@ -155,7 +198,7 @@ export default new Vuex.Store({
         location: SERVER.ROUTES.login,
         to: '/'
       }
-      dispatch('postAuthData', info)
+      dispatch('postAuthData2', info)
     },
     logout({ getters, commit }) {
       axios.post(SERVER.URL + SERVER.ROUTES.logout, null, getters.config)
@@ -163,6 +206,10 @@ export default new Vuex.Store({
           commit('SET_TOKEN', null)
           cookies.remove('auth-token')
           commit('SET_INIT')
+          Toast.fire({
+            icon: 'success',
+            title: "로그아웃 되었습니다."
+          })
           router.push({ name: 'Login'})
         })
         .catch(err => console.log(err.response.data))
@@ -258,10 +305,25 @@ export default new Vuex.Store({
           router.push({ name: 'ArticleDetail', params: { board_name: articleCreateData.boardName, article_id: res.data.id }})
         })
         .catch(err => {
-          console.log(err)
-          if (articleCreateData.boardName === null){
-            console.log("null null")
+          if (Object.keys(err.response.data)[0] === 'title'){
+            Toast.fire({
+              icon: 'error',
+              title: "제목을 입력해야 합니다.",
+            })
+          } else {
+            if (err.response.data.content[0] === '이 필드는 blank일 수 없습니다.' || err.response.data.content[0] === "이 필드는 null일 수 없습니다.") {
+              // swal.fire({
+              //   icon: 'error',
+              //   title: "내용을 입력해야 합니다. ",
+              //   confirmButtonText: '확인'
+              // })
+              Toast.fire({
+                icon: 'error',
+                title: "내용을 입력해야 합니다.",
+              })
+            }
           }
+          
         })
     },
     updateArticle({ getters }, articleUpdateData) {
@@ -271,8 +333,23 @@ export default new Vuex.Store({
       })
       .catch(err => {
         console.log(err)
-        if (getters.articleData.boardName === null){
-          console.log("null null")
+        if (Object.keys(err.response.data)[0] === 'title'){
+          Toast.fire({
+            icon: 'error',
+            title: "제목을 입력해야 합니다.",
+          })
+        } else {
+          if (err.response.data.content[0] === '이 필드는 blank일 수 없습니다.' || err.response.data.content[0] === "이 필드는 null일 수 없습니다.") {
+            // swal.fire({
+            //   icon: 'error',
+            //   title: "내용을 입력해야 합니다. ",
+            //   confirmButtonText: '확인'
+            // })
+            Toast.fire({
+              icon: 'error',
+              title: "내용을 입력해야 합니다.",
+            })
+          }
         }
       })
     },
@@ -298,7 +375,18 @@ export default new Vuex.Store({
           dispatch('fetchComments', getters.articleData)
         })
         .catch(err => {
-          console.log(err)
+          console.log(err.response.data)
+          if (err.response.data.content[0] === '이 필드는 blank일 수 없습니다.' || err.response.data.content[0] === "이 필드는 null일 수 없습니다.") {
+            // swal.fire({
+            //   icon: 'error',
+            //   title: "내용을 입력해야 합니다. ",
+            //   confirmButtonText: '확인'
+            // })
+            Toast.fire({
+              icon: 'error',
+              title: "내용을 입력해야 합니다.",
+            })
+          }
         })
     },
     updateComment({ getters, dispatch }, commentUpdateData) {
