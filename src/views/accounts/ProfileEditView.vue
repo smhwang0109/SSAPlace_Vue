@@ -77,7 +77,7 @@
             cols="6"
           >
             <v-text-field
-              v-model="profileData.website"
+              v-model="profileData.homepage"
               color="blue-grey lighten-2"
               label="Website 주소"
             ></v-text-field>
@@ -231,11 +231,12 @@ export default {
       profileData: {
         name: null,
         location: null,
+        homepage: null,
+        linkedin: null,
         email: null,
         github: null,
         facebook: null,
         instagram: null,
-        homepage: null,
         self_introduction: null,
         interests: null,
         languages: null,
@@ -287,6 +288,7 @@ export default {
       this.profileData.facebook = this.profile.facebook
       this.profileData.instagram = this.profile.instagram
       this.profileData.homepage = this.profile.homepage
+      this.profileData.linkedin = this.profile.linkedin
       this.profileData.self_introduction = this.profile.self_introduction
       if (this.profile.interests.length) {
         this.profileData.interests = this.profile.interests
