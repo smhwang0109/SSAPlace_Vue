@@ -57,7 +57,6 @@ Vue.use(VueRouter)
   },
 
   // Accounts
-  // Profile - will change to userId after the design is done
   {
     path: '/accounts/:userId',
     name: 'Profile',
