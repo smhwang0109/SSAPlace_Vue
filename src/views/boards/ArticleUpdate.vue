@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app v-if="selectedArticle">
     <v-card>
         <v-form
           v-model="valid"
@@ -65,6 +65,10 @@ export default {
   name: 'ArticleUpdate',
   data() {
     return {
+      articleData: {
+        boardName: this.$route.params.board_name,
+        articleId: this.$route.params.article_id,
+      },
       articleUpdateData: {
         body: {
           title: null,
@@ -108,6 +112,7 @@ export default {
     });
   },
   created() {
+    this.selectArticle(this.articleData)
     this.fetchTags()
   }
 }

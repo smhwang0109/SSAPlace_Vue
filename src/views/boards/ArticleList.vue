@@ -24,13 +24,13 @@
       </v-img>
 
       <div class="board-tools border-bottom row mx-0 px-1">
-        <div class="col-6">
+        <div class="col-md-6 col-sm-12">
           <div class="d-flex justify-content-start align-items-center">
             <label for="searchbar"><h4 class="mb-0"><i class="fas fa-search mb-0"></i></h4></label>
             <input @keyup.enter="searchArticle(searchData)" v-model="searchData.keyword" type="text" class="form-control ml-2 rounded border w-100" id="searchbar" placeholder="제목, 내용, 태그로 게시물을 검색해보세요 :)">
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-md-6 col-sm-12">
           <div class="d-flex justify-content-end align-items-center">
             <router-link :to="{ name: 'ArticleCreate', params: { board_name: boardName} }">
               <button type="button" class="btn btn-primary custom-btn">새 글쓰기</button>
@@ -49,13 +49,13 @@
             class="row px-3 mx-0 border-bottom"
             @click="selectArticle(article.id)"
           >
-            <div class="col-6 d-flex flex-column justify-content-center align-items-start">
+            <div class="col-md-6 col-xs-12 d-flex flex-column justify-content-center align-items-start">
               <h4>{{ article.title }}</h4>
               <div>
                 <small v-for="tag in article.tags" :key="`tag_${tag.id}`" class="mr-2 hashtag">#{{ tag.name }}</small>
               </div>
             </div>
-            <div class="col-6 d-flex justify-content-end align-items-center">
+            <div class="col-md-6 col-xs-12 d-flex justify-content-end align-items-center">
               <p class="mb-0 mr-4 font-weight-bold">{{ article.author.username }}</p>
               <p class="mb-0 mr-4 font-weight-bold">{{ article.created_at }}</p>
               <button type="button" class="btn hit-btn text-white p-1 pr-2 mr-3">
