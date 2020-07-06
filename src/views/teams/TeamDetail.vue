@@ -1,35 +1,30 @@
 <template>
   <div class="container">
-    {{team}}
     <div class="main">
       <h3 class="mb-3">{{ team.name }} </h3>
       <p><strong>{{ team.oneline_description }}</strong></p>
-      <p style="color:#3c3c3c">팀원 {{ team.current_members }}명 / {{ team.residence }} / Since {{ team.created_at.slice(0,10) }}</p>
+      <p style="color:#3c3c3c">팀원 {{ team.current_members }}명 / {{ team.residence }} / Since {{team.created_at | moment('YYYY-MM-DD')}}</p>
     </div>
     <div class="intro">
-      <h5>팀 정보</h5>
+      <h6 class="font-weight-bold">팀 정보</h6>
       <hr class="mt-2">
       <p class="description">{{ team.description }}</p>
       <div class="d-flex">
         <div class="col-6">
           <h6 class="font-weight-bold">사용 언어 & <span style="color:#3596F4">관심 분야</span></h6>
-          <span class="badge badge-pill language-badge mr-1" v-for="language_id in team.front_language" :key="language_id"> {{ languages[language_id-1]["language"] }} </span>
-          <span class="badge badge-pill language-badge mr-1" v-for="language_id in team.back_language" :key="language_id"> {{ languages[language_id-1]["language"] }} </span>
-          <span class="badge badge-pill interest-badge mr-1" v-for="interest_id in team.interests" :key="interest_id"> {{ interests[interest_id-1]["interest"] }} </span>
+          <span class="badge badge-pill language-badge mr-1" v-for="language_id in team.front_language" :key="`front_${language_id}`"> {{ languages[language_id-1]["language"] }} </span>
+          <span class="badge badge-pill language-badge mr-1" v-for="language_id in team.back_language" :key="`back_${language_id}`"> {{ languages[language_id-1]["language"] }} </span>
+          <span class="badge badge-pill interest-badge mr-1" v-for="interest_id in team.interests" :key="`interest_${interest_id}`"> {{ interests[interest_id-1]["interest"] }} </span>
         </div>
         <div class="col-6">
           <h6 class="font-weight-bold">팀장</h6>
           <router-link :to="{ name: 'Profile', params: {userId: team.leader.id} }" style="color:#3596F4">{{ team.leader.username }}</router-link>
         </div>
       </div>
-      
-    
-      
-      
     </div>
-    <div class="collect mt-5 ">
+    <div class="collect mt-5" v-if="collectTeam">
       <div class ="collection-header d-flex justify-content-between">
-        <h5>이 팀의 모집 정보</h5>
+        <h6 class="font-weight-bold">이 팀의 모집 정보</h6>
         <div>
           <span class="mr-2"><i class="fas fa-eye"></i> 조회 0</span>
           <span><i class="far fa-bookmark"></i> 관심 {{ collectTeam.like_users.length }} </span>
@@ -37,20 +32,30 @@
       </div>
       <hr class="mt-2">
       <div class="collection-content">
-        <h5>
-          {{ collectTeam.title }}
-          <small class="ml-3" style="color:#979797">{{ collectTeam.created_at }} / 모집인원: {{ collectTeam.collect_members[0].length }}명/ ~모집시까지</small>
-        </h5>
-        <div>
-          <p class="collection-info"> {{ collectTeam.description }}</p>
+        <div class="d-flex justify-content-between">
+          <h6 class="font-weight-bold">{{ collectTeam.title }}</h6>
+          <p style="color:#979797">{{ collectTeam.created_at | moment("from", "now")}} / 모집인원: {{ collectTeam.collect_members[0].length }}명/ ~모집시까지</p>
         </div>
-        <div class="col-2">
-          <h6>연락처</h6>
+        <div>
+          <p class="collection-info">{{ collectTeam.description }}</p>
+        </div>
+        <div>
+          <h6 class="font-weight-bold">모집 정보</h6>
+          <div v-for="(member, index) in changeStringToObject(collectTeam.collect_members)" :key="member.pk">
+            <span>{{ index + 1 }}) </span>
+            <span>{{ member.fields.role }} /</span>
+            <span>{{ member.fields.major }}</span><br>
+            <span v-if="member.fields.preferential">{{ member.fields.preferential }}</span>
+          </div>
+        </div>
+        <div class="mt-4">
+          <h6 class="font-weight-bold">연락처</h6>
           <span style="color:#3596F4">{{ collectTeam.contact }}</span>
         </div>
       </div>
     </div>
-    <router-link :to="{ name: 'CollectTeamCreate', params: {teamId: team.id} }" class="btn">모집 공고 만들기</router-link>
+    <!-- <router-link v-if="!collectTeam && team.leader.username === myaccount.username" :to="{ name: 'CollectTeamCreate', params: {teamId: team.id} }" class="btn">모집 공고 만들기</router-link> -->
+    <router-link v-if="!collectTeam" :to="{ name: 'CollectTeamCreate', params: {teamId: team.id} }" class="btn">모집 공고 만들기</router-link>
   </div>
 </template>
 
@@ -63,7 +68,11 @@ export default {
     ...mapState(['team','interests', 'languages', 'collectTeam'])
   },
   methods: {
-    ...mapActions(['getTeam', 'getCollectTeam', 'goToUser'])
+    ...mapActions(['getTeam', 'getCollectTeam']),
+    changeStringToObject(S) {
+      const O = JSON.parse(S);
+      return O
+    },
   },
   created() {
     this.getTeam(this.$route.params['teamId'])
