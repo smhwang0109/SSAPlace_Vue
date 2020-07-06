@@ -60,11 +60,11 @@
               <p class="mb-0 mr-4 font-weight-bold">{{ article.created_at }}</p>
               <button type="button" class="btn hit-btn text-white p-1 pr-2 mr-3">
                 <i class="far fa-eye mx-2 mb-0"></i>
-                <span class="badge badge-light">{{ article.hit }}</span>
+                <span class="badge">{{ article.hit }}</span>
               </button>
               <button type="button" class="btn like-btn text-white p-1 pr-2">
                 <i class="far fa-heart mx-2 mb-0"></i>
-                <span class="badge badge-light">{{ article.like_users.length }}</span>
+                <span class="badge">{{ article.like_users.length }}</span>
               </button>
             </div>
           </v-list-item>

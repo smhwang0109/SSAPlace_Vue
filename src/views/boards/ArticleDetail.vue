@@ -8,12 +8,12 @@
         <div class="mb-1 col-md-6 col-xs-12 d-flex justify-content-end">
           <button type="button" class="btn hit-btn text-white p-1 pr-2 mr-2">
             <i class="far fa-eye mx-2 mb-0"></i>
-            <span class="badge badge-light">{{ selectedArticle.hit }}</span>
+            <span class="badge">{{ selectedArticle.hit }}</span>
           </button>
           <button type="button" class="btn like-btn text-white p-1 pr-2" @click="likeArticle">
             <i v-if="isArticleLike" class="far fa-heart mx-2 mb-0"></i>
             <i v-else class="fas fa-heart mx-2 mb-0"></i>
-            <span class="badge badge-light">{{ selectedArticle.like_users.length }}</span>
+            <span class="badge">{{ selectedArticle.like_users.length }}</span>
           </button>
         </div>
       </div>

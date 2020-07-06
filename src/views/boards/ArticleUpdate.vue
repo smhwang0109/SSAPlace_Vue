@@ -114,7 +114,7 @@ export default {
   created() {
     this.selectArticle(this.articleData)
     this.fetchTags()
-  }
+  },
 }
 </script>
 

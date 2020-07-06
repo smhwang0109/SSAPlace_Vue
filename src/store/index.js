@@ -7,6 +7,8 @@ import axios from 'axios'
 import router from '@/router'
 import SERVER from '@/api/drf'
 
+import Swal from 'sweetalert2'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -110,6 +112,21 @@ export default new Vuex.Store({
           commit('SET_TOKEN', res.data.key)
           dispatch('getMyAccount')
           router.push({path:'/'})
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+           })
+           Toast.fire({
+            icon: 'success',
+            title: "로그인에 성공하였습니다."
+          })
         })
         .catch(err => {
         console.log(err)
