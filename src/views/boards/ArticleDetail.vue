@@ -3,9 +3,9 @@
 
     <div class="card-header">        
       <router-link :to="{ name: 'Boards', params: { board_name: articleData.boardName }}"><p class="boardname link-hover">{{ revisedBoardName }}</p></router-link>
-      <div class="d-flex justify-content-between">
-        <h4 class="mb-0">{{ selectedArticle.title }}</h4>        
-        <div class="mb-1">
+      <div class="row">
+        <h4 class="mb-0 col-md-6 col-xs-12">{{ selectedArticle.title }}</h4>        
+        <div class="mb-1 col-md-6 col-xs-12 d-flex justify-content-end">
           <button type="button" class="btn hit-btn text-white p-1 pr-2 mr-2">
             <i class="far fa-eye mx-2 mb-0"></i>
             <span class="badge badge-light">{{ selectedArticle.hit }}</span>
@@ -17,7 +17,7 @@
           </button>
         </div>
       </div>
-      <div class="d-flex justify-content-between pb-0 review-info">
+      <div class="d-flex justify-content-between align-items-center pb-0 review-info">
         <small class="line-height">posted by <span class="link-hover" ><strong>{{ selectedArticle.author.username }}</strong></span> on {{selectedArticle.created_at}} & <span style="font-weight:700">edited at</span> {{selectedArticle.updated_at}}</small>
         <div v-if="selectedArticle.author.id === myaccount.id" class="btn-group dropleft">
           <button type="button" class="btn btn-sm custom-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
