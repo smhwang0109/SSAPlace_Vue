@@ -5,21 +5,22 @@
       <div class="row">
         <div class="col-4 h-30 p-2" v-for="collectTeam in collectTeams" :key="`collectTeam-${collectTeam.id}`">
           <router-link :to="{ name: 'CollectTeamDetail', params: { collectTeamId: collectTeam.id } }" class="card h-100" >
-          <!-- <img src="https://picsum.photos/400/120" class="card-img-top" alt="image" > -->
+          <img src="https://picsum.photos/400/120" class="card-img-top" alt="image" >
           <div class="card-body d-flex flex-column">
-            <div class="description" v-if="collectTeam.team.interests.length">
-              <span class="card-subtitle badge badge-pill mr-2" v-for="interest_id in collectTeam.team.interests" :key="`interest-${interest_id}`"> {{ interests[interest_id-1]["interest"] }} </span>
-            </div>
-            <div v-else>
-              <br>
-            </div>
             <div class="header d-flex flex-column">
-              <h5 class="card-title">{{ collectTeam.title }}</h5>
-              <span class="mt-auto">by {{ collectTeam.team.name }}</span>
+              <!-- 제목 -->
+              <h5 class="card-title"><strong>{{ collectTeam.title }}</strong></h5>
+              <!-- interests -->
+              <div class="description" v-if="collectTeam.team.interests.length">
+                <span class="card-subtitle badge badge-pill mr-2" v-for="interest_id in collectTeam.team.interests" :key="`interest-${interest_id}`"> {{ interests[interest_id-1]["interest"] }} </span>
+              </div>
+              <div v-else>
+                <br>
+              </div>
             </div>
-
             
             <hr class="my-2">
+
             <p class="card-text m-0">
               <span><strong>{{ collectTeam.collect_count }}명 모집 중</strong></span> <br>
               <span class="members" v-for="collect_member in changeStringToObject(collectTeam.collect_members).slice(0, changeStringToObject(collectTeam.collect_members).length-1)" :key="`collectMember-${collect_member.pk}`"> {{ collect_member.fields.role }}({{ collect_member.fields.major }})∙</span>
@@ -36,9 +37,12 @@
             
             
           </div>
-          <div class="card-footer d-flex justify-content-between">
-            <small class="text-muted">{{ collectTeam.created_at }}</small>
-            <i class="far fa-bookmark"></i>
+          <div class="card-footer" >
+            <div class = "d-flex justify-content-between">
+              <small class="text-muted">{{ collectTeam.created_at }}</small>
+              <i class="far fa-bookmark"></i>
+            </div>
+            <small class="text-muted text-left">by {{ collectTeam.team.name }}</small>
           </div>
         </router-link>
         </div>
@@ -78,13 +82,13 @@ export default {
 .card-title{
   overflow: hidden;
   white-space: normal;
-  line-height: 1.1;
-  height: 3.3em;
+  line-height: 1.0;
+  height: 2.0em;
   word-wrap: break-word;
   margin: 0;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3; 
+  -webkit-line-clamp: 2; 
   -webkit-box-orient: vertical;
 }
 
@@ -118,6 +122,10 @@ export default {
 .badge {
   border: 1px solid #3596F4;
   margin-bottom: 5px;
+}
+
+.card-footer {
+  text-align: left;
 }
 
 </style>

@@ -109,7 +109,7 @@ export default {
   },
   created() {
     this.fetchTags()
-  }
+  },
 }
 </script>
 
