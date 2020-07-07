@@ -37,11 +37,11 @@
         <!-- 관심사/스킬 -->
         <div class="mb-3" v-if="profile.interests.length">
           <h6><strong>관심사</strong></h6>
-          <span class="badge badge-pill mr-2 interests" v-for="interest_id in profile.interests" :key="`interest-${interest_id}`">{{ interests[interest_id-1]["interest"] }}</span>
+          <span class="badge badge-pill mr-2 interests" v-for="interest_id in profile.interests" :key="`profile-interest-${interest_id}`">{{ interests[interest_id-1]["interest"] }}</span>
         </div>
         <div v-if="profile.languages.length">
           <h6><strong>Core Skills</strong></h6>
-          <span class="badge badge-pill mr-2 languages" v-for="language_id in profile.languages" :key="`language-${language_id}`">{{ languages[language_id-1]["language"] }}</span>
+          <span class="badge badge-pill mr-2 languages" v-for="language_id in profile.languages" :key="`profile-language-${language_id}`">{{ languages[language_id-1]["language"] }}</span>
         </div>
       </div>
       
@@ -56,28 +56,32 @@
 
       <div class="container-fluid mt-4" v-if="teams.length">
         <div class="row">
-            <div class="col-4 h-30 p-2" v-for="team in teams" :key="team.id">
+            <div class="col-4 h-30 p-2" v-for="team in teams" :key="`team-${team.id}`">
               <router-link :to="{ name: 'TeamDetail', params: { teamId: team.id } }" class="card h-100" >
-              <img src="https://picsum.photos/seed/picsum/400/120" class="card-img-top" alt="image" >
+              <!-- <img src="../../assets/image2.jpg" class="card-img-top" alt="image" > -->
+              <!-- <img :src="'../../assets/card-image/image'+randomNum(this.images) + '.jpg'" class="card-img-top" alt="image" width="400" height="120">  -->
+              <img :src="randomImage(images)" class="card-img-top" alt="image" width="400" height="120"> 
+
+              <!-- <img :src="this.images[1]" height="120"> -->
               <div class="card-body d-flex flex-column">
                 <div class="team-header d-flex flex-column">
                   <div class="team-title">
                     <h5 class="card-title mb-0"><strong>{{ team.name }}</strong></h5>
                   </div>
                   <div class="mt-auto team-interests">
-                    <span class="badge badge-pill mr-2" v-for="interest_id in team.interests" :key="interest_id"> {{ interests[interest_id-1]["interest"] }} </span>
+                    <span class="badge badge-pill mr-2" v-for="interest_id in team.interests" :key="`team-interest-${interest_id}`"> {{ interests[interest_id-1]["interest"] }} </span>
                   </div>
                 </div>
                 <hr class="m-2">
-                <div class="description">
-                  <p class="card-subtitle mt-0" style="color:#979797">{{ team.oneline_description }}</p>
+                <div class="team-description">
+                  <p class="card-subtitle mt-0 description" style="color:#979797">{{ team.oneline_description }}</p>
                 </div>
                 <hr class="m-2">
                 <div class="card-text languages">
                   <span class="m-0 font-weight-bold">사용 언어</span><br>
                   <div class="language-list">
-                    <span class="badge badge-pill mr-2" v-for="language_id in team.front_language" :key="language_id"> {{ languages[language_id-1]["language"] }} </span>
-                    <span class="badge badge-pill mr-2" v-for="language_id in team.back_language" :key="language_id"> {{ languages[language_id-1]["language"] }} </span>
+                    <span class="badge badge-pill mr-2" v-for="language_id in team.front_language" :key="`team-front-language-${language_id}`"> {{ languages[language_id-1]["language"] }} </span>
+                    <span class="badge badge-pill mr-2" v-for="language_id in team.back_language" :key="`team-back-language-${language_id}`"> {{ languages[language_id-1]["language"] }} </span>
                   </div>
                   <!-- <br> 현재 구성원 {{ team.current_members }}명 / {{ team.residence }} / ~{{ team.created_at.slice(0,10) }} -->
                 </div>
@@ -112,19 +116,39 @@ export default {
   name: 'Profile',
   data() {
     return {
-      userId: this.$route.params['userId']
+      userId: this.$route.params['userId'],
+      images: [
+        'https://user-images.githubusercontent.com/25967949/86784922-0a188900-c09d-11ea-8716-3438dec14f7b.jpg',
+        'https://user-images.githubusercontent.com/25967949/86785046-2ae0de80-c09d-11ea-8ccb-2b0d13fd02ba.jpg',
+        'https://user-images.githubusercontent.com/25967949/86785050-2b797500-c09d-11ea-9660-2c9a36cb8a1c.jpg',
+        'https://user-images.githubusercontent.com/25967949/86785053-2d433880-c09d-11ea-861c-ac4808a1dff1.jpg',
+        'https://user-images.githubusercontent.com/25967949/86785025-261c2a80-c09d-11ea-9e9d-79886a905a80.jpg',
+        'https://user-images.githubusercontent.com/25967949/86785077-32a08300-c09d-11ea-82e7-0ee19fac5bdf.jpg',
+      ],
+      selectedImage: null,
+     
     }
   },
   computed: {
-    ...mapState(['myaccount', 'teams', 'profile', 'users', 'interests', 'languages'])
+    ...mapState(['myaccount', 'teams', 'profile', 'users', 'interests', 'languages']),
   },
   methods: {
     ...mapActions(['getProfile', 'fetchTeams']),
+    randomImage(items) {
+      // console.log("randomItem", items[Math.floor(Math.random()*items.length)])
+      // console.log(this.photos[Math.floor(Math.random()*this.images.length)])
+      // var chosenNumber = Math.floor(Math.random() * this.images.length);
+      // this.selectedImage = this.images[chosenNumber];
+      return items[Math.floor(Math.random()*items.length)];
+    },
   },
   created() {
     this.getProfile(this.userId)
     this.fetchTeams()
-  }
+    const idx = Math.floor(Math.random() * this.images.length)
+    this.selectedImage = this.images[idx]
+    console.log(this.selectedImage)
+  },
 }
 </script>
 
@@ -171,7 +195,7 @@ export default {
 }
 
 .team-header {
-  height: 30%;
+  height: 40%;
 }
 
 .team-title {
@@ -185,11 +209,15 @@ export default {
   -webkit-line-clamp: 2; 
   -webkit-box-orient: vertical;
 }
+
+.team-description {
+  height: 20%;
+}
 .description {
   overflow: hidden;
   white-space: normal;
   line-height: 1.0;
-  height: 20%;
+  /* height: 20%; */
   word-wrap: break-word;
   margin: 0;
   text-overflow: ellipsis;
