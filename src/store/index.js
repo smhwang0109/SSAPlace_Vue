@@ -46,6 +46,7 @@ export default new Vuex.Store({
     teams: null,
     team: null,
     collectTeams: null,
+    collectThreeTeams: null,
     collectTeam: null,
     interests: null,
     languages: null,
@@ -56,7 +57,7 @@ export default new Vuex.Store({
     freeArticles: null,
     selectedArticle: null,
     comments: null,
-    tags: null
+    tags: null,
   },
   getters: {
     isLoggedIn: state => !!state.authToken,
@@ -64,7 +65,9 @@ export default new Vuex.Store({
     
     // boards
     articleData: state => state.selectedArticle.articleData,
-    isArticleLike: state => state.selectedArticle.like_users.includes(state.myaccount.id)
+    isArticleLike: state => state.selectedArticle.like_users.includes(state.myaccount.id),
+
+    
   },
   mutations: {
     SET_INIT(state) {
@@ -101,6 +104,7 @@ export default new Vuex.Store({
     },
     SET_COLLECT_TEAMS(state, teams) {
       state.collectTeams = teams
+      state.collectThreeTeams = teams.slice(0, 3)
     },
     SET_COLLECT_TEAM(state, team) {
       state.collectTeam = team
