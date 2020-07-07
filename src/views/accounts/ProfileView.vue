@@ -118,12 +118,30 @@ export default {
     return {
       userId: this.$route.params['userId'],
       images: [
+        // programming, coding
         'https://user-images.githubusercontent.com/25967949/86784922-0a188900-c09d-11ea-8716-3438dec14f7b.jpg',
         'https://user-images.githubusercontent.com/25967949/86785046-2ae0de80-c09d-11ea-8ccb-2b0d13fd02ba.jpg',
         'https://user-images.githubusercontent.com/25967949/86785050-2b797500-c09d-11ea-9660-2c9a36cb8a1c.jpg',
         'https://user-images.githubusercontent.com/25967949/86785053-2d433880-c09d-11ea-861c-ac4808a1dff1.jpg',
         'https://user-images.githubusercontent.com/25967949/86785025-261c2a80-c09d-11ea-9e9d-79886a905a80.jpg',
         'https://user-images.githubusercontent.com/25967949/86785077-32a08300-c09d-11ea-82e7-0ee19fac5bdf.jpg',
+        'https://user-images.githubusercontent.com/25967949/86785759-0df8db00-c09e-11ea-9e41-1ec8467457fa.png',
+        'https://user-images.githubusercontent.com/25967949/86785987-5ca67500-c09e-11ea-84d4-b39c521b1a67.png',
+        'https://user-images.githubusercontent.com/25967949/86789874-c6c11900-c0a2-11ea-95a4-5278d09c5c27.png',
+        'https://user-images.githubusercontent.com/25967949/86789911-d0e31780-c0a2-11ea-9a90-1c24ce05192c.png',
+        'https://user-images.githubusercontent.com/25967949/86789952-d8a2bc00-c0a2-11ea-9a6d-961913576b4f.png',
+        'https://user-images.githubusercontent.com/25967949/86789992-e0626080-c0a2-11ea-8414-40f74270a024.png',
+        'https://user-images.githubusercontent.com/25967949/86790042-eeb07c80-c0a2-11ea-8b43-de0adde019cf.png',
+
+
+        // // team images
+        // 'https://user-images.githubusercontent.com/25967949/86788558-43eb8e80-c0a1-11ea-8019-057acf6bf27b.png',
+        // 'https://user-images.githubusercontent.com/25967949/86788572-4948d900-c0a1-11ea-83a5-688e0dc9fdd5.png',
+        // 'https://user-images.githubusercontent.com/25967949/86788631-58c82200-c0a1-11ea-9e73-4f3465855fc4.png',
+        // 'https://user-images.githubusercontent.com/25967949/86788831-8dd47480-c0a1-11ea-8510-fcbfd03e0c64.png',
+        // // 'https://user-images.githubusercontent.com/25967949/86788946-b52b4180-c0a1-11ea-99b1-40d3b8f2e61b.png',
+        // 'https://user-images.githubusercontent.com/25967949/86789020-cc6a2f00-c0a1-11ea-92ab-f34793e0333f.png',
+        // 'https://user-images.githubusercontent.com/25967949/86789132-eefc4800-c0a1-11ea-8864-a5445b3bb87e.png',
       ],
       selectedImage: null,
      
@@ -135,10 +153,6 @@ export default {
   methods: {
     ...mapActions(['getProfile', 'fetchTeams']),
     randomImage(items) {
-      // console.log("randomItem", items[Math.floor(Math.random()*items.length)])
-      // console.log(this.photos[Math.floor(Math.random()*this.images.length)])
-      // var chosenNumber = Math.floor(Math.random() * this.images.length);
-      // this.selectedImage = this.images[chosenNumber];
       return items[Math.floor(Math.random()*items.length)];
     },
   },

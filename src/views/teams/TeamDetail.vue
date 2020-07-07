@@ -35,7 +35,7 @@
         <div class="d-flex justify-content-between">
           <h6 class="font-weight-bold">{{ collectTeam.title }}</h6>
           <!-- <p style="color:#979797">{{ collectTeam.created_at | moment("from", "now")}} / 모집인원: {{ collectTeam.collect_members[0].length }}명/ ~모집시까지</p> -->
-          <p style="color:#979797">{{ collectTeam.created_at | moment("from", "now")}} / 모집인원: {{ collectTeam.collect_members[0].length }}명</p>
+          <p style="color:#979797">{{ collectTeam.created_at | moment("from", "now")}} / 모집인원: {{ changeStringToObject(collectTeam.collect_members).length}}명</p>
 
         </div>
         <div>
