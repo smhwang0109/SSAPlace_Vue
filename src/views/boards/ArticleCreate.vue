@@ -27,11 +27,19 @@
                   </div>
                 </div>
               </v-col>
-              <v-col cols="12" class="pt-0">
-                <div class="editor-page my-3">
-                  <div id="summernote"></div>
+
+              <v-col cols="12">
+                <div class="quill-editor border-bottom">
+                  <quill-editor
+                    class="editor"
+                    ref="myTextEditor"
+                    v-model="articleCreateData.body.content"
+                    :options="editorOption"
+                    @change="onEditorChange"
+                  />
                 </div>
               </v-col>
+
               <v-col v-if="tags" cols="12">
                 <v-combobox
                   v-model="articleCreateData.tags"
@@ -71,10 +79,45 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 
+import hljs from 'highlight.js'
+import debounce from 'lodash/debounce'
+import { quillEditor } from 'vue-quill-editor'
+// highlight.js style
+import 'highlight.js/styles/tomorrow.css'
+// import theme style
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+
 export default {
   name: 'ArticleCreate',
+  components: {
+    quillEditor
+  },
   data() {
     return {
+      editorOption: {
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            // [{ 'header': 1 }, { 'header': 2 }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'script': 'sub' }, { 'script': 'super' }],
+            [{ 'indent': '-1' }, { 'indent': '+1' }],
+            // [{ 'direction': 'rtl' }],
+            // [{ 'size': ['small', false, 'large', 'huge'] }],
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            [{ 'font': [] }],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'align': [] }],
+            // ['clean'],
+            ['link', 'image', 'video']
+          ],
+          syntax: {
+            highlight: text => hljs.highlightAuto(text).value
+          }
+        }
+      },
       selectedBoard: null,
       articleCreateData: {
         boardName: null,
@@ -87,7 +130,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['tags'])
+    ...mapState(['tags']),
+    editor() {
+      return this.$refs.myTextEditor.quill
+    }
   },
   methods: {
     ...mapActions(['createArticle', 'fetchTags']),
@@ -100,29 +146,23 @@ export default {
       }
     },
     articleCreateSave() {
-      this.articleCreateData.body.content = window.$('#summernote').summernote('code')
       this.createArticle(this.articleCreateData)
     },
     clickBack() {
       this.$router.go(-1)
-    }
+    },
+    onEditorChange: debounce(function(value) {
+      this.content = value.html
+    }, 466),
   },
   created() {
     this.selectBoard(this.$route.params.board_name)
     this.fetchTags()
   },
-  mounted() {
-    console.log(window)
-    window.$('#summernote').summernote({
-      placeholder: '내용을 작성해주세요 :)',
-      height: 300,
-    });
-    window.$('#summernote').summernote('justifyLeft');
-  },
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .btn {
   color: white;
   background-color: #3596F4;
@@ -169,14 +209,35 @@ textarea {
   display: none;
 }
 
-.summernote .note-editable {
-  text-align: left;
-}
-
 .goBack {
   text-decoration: underline;
 }
 .goBack:hover {
   cursor:pointer;
+}
+
+.quill-editor {
+  display: flex;
+  flex-direction: column;
+  .editor {
+    height: 40rem;
+    overflow: hidden;
+  }
+  .output {
+    width: 100%;
+    height: 20rem;
+    margin: 0;
+    border: 1px solid #ccc;
+    overflow-y: auto;
+    resize: vertical;
+    &.code {
+      padding: 1rem;
+      height: 16rem;
+    }
+    &.ql-snow {
+      border-top: none;
+      height: 24rem;
+    }
+  }
 }
 </style>

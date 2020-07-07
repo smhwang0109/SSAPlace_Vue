@@ -15,9 +15,15 @@
                   label="제목을 입력하세요 :)"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" class="pt-0">
-                <div class="editor-page my-3">
-                  <div id="summernote"></div>
+              <v-col cols="12">
+                <div class="quill-editor border-bottom">
+                  <quill-editor
+                    class="editor"
+                    ref="myTextEditor"
+                    v-model="articleUpdateData.body.content"
+                    :options="editorOption"
+                    @change="onEditorChange"
+                  />
                 </div>
               </v-col>
 
@@ -61,10 +67,46 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+
+import hljs from 'highlight.js'
+import debounce from 'lodash/debounce'
+import { quillEditor } from 'vue-quill-editor'
+// highlight.js style
+import 'highlight.js/styles/tomorrow.css'
+// import theme style
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+
 export default {
   name: 'ArticleUpdate',
+  components: {
+    quillEditor
+  },
   data() {
     return {
+      editorOption: {
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            // [{ 'header': 1 }, { 'header': 2 }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'script': 'sub' }, { 'script': 'super' }],
+            [{ 'indent': '-1' }, { 'indent': '+1' }],
+            // [{ 'direction': 'rtl' }],
+            // [{ 'size': ['small', false, 'large', 'huge'] }],
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            [{ 'font': [] }],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'align': [] }],
+            // ['clean'],
+            ['link', 'image', 'video']
+          ],
+          syntax: {
+            highlight: text => hljs.highlightAuto(text).value
+          }
+        }
+      },
       articleData: {
         boardName: this.$route.params.board_name,
         articleId: this.$route.params.article_id,
@@ -80,6 +122,9 @@ export default {
   },
   computed: {
     ...mapState(['selectedArticle', 'tags']),
+    editor() {
+      return this.$refs.myTextEditor.quill
+    },
     revisedBoardName() {
       if (this.selectedArticle.articleData.boardName === 'ssafy') {
         return '싸피 게시판'
@@ -93,32 +138,30 @@ export default {
   methods: {
     ...mapActions(['selectArticle', 'updateArticle', 'fetchTags']),
     articleUpdateSave() {
-      this.articleUpdateData.body.content = window.$('#summernote').summernote('code')
       this.updateArticle(this.articleUpdateData)
     },
     clickBack() {
       this.$router.go(-1)
-    }
-  },
-  mounted() {
-    window.$('#summernote').summernote({
-      placeholder: '내용을 작성해주세요 :)',
-      height: 300,
-    });
-    window.$('#summernote').summernote('code', this.selectedArticle.content);
-    this.articleUpdateData.body.title = this.selectedArticle.title;
-    this.selectedArticle.tags.forEach(tag => {
-      this.articleUpdateData.tags.push(tag.name)
-    });
+    },
+    onEditorChange: debounce(function(value) {
+      this.content = value.html
+    }, 466),
   },
   created() {
     this.selectArticle(this.articleData)
     this.fetchTags()
   },
+  mounted() {
+    this.articleUpdateData.body.title = this.selectedArticle.title;
+    this.articleUpdateData.body.content = this.selectedArticle.content;
+    this.selectedArticle.tags.forEach(tag => {
+      this.articleUpdateData.tags.push(tag.name)
+    });
+  },
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 p {
   text-align: left;
 }
@@ -153,10 +196,6 @@ textarea {
   display: none;
 }
 
-.summernote .note-editable {
-  text-align: left;
-}
-
 .goBack {
   text-decoration: underline;
 }
@@ -171,6 +210,31 @@ textarea {
 
 .link-hover:hover{
   cursor: pointer;
+}
+
+.quill-editor {
+  display: flex;
+  flex-direction: column;
+  .editor {
+    height: 40rem;
+    overflow: hidden;
+  }
+  .output {
+    width: 100%;
+    height: 20rem;
+    margin: 0;
+    border: 1px solid #ccc;
+    overflow-y: auto;
+    resize: vertical;
+    &.code {
+      padding: 1rem;
+      height: 16rem;
+    }
+    &.ql-snow {
+      border-top: none;
+      height: 24rem;
+    }
+  }
 }
 
 </style>
