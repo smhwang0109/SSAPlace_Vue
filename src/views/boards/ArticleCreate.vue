@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app v-if="articleCreateData">
     <v-card>
         <v-form
           v-model="valid"
@@ -32,7 +32,7 @@
                   <div id="summernote"></div>
                 </div>
               </v-col>
-              <v-col cols="12">
+              <v-col v-if="tags" cols="12">
                 <v-combobox
                   v-model="articleCreateData.tags"
                   :items="tags"
@@ -112,17 +112,17 @@ export default {
     this.fetchTags()
   },
   mounted() {
+    console.log(window)
     window.$('#summernote').summernote({
       placeholder: '내용을 작성해주세요 :)',
       height: 300,
     });
     window.$('#summernote').summernote('justifyLeft');
-  }
+  },
 }
 </script>
 
 <style scoped>
-
 .btn {
   color: white;
   background-color: #3596F4;
