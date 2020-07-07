@@ -124,6 +124,11 @@ export default {
           title: '자유 게시판',
           description: '자유로운 주제로 글을 작성해보세요 :)',
         }
+      } else if (this.boardName === 'code') {
+        return {
+          title: '코드 게시판',
+          description: '작성한 코드를 공유하고 이야기를 나눠 보세요 :)'
+        }
       } else {
         return false
       }

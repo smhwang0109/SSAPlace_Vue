@@ -115,8 +115,10 @@ export default {
         return '싸피 게시판'
       } else if (this.articleData.boardName === 'free') {
         return '자유 게시판'
+      } else if (this.articleData.boardName === 'code') {
+        return '코드 게시판'
       } else {
-        return 'Undefined'
+        return false
       }
     },
   },
