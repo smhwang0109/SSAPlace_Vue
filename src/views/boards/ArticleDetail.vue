@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="d-flex justify-content-between align-items-center pb-0 review-info">
-        <small class="line-height">posted by <span class="link-hover font-weight-bold" ><router-link :to="{ name: 'Profile', params: {userId: selectedArticle.author.id} }">{{ selectedArticle.author.username }}</router-link></span> on {{selectedArticle.created_at}} & <span style="font-weight:700">edited at</span> {{selectedArticle.updated_at}}</small>
+        <small class="line-height">posted by <span class="link-hover" ><router-link :to="{ name: 'Profile', params: {userId: selectedArticle.author.id} }">{{ selectedArticle.author.username }}</router-link></span> on {{selectedArticle.created_at}} & <span style="font-weight:700">edited at</span> {{selectedArticle.updated_at}}</small>
         <div v-if="selectedArticle.author.id === myaccount.id" class="btn-group dropleft">
           <button type="button" class="btn btn-sm custom-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
           <div class="dropdown-menu">

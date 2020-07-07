@@ -26,7 +26,7 @@
       <div class ="collection-header d-flex justify-content-between">
         <h6 class="font-weight-bold">이 팀의 모집 정보</h6>
         <div>
-          <span class="mr-2"><i class="fas fa-eye"></i> 조회 0</span>
+          <!-- <span class="mr-2"><i class="fas fa-eye"></i> 조회 0</span> -->
           <span><i class="far fa-bookmark"></i> 관심 {{ collectTeam.like_users.length }} </span>
         </div>
       </div>
@@ -34,23 +34,44 @@
       <div class="collection-content">
         <div class="d-flex justify-content-between">
           <h6 class="font-weight-bold">{{ collectTeam.title }}</h6>
-          <p style="color:#979797">{{ collectTeam.created_at | moment("from", "now")}} / 모집인원: {{ collectTeam.collect_members[0].length }}명/ ~모집시까지</p>
+          <!-- <p style="color:#979797">{{ collectTeam.created_at | moment("from", "now")}} / 모집인원: {{ collectTeam.collect_members[0].length }}명/ ~모집시까지</p> -->
+          <p style="color:#979797">{{ collectTeam.created_at | moment("from", "now")}} / 모집인원: {{ collectTeam.collect_members[0].length }}명</p>
+
         </div>
         <div>
           <p class="collection-info">{{ collectTeam.description }}</p>
         </div>
         <div>
-          <h6 class="font-weight-bold">모집 정보</h6>
-          <div v-for="(member, index) in changeStringToObject(collectTeam.collect_members)" :key="member.pk">
-            <span>{{ index + 1 }}) </span>
+          <h6 class="font-weight-bold mt-5 w-100">모집 정보</h6>
+          <div class="list-group list-group-flush w-100">
+            <div v-for="(member,index) in changeStringToObject(collectTeam.collect_members)" :key="member.pk" class="list-group-item">
+              <div class="d-flex">
+                <h5 class="font-weight-bold col-2">팀원 {{ index + 1 }}</h5>
+                <h5 class="col-3 m-0">{{ member.fields.role }}</h5>
+                <p class="col-2 m-0">{{member.fields.major}}</p>
+                <div v-if="member.fields.preferential" class="col-5">
+                  <!-- <strong>우대사항</strong> -->
+                  <span class="preferential">{{ member.fields.preferential }}</span>
+                </div>
+              </div>
+              
+            </div>  
+          </div>
+          
+          
+          <!-- <div v-for="(member, index) in changeStringToObject(collectTeam.collect_members)" :key="member.pk">
+            <span style="color:#3596F4">{{ index + 1 }}) </span>
             <span>{{ member.fields.role }} /</span>
             <span>{{ member.fields.major }}</span><br>
-            <span v-if="member.fields.preferential">{{ member.fields.preferential }}</span>
-          </div>
+            <div v-if="member.fields.preferential" class="ml-3">
+              <strong>우대사항</strong><br>
+              <span class="preferential">{{ member.fields.preferential }}</span>
+            </div>
+          </div> -->
         </div>
         <div class="mt-4">
           <h6 class="font-weight-bold">연락처</h6>
-          <span style="color:#3596F4">{{ collectTeam.contact }}</span>
+          <span style="color:#3596F4">{{ phoneFormatter(collectTeam.contact) }}</span>
         </div>
       </div>
     </div>
@@ -73,6 +94,11 @@ export default {
       const O = JSON.parse(S);
       return O
     },
+    phoneFormatter(num) {
+      var formatNum = ""
+      formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")
+      return formatNum;
+    }
   },
   created() {
     this.getTeam(this.$route.params['teamId'])
@@ -115,6 +141,10 @@ export default {
 .btn {
   background-color: #3596F4;
   color: white;
+}
+
+.preferential {
+  white-space: pre-wrap;
 }
 
 
