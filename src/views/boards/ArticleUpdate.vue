@@ -15,8 +15,9 @@
                   label="제목을 입력하세요 :)"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12">
-                <div class="quill-editor border-bottom">
+
+              <v-col cols="12 mb-5">
+                <div class="quill-editor">
                   <quill-editor
                     class="editor"
                     ref="myTextEditor"
@@ -130,8 +131,10 @@ export default {
         return '싸피 게시판'
       } else if (this.selectedArticle.articleData.boardName === 'free') {
         return '자유 게시판'
+      } else if (this.selectedArticle.articleData.boardName === 'code') {
+        return '코드 게시판'
       } else {
-        return 'Undefined'
+        return false
       }
     }
   },
@@ -217,7 +220,7 @@ textarea {
   flex-direction: column;
   .editor {
     height: 40rem;
-    overflow: hidden;
+    overflow: default;
   }
   .output {
     width: 100%;

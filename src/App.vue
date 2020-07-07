@@ -9,8 +9,9 @@
           <div class="dropdown-content">
             <div class="row">
               <div class="column">
-                <router-link :to="{ name: 'Boards', params: {board_name: 'ssafy'} }">싸피게시판</router-link>
-                <router-link :to="{ name: 'Boards', params: {board_name: 'free'} }">자유게시판</router-link>
+                <router-link :to="{ name: 'Boards', params: {board_name: 'ssafy'} }">싸피 게시판</router-link>
+                <router-link :to="{ name: 'Boards', params: {board_name: 'free'} }">자유 게시판</router-link>
+                <router-link :to="{ name: 'Boards', params: {board_name: 'code'} }">코드 게시판</router-link>
               </div>
               <div class="column">
                 <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>

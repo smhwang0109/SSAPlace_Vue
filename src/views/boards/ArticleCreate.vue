@@ -24,12 +24,13 @@
                   <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item px-3" @click="selectBoard('ssafy')">싸피 게시판</a>
                     <a class="dropdown-item px-3" @click="selectBoard('free')">자유 게시판</a>
+                    <a class="dropdown-item px-3" @click="selectBoard('code')">코드 게시판</a>
                   </div>
                 </div>
               </v-col>
 
-              <v-col cols="12">
-                <div class="quill-editor border-bottom">
+              <v-col cols="12 mb-5">
+                <div class="quill-editor">
                   <quill-editor
                     class="editor"
                     ref="myTextEditor"
@@ -143,6 +144,8 @@ export default {
         this.selectedBoard = '싸피 게시판'
       } else if (boardName === 'free') {
         this.selectedBoard = '자유 게시판'
+      } else if (boardName === 'code') {
+        this.selectedBoard = '코드 게시판'
       }
     },
     articleCreateSave() {
@@ -158,6 +161,9 @@ export default {
   created() {
     this.selectBoard(this.$route.params.board_name)
     this.fetchTags()
+    if (this.$route.params.board_name === 'code') {
+      this.articleCreateData.body.content = '<pre class="ql-syntax" spellcheck="false">write your code here\n</pre>'
+    }
   },
 }
 </script>
@@ -221,7 +227,7 @@ textarea {
   flex-direction: column;
   .editor {
     height: 40rem;
-    overflow: hidden;
+    overflow: default;
   }
   .output {
     width: 100%;
