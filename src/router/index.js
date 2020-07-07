@@ -4,6 +4,7 @@ import vueMoment from 'vue-moment'
 
 // Home (main page)
 import Home from '@/views/Home.vue'
+import Message from '@/views/Message.vue'
 
 // rest-auth
 import SignupView from '@/views/accounts/SignupView'
@@ -42,6 +43,11 @@ Vue.use(vueMoment)
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/message',
+    name: 'Message',
+    component: Message
   },
   // rest-auth
   {
