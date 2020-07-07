@@ -1,11 +1,10 @@
 <template>
-  <div class="card">
-
+  <div v-if="selectedArticle" class="card">
     <div class="card-header">        
       <router-link :to="{ name: 'Boards', params: { board_name: articleData.boardName }}"><p class="boardname link-hover">{{ revisedBoardName }}</p></router-link>
       <div class="row">
         <h4 class="mb-0 col-md-6 col-xs-12">{{ selectedArticle.title }}</h4>        
-        <div class="mb-1 col-md-6 col-xs-12 d-flex justify-content-end">
+        <div class="mb-1 col-md-6 col-xs-12 d-flex justify-content-end align-items-center">
           <button type="button" class="btn hit-btn text-white p-1 pr-2 mr-2">
             <i class="far fa-eye mx-2 mb-0"></i>
             <span class="badge">{{ selectedArticle.hit }}</span>

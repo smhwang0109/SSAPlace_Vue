@@ -79,14 +79,14 @@ Vue.use(vueMoment)
     component: ArticleList
   },
   {
-    path: '/boards/:board_name/:article_id',
-    name: 'ArticleDetail',
-    component: ArticleDetail
-  },
-  {
     path: '/boards/:board_name/create',
     name: 'ArticleCreate',
     component: ArticleCreate
+  },
+  {
+    path: '/boards/:board_name/:article_id',
+    name: 'ArticleDetail',
+    component: ArticleDetail
   },
   {
     path: '/boards/:board_name/:article_id/update',

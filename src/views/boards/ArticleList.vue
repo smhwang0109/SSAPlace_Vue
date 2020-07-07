@@ -49,22 +49,22 @@
             class="row px-3 mx-0 border-bottom"
             @click="selectArticle(article.id)"
           >
-            <div class="col-md-6 col-xs-12 d-flex flex-column justify-content-center align-items-start">
+            <div class="col-lg-6 col-sm-12 d-flex flex-column justify-content-center align-items-start">
               <h5 class="mb-0 article-title">{{ article.title }}</h5>
               <div class="mt-1">
                 <small v-for="tag in article.tags" :key="`tag_${tag.id}`" class="mr-2 hashtag mb-0">#{{ tag.name }}</small>
               </div>
             </div>
-            <div class="col-md-6 col-xs-12 d-flex justify-content-end align-items-center">
+            <div class="col-lg-6 col-sm-12 d-flex justify-content-end align-items-center">
               <p class="mb-0 mr-4 font-weight-bold">{{ article.author.username }}</p>
               <p class="mb-0 mr-4 font-weight-bold">{{ article.created_at }}</p>
-              <button type="button" class="btn hit-btn text-white p-1 pr-2 mr-3">
-                <i class="far fa-eye mx-2 mb-0"></i>
-                <span class="badge">{{ article.hit }}</span>
+              <button type="button" class="btn hit-btn text-white p-1 pl-2 mr-2 d-flex flex-row">
+                <i class="far fa-eye mb-0"></i>
+                <span class="badge custom-width px-0 mx-0">{{ article.hit }}</span>
               </button>
-              <button type="button" class="btn like-btn text-white p-1 pr-2">
-                <i class="far fa-heart mx-2 mb-0"></i>
-                <span class="badge">{{ article.like_users.length }}</span>
+              <button type="button" class="btn like-btn text-white p-1 pl-2 d-flex flex-row">
+                <i class="far fa-heart mb-0"></i>
+                <span class="badge custom-width px-0 mx-0">{{ article.like_users.length }}</span>
               </button>
             </div>
 
@@ -315,4 +315,7 @@ table{
   -webkit-box-orient: vertical;
 }
 
+.custom-width {
+  min-width: 2rem;
+}
 </style>

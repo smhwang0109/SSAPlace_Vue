@@ -30,13 +30,15 @@
                 class="border-bottom"
                 @click="selectSSAFYArticle(article.id)"
               >
-                <div class="d-flex justify-content-between align-items-center w-100">
-                  <h6 class="mb-0 font-weight-bold article-title">{{ article.title }}</h6>
-                  <div class="d-flex justify-content-between align-items-center">
+                <div class="w-100 row">
+                  <div class="col-6">
+                    <h6 class="mb-0 font-weight-bold article-title">{{ article.title }}</h6>
+                  </div>
+                  <div class="d-flex justify-content-end align-items-center col-6">
                     <p class="mb-0">{{ article.author.username }}</p>
-                    <div class="ml-2 ssafy-color">
+                    <div class="ml-2 ssafy-color d-flex flex-row">
                       <i class="far fa-eye mx-1 mb-0 ssafy-color"></i>
-                      <span class="mb-0">{{ article.hit }}</span>
+                      <span class="badge text-center custom-width px-0">{{ article.hit }}</span>
                     </div>
                   </div>
                 </div>
@@ -64,25 +66,19 @@
               <v-list-item
                 v-for="article in freeArticles"
                 :key="`article_${article.id}`"
-                class="border-bottom article-container"
+                class="border-bottom"
                 @click="selectFreeArticle(article.id)"
               >
-                <div class="d-flex justify-content-between align-items-center w-100">
-                  <h6 class="mb-0 font-weight-bold article-title">{{ article.title }}</h6>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <p class="mb-0  font-weight-bold">{{ article.author.username }}</p>
+                <div class="w-100 row">
+                  <div class="col-6">
+                    <h6 class="mb-0 font-weight-bold article-title">{{ article.title }}</h6>
                   </div>
-                </div>
-                <div class="overlay">
-                  <div class="inner-content">
-                    <button type="button" class="btn hit-btn text-white p-1 pr-2 mr-1">
-                      <i class="far fa-eye mx-2 mb-0"></i>
-                      <span class="badge">{{ article.hit }}</span>
-                    </button>
-                    <button type="button" class="btn like-btn text-white p-1 pr-2 mr-2">
-                      <i class="far fa-heart mx-2 mb-0"></i>
-                      <span class="badge">{{ article.like_users.length }}</span>
-                    </button>
+                  <div class="d-flex justify-content-end align-items-center col-6">
+                    <p class="mb-0">{{ article.author.username }}</p>
+                    <div class="ml-2 ssafy-color d-flex flex-row">
+                      <i class="far fa-eye mx-1 mb-0 ssafy-color"></i>
+                      <span class="badge text-center custom-width px-0">{{ article.hit }}</span>
+                    </div>
                   </div>
                 </div>
               </v-list-item>
@@ -383,5 +379,9 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 1; 
   -webkit-box-orient: vertical;
+}
+
+.custom-width {
+  min-width: 2rem;
 }
 </style>
