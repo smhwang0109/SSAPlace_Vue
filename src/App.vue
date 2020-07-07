@@ -19,7 +19,7 @@
             </div>
           </div>
         </div>
-        <router-link class="two message" to="/"><i class="far fa-envelope"></i></router-link>
+        <router-link class="two message" :to="{ name: 'Message' }"><i class="far fa-envelope"></i></router-link>
 
         <div v-if="isLoggedIn" class="dropdown2 two">
           <button class="dropbtn" v-if="myaccount">{{ myaccount.username }} </button>

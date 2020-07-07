@@ -1,11 +1,10 @@
 <template>
-  <div class="card">
-
+  <div v-if="selectedArticle" class="card">
     <div class="card-header">        
       <router-link :to="{ name: 'Boards', params: { board_name: articleData.boardName }}"><p class="boardname link-hover">{{ revisedBoardName }}</p></router-link>
       <div class="row">
         <h4 class="mb-0 col-md-6 col-xs-12">{{ selectedArticle.title }}</h4>        
-        <div class="mb-1 col-md-6 col-xs-12 d-flex justify-content-end">
+        <div class="mb-1 col-md-6 col-xs-12 d-flex justify-content-end align-items-center">
           <button type="button" class="btn hit-btn text-white p-1 pr-2 mr-2">
             <i class="far fa-eye mx-2 mb-0"></i>
             <span class="badge">{{ selectedArticle.hit }}</span>
@@ -29,10 +28,15 @@
       </div>
     </div>
 
-    <div class="card-body">
-      <p v-html="selectedArticle.content" class="card-text"></p>
+    <div class="card-body py-1">
       <div>
-        <small v-for="tag in selectedArticle.tags" :key="`tag_${tag.id}`" class="hashtag mr-2">#{{ tag.name }}</small>
+        <span v-for="tag in selectedArticle.tags" :key="`tag_${tag.id}`" class="hashtag mr-2">#{{ tag.name }}</span>
+      </div>
+      <hr class="my-1">
+      <div class="quill-editor">
+        <div class="output ql-snow">
+          <div class="ql-editor" v-html="selectedArticle.content"></div>
+        </div>
       </div>
     </div>
 
@@ -293,4 +297,24 @@ textarea {
   background-color:#e00000;
 }
 
+.quill-editor {
+  display: flex;
+  flex-direction: column;
+  .output {
+    width: 100%;
+    height: 20rem;
+    margin: 0;
+    border: 1px solid #ccc;
+    overflow-y: auto;
+    resize: vertical;
+    &.code {
+      padding: 1rem;
+      height: 16rem;
+    }
+    &.ql-snow {
+      border-top: none;
+      height: 24rem;
+    }
+  }
+}
 </style>

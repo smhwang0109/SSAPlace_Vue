@@ -39,6 +39,8 @@ export default new Vuex.Store({
     users: null,
     profile: null,
     errorMessages:null,
+    messageGroup: null,
+
 
     // teams
     teams: null,
@@ -88,6 +90,9 @@ export default new Vuex.Store({
     },
     SET_PROFILE(state, profile) {
       state.profile = profile
+    },
+    SET_MESSAGE_GROUP(state, messageGroup) {
+      state.messageGroup = messageGroup
     },
 
     // teams
@@ -244,6 +249,19 @@ export default new Vuex.Store({
           commit('SET_PROFILE', res.data)
         })
         .catch(err => console.log(err.response.data))
+    },
+    fetchMessageGroup({ getters, commit }) {
+      axios.get(SERVER.URL + SERVER.ROUTES.userList + 'message-group/', getters.config)
+        .then(res => {
+          commit('SET_MESSAGE_GROUP', res.data)
+        })
+        .catch(err => console.log(err.response.data))
+    },
+    createMessageGroup({ getters }, messageGroupData) {
+      axios.post(SERVER.URL + SERVER.ROUTES.userList + 'message-group/', messageGroupData, getters.config)
+      .then(() => {
+      })
+      .catch(err => console.log(err.response.data))
     },
 
     // teams

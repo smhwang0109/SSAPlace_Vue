@@ -4,6 +4,7 @@ import vueMoment from 'vue-moment'
 
 // Home (main page)
 import Home from '@/views/Home.vue'
+import Message from '@/views/Message.vue'
 
 // rest-auth
 import SignupView from '@/views/accounts/SignupView'
@@ -43,6 +44,11 @@ Vue.use(vueMoment)
     name: 'Home',
     component: Home
   },
+  {
+    path: '/message',
+    name: 'Message',
+    component: Message
+  },
   // rest-auth
   {
     path: '/signup',
@@ -79,14 +85,14 @@ Vue.use(vueMoment)
     component: ArticleList
   },
   {
-    path: '/boards/:board_name/:article_id',
-    name: 'ArticleDetail',
-    component: ArticleDetail
-  },
-  {
     path: '/boards/:board_name/create',
     name: 'ArticleCreate',
     component: ArticleCreate
+  },
+  {
+    path: '/boards/:board_name/:article_id',
+    name: 'ArticleDetail',
+    component: ArticleDetail
   },
   {
     path: '/boards/:board_name/:article_id/update',
