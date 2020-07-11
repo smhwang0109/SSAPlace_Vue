@@ -159,9 +159,6 @@ export default {
   created() {
     this.getProfile(this.userId)
     this.fetchTeams()
-    const idx = Math.floor(Math.random() * this.images.length)
-    this.selectedImage = this.images[idx]
-    console.log(this.selectedImage)
   },
 }
 </script>

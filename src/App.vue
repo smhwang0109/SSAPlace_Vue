@@ -272,4 +272,8 @@ export default {
   margin-bottom: 150px
 }
 
+.dropdown-content > .row {
+  background-color: white;
+}
+
 </style>

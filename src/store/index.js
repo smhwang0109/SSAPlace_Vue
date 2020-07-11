@@ -109,6 +109,9 @@ export default new Vuex.Store({
     SET_COLLECT_TEAM(state, team) {
       state.collectTeam = team
     },
+    SET_COLLECT_TEAM_EMPTY(state){
+      state.collectTeam = null
+    },
     SET_INTERESTS(state, interests) {
       state.interests = interests
     },
@@ -292,7 +295,10 @@ export default new Vuex.Store({
         .then (res => {
           commit('SET_COLLECT_TEAM', res.data)
         })
-        .catch(err => console.log(err.response.data))
+        .catch(err => {
+          commit('SET_COLLECT_TEAM_EMPTY')
+          console.log(err.response.data)
+        })
     },
 
     fetchInterests({ commit }) {
@@ -348,11 +354,6 @@ export default new Vuex.Store({
             })
           } else {
             if (err.response.data.content[0] === '이 필드는 blank일 수 없습니다.' || err.response.data.content[0] === "이 필드는 null일 수 없습니다.") {
-              // swal.fire({
-              //   icon: 'error',
-              //   title: "내용을 입력해야 합니다. ",
-              //   confirmButtonText: '확인'
-              // })
               Toast.fire({
                 icon: 'error',
                 title: "내용을 입력해야 합니다.",

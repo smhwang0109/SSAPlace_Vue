@@ -6,7 +6,10 @@
       <p style="color:#3c3c3c">팀원 {{ team.current_members }}명 / {{ team.residence }} / Since {{team.created_at | moment('YYYY-MM-DD')}}</p>
     </div>
     <div class="intro">
-      <h6 class="font-weight-bold">팀 정보</h6>
+      <div class="d-flex justify-content-between">
+        <h6 class="font-weight-bold">팀 정보</h6>
+        <router-link :to="{ name: 'TeamUpdate', params: {teamId: team.id} }" class="btn btn-sm update">프로필 수정</router-link>
+      </div>
       <hr class="mt-2">
       <p class="description">{{ team.description }}</p>
       <div class="d-flex">

@@ -25,6 +25,7 @@ import ArticleUpdate from '@/views/boards/ArticleUpdate'
 // Teams
 import TeamCreate from '@/views/teams/TeamCreate'
 import TeamDetail from '@/views/teams/TeamDetail'
+import TeamUpdate from '@/views/teams/TeamUpdate'
 import CollectTeamCreate from '@/views/teams/CollectTeamCreate'
 import FindMember from '@/views/teams/FindMember'
 import CollectTeamList from '@/views/teams/CollectTeamList'
@@ -105,6 +106,11 @@ Vue.use(vueMoment)
     path: '/teams/create',
     name: 'TeamCreate',
     component: TeamCreate
+  },
+  {
+    path: '/teams/:teamId/update',
+    name: 'TeamUpdate',
+    component: TeamUpdate
   },
   {
     path: '/teams/collect',
