@@ -23,7 +23,6 @@
                     ref="myTextEditor"
                     v-model="articleUpdateData.body.content"
                     :options="editorOption"
-                    @change="onEditorChange"
                   />
                 </div>
               </v-col>
@@ -70,7 +69,6 @@
 import { mapState, mapActions } from 'vuex'
 
 import hljs from 'highlight.js'
-import debounce from 'lodash/debounce'
 import { quillEditor } from 'vue-quill-editor'
 // highlight.js style
 import 'highlight.js/styles/tomorrow.css'
@@ -146,9 +144,6 @@ export default {
     clickBack() {
       this.$router.go(-1)
     },
-    onEditorChange: debounce(function(value) {
-      this.content = value.html
-    }, 466),
   },
   created() {
     this.selectArticle(this.articleData)
