@@ -7,13 +7,13 @@ import vuetify from './plugins/vuetify'
 // import io from 'socket.io-client'
 // import SERVER from '@/api/drf'
 
-Vue.use(VueCookies)
-
 // const socket = io(SERVER.URL + '/chat/');
 
 // Vue.prototype.$socket = socket;
 
-Vue.config.productionTip = false
+// Vue.config.productionTip = false
+
+Vue.use(VueCookies)
 
 new Vue({
   router,
