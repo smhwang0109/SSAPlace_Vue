@@ -1,15 +1,12 @@
 <template>
   <div v-if="profile" class="container mt-3">
     <div class="header row mb-3">
-      <div class="col-4 col-lg-3 d-flex flex-column align-items-center">
+      <div class="col-4 col-lg-3 d-flex flex-column align-items-center profile-image-box">
         <img class="profile-image" src="../../assets/img_avatar2.png">
-        <div class="d-flex justify-content-center mt-auto">
-          <router-link :to="{ name: 'ProfileEdit', params: {user_id: profile.user.id} }" class="btn btn-sm update">프로필 수정</router-link>
-        </div>
       </div>
       <div class="col-8 col-lg-9 pl-5 mt-0 ">
         <div class="d-flex justify-content-between">
-          <h3 v-if="profile">{{ profile.user.username }}</h3>
+          <h3 v-if="profile">{{ profile.user.username }}<router-link v-if="profile.user.username === myaccount.username" :to="{ name: 'ProfileEdit', params: {user_id: profile.user.id} }" class="btn btn-sm update ml-3">프로필 수정</router-link></h3>
           <div>
             <!-- github 주소 -->
             <a v-if="profile.github" :href="profile.github" target="_blank"><i class="fab fa-github mr-3 sites fa-2x"></i> </a>
@@ -51,7 +48,7 @@
       <!-- 본인이 소속된 팀 -->
       <div class="d-flex justify-content-between">
         <h5 class="d-inline">우리 팀</h5>
-        <router-link :to="{ name: 'TeamCreate' }" class="btn">팀 생성</router-link>
+        <router-link v-if="profile.user.username === myaccount.username" :to="{ name: 'TeamCreate' }" class="btn">팀 생성</router-link>
       </div>
 
       <div class="container-fluid mt-4" v-if="teams.length">
@@ -166,6 +163,10 @@ export default {
 <style scoped>
 .container {
   text-align: left;
+}
+.profile-image-box {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .profile-image {
   border-radius: 50%;

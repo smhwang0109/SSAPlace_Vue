@@ -14,13 +14,13 @@
                 <router-link :to="{ name: 'Boards', params: {board_name: 'code'} }">코드 게시판</router-link>
               </div>
               <div class="column">
-                <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link>
+                <!-- <router-link :to="{ name: 'FindMember' }">PJT 멤버 찾아요</router-link> -->
                 <router-link :to="{ name: 'CollectTeamList' }">PJT 팀 찾아요</router-link>
               </div>
             </div>
           </div>
         </div>
-        <router-link class="two message" :to="{ name: 'Message' }"><i class="far fa-envelope"></i></router-link>
+        <!-- <router-link class="two message" :to="{ name: 'Message' }"><i class="far fa-envelope"></i></router-link> -->
 
         <div v-if="isLoggedIn" class="dropdown2 two">
           <button class="dropbtn" v-if="myaccount">{{ myaccount.username }} </button>
@@ -105,6 +105,7 @@ export default {
 
 .two {
   width: 16.66%;
+  float: right !important; 
 }
 
 /* Navbar container */
