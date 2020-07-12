@@ -3,14 +3,14 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
-import io from 'socket.io-client'
-import SERVER from '@/api/drf'
+// import io from 'socket.io-client'
+// import SERVER from '@/api/drf'
 
-const socket = io(SERVER.URL + '/chat/');
+// const socket = io(SERVER.URL + '/chat/');
 
-Vue.prototype.$socket = socket;
+// Vue.prototype.$socket = socket;
 
-Vue.config.productionTip = false
+// Vue.config.productionTip = false
 
 new Vue({
   router,

@@ -283,8 +283,8 @@ export default new Vuex.Store({
     },
 
     // teams
-    fetchTeams({ getters, commit }) {
-      axios.get(SERVER.URL + SERVER.ROUTES.teamList, getters.config)
+    fetchTeams({ getters, commit }, userId) {
+      axios.get(SERVER.URL + SERVER.ROUTES.teamList + userId + '/', getters.config)
         .then(res => {
           commit('SET_TEAMS', res.data)
         })

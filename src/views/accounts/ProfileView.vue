@@ -155,7 +155,7 @@ export default {
   },
   created() {
     this.getProfile(this.userId)
-    this.fetchTeams()
+    this.fetchTeams(this.userId)
   },
 }
 </script>
