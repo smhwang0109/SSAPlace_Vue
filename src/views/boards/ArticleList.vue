@@ -26,8 +26,19 @@
       <div class="board-tools border-bottom row mx-0 px-1">
         <div class="col-md-6 col-sm-12">
           <div class="d-flex justify-content-start align-items-center">
-            <label for="searchbar"><h4 class="mb-0"><i class="fas fa-search mb-0"></i></h4></label>
-            <input @keyup.enter="searchArticle(searchData)" v-model="searchData.keyword" type="text" class="form-control ml-2 rounded border w-100" id="searchbar" placeholder="제목, 내용, 태그로 게시물을 검색해보세요 :)">
+            <!-- <label for="searchbar"><h4 class="mb-0"><i class="fas fa-search mb-0"></i></h4></label> -->
+            <div class="dropdown">
+              <button class="btn dropdown-toggle mx-0 px-1" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span v-if="selectedFilter">{{ selectedFilter }}</span>
+                <span v-else>검색</span>
+              </button>
+              <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item px-3" @click="selectFilter('제목')">제목</a>
+                <a class="dropdown-item px-3" @click="selectFilter('내용')">내용</a>
+                <a class="dropdown-item px-3" @click="selectFilter('태그')">태그</a>
+              </div>
+            </div>
+            <input @keyup.enter="searchArticle(searchData)" v-model="searchData.keyword" type="text" class="form-control ml-2 rounded border w-100" id="searchbar" placeholder="검색어를 입력하고 Enter를 누르세요 :)">
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
@@ -46,26 +57,44 @@
           <v-list-item
             v-for="article in paginatedData"
             :key="`article_${article.id}`"
-            class="row px-3 mx-0 border-bottom"
+            class="row px-1 mx-0 border-bottom"
             @click="selectArticle(article.id)"
           >
-            <div class="col-lg-6 col-sm-12 d-flex flex-column justify-content-center align-items-start">
-              <h5 class="mb-0 article-title">{{ article.title }}</h5>
-              <div class="mt-1">
+            <div class="col-lg-6 col-sm-12 d-flex flex-column justify-content-center align-items-start custom-height">
+              <h5 class="my-1 article-title">{{ article.title }}</h5>
+              <div v-if="article.tags" class="d-flex justify-content-start align-items-end">
                 <small v-for="tag in article.tags" :key="`tag_${tag.id}`" class="mr-2 hashtag mb-0">#{{ tag.name }}</small>
               </div>
             </div>
             <div class="col-lg-6 col-sm-12 d-flex justify-content-end align-items-center">
-              <p class="mb-0 mr-4 font-weight-bold">{{ article.author.username }}</p>
-              <p class="mb-0 mr-4 font-weight-bold">{{ article.created_at }}</p>
-              <button type="button" class="btn hit-btn text-white p-1 pl-2 mr-2 d-flex flex-row">
+              <small class="mb-0 mr-4 font-weight-bold">{{ article.author.username }}</small>
+              <small class="mb-0 mr-4">{{ article.created_at }}</small>
+              <div class="hit-btn d-flex flex-row align-items-center mr-3">
                 <i class="far fa-eye mb-0"></i>
-                <span class="badge custom-width px-0 mx-0">{{ article.hit }}</span>
-              </button>
-              <button type="button" class="btn like-btn text-white p-1 pl-2 d-flex flex-row">
-                <i class="far fa-heart mb-0"></i>
-                <span class="badge custom-width px-0 mx-0">{{ article.like_users.length }}</span>
-              </button>
+                <small class="text-center custom-width">{{ article.hit }}</small>
+              </div>
+              <div class="like-btn d-flex flex-row align-items-center">
+                <i class="fas fa-heart mb-0"></i>
+                <small class="text-center custom-width">{{ article.like_users.length }}</small>
+              </div>
+            <!-- <div class="col-lg-6 col-sm-12 d-flex flex-column justify-content-center align-items-end">
+              <div>
+                <div class="d-flex justify-content-end align-items-center mr-1 mb-1">
+                  <small class="mb-0 mr-4 font-weight-bold">{{ article.author.username }}</small>
+                  <small class="mb-0">{{ article.created_at }}</small>
+                </div>
+                <div class="d-flex justify-content-end align-items-center">
+                  <div class="hit-btn d-flex flex-row align-items-center ml-1 mr-3">
+                    <i class="far fa-eye mb-0"></i>
+                    <small class="text-center custom-width">{{ article.hit }}</small>
+                  </div>
+                  <div class="like-btn d-flex flex-row align-items-center">
+                    <i class="fas fa-heart mb-0"></i>
+                    <small class="text-center custom-width">{{ article.like_users.length }}</small>
+                  </div>
+                </div>
+              </div> -->
+
             </div>
 
             
@@ -95,8 +124,10 @@ export default {
       pageSize: 10,
       searchData: {
         boardName: this.$route.params.board_name,
+        filterName: null,
         keyword: null
-      }
+      },
+      selectedFilter: null
     }
   },
   methods: {
@@ -109,6 +140,10 @@ export default {
     },
     selectArticle(articleId) {
       router.push({ name: 'ArticleDetail', params: { board_name: this.boardName, article_id: articleId }})
+    },
+    selectFilter(filterName) {
+      this.searchData.filterName = filterName
+      this.selectedFilter = filterName
     },
   },
   computed: {
@@ -153,11 +188,14 @@ export default {
   },
   created() {
     this.fetchArticles(this.boardName)
+    this.selectFilter('제목')
   },
   beforeRouteUpdate (to, from, next) {
     this.fetchArticles(to.params.board_name)
     this.boardName = to.params.board_name
     this.searchData.boardName = to.params.board_name
+    this.selectFilter('제목')
+    this.searchData.keyword = null
     next();
   },
 }
@@ -301,13 +339,13 @@ table{
 }
 
 .hit-btn {
-  background-color:#4aa5ff;
-  color: white;
+  color:#4aa5ff;
+  /* color: white; */
 }
 
 .like-btn {
-  background-color:#ff5252;
-  color: white;
+  color:#ff5252;
+  /* color: white; */
 }
 
 .article-title {
@@ -318,9 +356,15 @@ table{
   display: -webkit-box;
   -webkit-line-clamp: 1; 
   -webkit-box-orient: vertical;
+  text-align: start;
 }
 
 .custom-width {
   min-width: 2rem;
 }
+
+.custom-height {
+  min-height: 75.2px;
+}
+
 </style>
