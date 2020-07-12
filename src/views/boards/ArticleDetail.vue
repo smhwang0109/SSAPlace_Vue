@@ -46,12 +46,12 @@
       <hr>
       <div v-if="comments!=='[]'">
         <div v-for="comment in comments" :key="comment.id">
-          <div class="comments d-flex justify-content-between">
+          <div class="comments d-flex justify-content-between my-1">
             <!-- 댓글 작성자 -->
             <strong>{{ comment.author.username }}</strong>
             
             <!-- 댓글 수정/삭제 드롭다운 -->
-            <div v-if="comment.author.id === myaccount.id" class="btn-group dropleft comment-padding">
+            <div v-if="comment.author.id === myaccount.id" class="btn-group dropleft comment-padding pr-0">
               <button type="button" class="btn btn-sm custom-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
               <div class="dropdown-menu">
                 <p class="give-highlight text-center border-bottom" @click="initUpdateComment(comment)">수정</p>
@@ -61,25 +61,46 @@
           </div>
 
           <!-- 댓글 수정란 -->
-          <div class="mx-1 my-1 d-flex justify-content-center">
-            <div v-show="comment.id === commentUpdateData.commentId" class="input-group row">
-              <textarea @keyup.enter="saveUpdateComment" v-model="commentUpdateData.body.content" type="content" class="col-xs-8 col-md-11" rows="2"></textarea>
+          <div v-if="comment.id === commentUpdateData.commentId" class="mx-2 d-flex justify-content-center">
+            <div class="input-group row">
+              <div v-if="articleData.boardName == 'code'" class="quill-editor col-md-11 py-0 px-0">
+                <quill-editor
+                  class="editor"
+                  ref="myTextEditor"
+                  v-model="commentUpdateData.body.content"
+                  :options="editorOption"
+                />
+              </div>
+              <textarea v-else @keyup.enter="saveUpdateComment" v-model="commentUpdateData.body.content" type="content" class="col-xs-8 col-md-11" rows="2"></textarea>
               <button @click="saveUpdateComment" class="input-group-append btn custom-btn justify-content-center align-items-center col-xs-4 col-md-1 text-center">수정</button>
             </div>
           </div>
           <!-- 댓글 내용 -->
-          <div v-show="comment.id != commentUpdateData.commentId">
-            <p class="mb-2">{{ comment.content }}</p>
-            <small class="comment-info">created {{ comment.created_at }} & updated {{ comment.updated_at }}</small>
-            <hr>
+          <div v-if="comment.id != commentUpdateData.commentId">
+            <!-- <p class="mb-2" v-html="comment.content"></p> -->
+            <div class="quill-editor mb-3">
+              <div class="output ql-snow">
+                <div class="ql-editor p-0 m-0" v-html="comment.content"></div>
+              </div>
+            </div>
           </div>
+          <small class="comment-info">created {{ comment.created_at }} & updated {{ comment.updated_at }}</small>
+          <hr>
         </div>
       </div>
       <!-- 댓글 생성 -->
       <div class="mx-1 d-flex justify-content-center">
         <div class="input-group row">
-          <textarea @keyup.enter="saveCreateComment" v-model="commentCreateData.content" class="col-xs-8 col-md-11" type="content" placeholder="댓글을 작성해주세요." rows="2" ></textarea>
-          <button class="input-group-append btn custom-btn justify-content-center align-items-center col-xs-4 col-md-1 text-center" @click="saveCreateComment">작성</button>
+          <div v-if="articleData.boardName == 'code'" class="quill-editor col-md-11 py-0 px-0">
+            <quill-editor
+              class="editor"
+              ref="myTextEditor"
+              v-model="commentCreateData.content"
+              :options="editorOption"
+            />
+          </div>
+          <textarea v-else @keyup.enter="saveCreateComment" v-model="commentCreateData.content" class="col-md-11" type="content" placeholder="댓글을 작성해주세요." rows="2" ></textarea>
+          <button class="input-group-append btn custom-btn justify-content-center align-items-center col-md-1 text-center" @click="saveCreateComment">작성</button>
         </div>
       </div>
     </div>  
@@ -88,10 +109,32 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
+
+import hljs from 'highlight.js'
+import { quillEditor } from 'vue-quill-editor'
+// highlight.js style
+import 'highlight.js/styles/tomorrow.css'
+// import theme style
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+
 export default {
   name: 'ArticleDetail',
+  components: {
+    quillEditor
+  },
   data() {
     return {
+      editorOption: {
+        modules: {
+          toolbar: [
+            ['code-block'],
+          ],
+          syntax: {
+            highlight: text => hljs.highlightAuto(text).value
+          }
+        }
+      },
       articleData: {
         boardName: this.$route.params.board_name,
         articleId: this.$route.params.article_id,
@@ -134,7 +177,11 @@ export default {
     saveCreateComment() {
       this.createComment(this.commentCreateData)
         .then(() => {
-          this.commentCreateData.content = null
+          if (this.$route.params.board_name === 'code') {
+            this.commentCreateData.content = '<pre class="ql-syntax" spellcheck="false">write your code here\n</pre>'
+          } else {
+            this.commentCreateData.content = null
+          }
         })
     },
     initUpdateComment(comment) {
@@ -154,11 +201,14 @@ export default {
       } else {
         return false
       }
-    }
+    },
   },
   created() {
     this.selectArticle(this.articleData)
     this.fetchComments(this.articleData)
+    if (this.$route.params.board_name === 'code') {
+      this.commentCreateData.content = '<pre class="ql-syntax" spellcheck="false">write your code here\n</pre>'
+    }
   },
   beforeRouteUpdate (to, from, next) {
     this.boardName = to.params.board_name
@@ -302,6 +352,11 @@ textarea {
 .quill-editor {
   display: flex;
   flex-direction: column;
+  /* 왜 안먹지..? */
+  .editor { 
+    overflow: default;
+    background-color: white;
+  }
   .output {
     width: 100%;
     height: 20rem;
@@ -319,4 +374,11 @@ textarea {
     }
   }
 }
+
+.editor {
+  overflow: default;
+  background-color: white;
+}
+
+
 </style>
