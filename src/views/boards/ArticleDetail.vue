@@ -81,8 +81,9 @@
                   v-model="commentUpdateData.body.content"
                   :options="editorOption"
                 >
-                  <div id="toolbar" slot="toolbar">
-                    <button class="ql-code-block w-100"></button>
+                  <div id="toolbar" slot="toolbar" class="d-flex align-items-center">
+                    <button class="ql-code-block"></button>
+                    <small class="add-code">코드 추가</small>
                   </div>
                 </quill-editor>
               </div>
@@ -113,8 +114,9 @@
               v-model="commentCreateData.content"
               :options="editorOption"
             >
-              <div id="toolbar" slot="toolbar">
-                <button class="ql-code-block w-100"></button>
+              <div id="toolbar" slot="toolbar" class="d-flex align-items-center">
+                <button class="ql-code-block"></button>
+                <small class="add-code">코드 추가</small>
               </div>
             </quill-editor>
           </div>
@@ -137,10 +139,9 @@ import 'highlight.js/styles/tomorrow.css'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 
-import Quill from 'quill'
-
-let icons = Quill.import('ui/icons');
-icons['code-block'] = '<span aria-hidden="true">코드 추가</span>';
+// import Quill from 'quill'
+// let icons = Quill.import('ui/icons');
+// icons['code-block'] = '<span aria-hidden="true">코드 추가</span>';
 
 export default {
   name: 'ArticleDetail',
@@ -158,17 +159,6 @@ export default {
           }
         }
       },
-      // editorOption: {
-      //   placeholder: '댓글을 작성하세요 :)',
-      //   modules: {
-      //     toolbar: [
-      //       ['code-block'],
-      //     ],
-      //     syntax: {
-      //       highlight: text => hljs.highlightAuto(text).value
-      //     }
-      //   }
-      // },
       articleData: {
         boardName: this.$route.params.board_name,
         articleId: this.$route.params.article_id,
@@ -412,10 +402,13 @@ textarea {
   min-height: 15rem;
 }
 
-.ql-code-block {
+/* .ql-code-block {
   text-align: start;
   margin-bottom: 5px;
   color: #3596F4;
-}
+} */
 
+.add-code {
+  color:rgba(0, 0, 0, 0.4)
+}
 </style>
