@@ -14,10 +14,12 @@
       <p class="description">{{ team.description }}</p>
       <div class="d-flex">
         <div class="col-6">
-          <h6 class="font-weight-bold">사용 언어 & <span style="color:#3596F4">관심 분야</span></h6>
-          <span class="badge badge-pill language-badge mr-1" v-for="language_id in team.front_language" :key="`front_${language_id}`"> {{ languages[language_id-1]["language"] }} </span>
-          <span class="badge badge-pill language-badge mr-1" v-for="language_id in team.back_language" :key="`back_${language_id}`"> {{ languages[language_id-1]["language"] }} </span>
+          <h6 class="font-weight-bold"><span style="color:#3596F4">관심 분야</span></h6>
           <span class="badge badge-pill interest-badge mr-1" v-for="interest_id in team.interests" :key="`interest_${interest_id}`"> {{ interests[interest_id-1]["interest"] }} </span>
+          <h6 class="font-weight-bold mt-3">Front Language & Framework</h6>
+          <span class="badge badge-pill language-badge mr-1" v-for="language_id in team.front_language" :key="`front_${language_id}`"> {{ languages[language_id-1]["language"] }} </span>
+          <h6 class="font-weight-bold mt-3">Back Language & Framework</h6>
+          <span class="badge badge-pill language-badge mr-1" v-for="language_id in team.back_language" :key="`back_${language_id}`"> {{ languages[language_id-1]["language"] }} </span>
         </div>
         <div class="col-6">
           <h6 class="font-weight-bold">팀장</h6>
@@ -57,10 +59,8 @@
                   <span class="preferential">{{ member.fields.preferential }}</span>
                 </div>
               </div>
-              
             </div>  
           </div>
-          
           
           <!-- <div v-for="(member, index) in changeStringToObject(collectTeam.collect_members)" :key="member.pk">
             <span style="color:#3596F4">{{ index + 1 }}) </span>
@@ -79,7 +79,7 @@
       </div>
     </div>
     <!-- <router-link v-if="!collectTeam && team.leader.username === myaccount.username" :to="{ name: 'CollectTeamCreate', params: {teamId: team.id} }" class="btn">모집 공고 만들기</router-link> -->
-    <router-link v-if="!collectTeam" :to="{ name: 'CollectTeamCreate', params: {teamId: team.id} }" class="btn">모집 공고 만들기</router-link>
+    <router-link v-if="!collectTeam" :to="{ name: 'CollectTeamCreate', params: {teamId: team.id} }" class="btn mt-3">모집 공고 만들기</router-link>
   </div>
 </template>
 
