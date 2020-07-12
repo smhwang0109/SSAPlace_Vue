@@ -46,26 +46,44 @@
           <v-list-item
             v-for="article in paginatedData"
             :key="`article_${article.id}`"
-            class="row px-3 mx-0 border-bottom"
+            class="row px-1 mx-0 border-bottom"
             @click="selectArticle(article.id)"
           >
-            <div class="col-lg-6 col-sm-12 d-flex flex-column justify-content-center align-items-start">
-              <h5 class="mb-0 article-title">{{ article.title }}</h5>
-              <div class="mt-1">
+            <div class="col-lg-6 col-sm-12 d-flex flex-column justify-content-center align-items-start custom-height">
+              <h5 class="my-1 article-title">{{ article.title }}</h5>
+              <div v-if="article.tags" class="d-flex justify-content-start align-items-end">
                 <small v-for="tag in article.tags" :key="`tag_${tag.id}`" class="mr-2 hashtag mb-0">#{{ tag.name }}</small>
               </div>
             </div>
             <div class="col-lg-6 col-sm-12 d-flex justify-content-end align-items-center">
-              <p class="mb-0 mr-4 font-weight-bold">{{ article.author.username }}</p>
-              <p class="mb-0 mr-4 font-weight-bold">{{ article.created_at }}</p>
-              <button type="button" class="btn hit-btn text-white p-1 pl-2 mr-2 d-flex flex-row">
+              <small class="mb-0 mr-4 font-weight-bold">{{ article.author.username }}</small>
+              <small class="mb-0 mr-4">{{ article.created_at }}</small>
+              <div class="hit-btn d-flex flex-row align-items-center mr-3">
                 <i class="far fa-eye mb-0"></i>
-                <span class="badge custom-width px-0 mx-0">{{ article.hit }}</span>
-              </button>
-              <button type="button" class="btn like-btn text-white p-1 pl-2 d-flex flex-row">
-                <i class="far fa-heart mb-0"></i>
-                <span class="badge custom-width px-0 mx-0">{{ article.like_users.length }}</span>
-              </button>
+                <small class="text-center custom-width">{{ article.hit }}</small>
+              </div>
+              <div class="like-btn d-flex flex-row align-items-center">
+                <i class="fas fa-heart mb-0"></i>
+                <small class="text-center custom-width">{{ article.like_users.length }}</small>
+              </div>
+            <!-- <div class="col-lg-6 col-sm-12 d-flex flex-column justify-content-center align-items-end">
+              <div>
+                <div class="d-flex justify-content-end align-items-center mr-1 mb-1">
+                  <small class="mb-0 mr-4 font-weight-bold">{{ article.author.username }}</small>
+                  <small class="mb-0">{{ article.created_at }}</small>
+                </div>
+                <div class="d-flex justify-content-end align-items-center">
+                  <div class="hit-btn d-flex flex-row align-items-center ml-1 mr-3">
+                    <i class="far fa-eye mb-0"></i>
+                    <small class="text-center custom-width">{{ article.hit }}</small>
+                  </div>
+                  <div class="like-btn d-flex flex-row align-items-center">
+                    <i class="fas fa-heart mb-0"></i>
+                    <small class="text-center custom-width">{{ article.like_users.length }}</small>
+                  </div>
+                </div>
+              </div> -->
+
             </div>
 
             
@@ -301,13 +319,13 @@ table{
 }
 
 .hit-btn {
-  background-color:#4aa5ff;
-  color: white;
+  color:#4aa5ff;
+  /* color: white; */
 }
 
 .like-btn {
-  background-color:#ff5252;
-  color: white;
+  color:#ff5252;
+  /* color: white; */
 }
 
 .article-title {
@@ -318,9 +336,14 @@ table{
   display: -webkit-box;
   -webkit-line-clamp: 1; 
   -webkit-box-orient: vertical;
+  text-align: start;
 }
 
 .custom-width {
   min-width: 2rem;
+}
+
+.custom-height {
+  min-height: 75.2px;
 }
 </style>
