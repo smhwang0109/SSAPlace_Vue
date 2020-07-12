@@ -368,8 +368,8 @@ export default {
     createTeam() {
       this.teamData.current_members = this.teamData.members.length
       axios.post(SERVER.URL + SERVER.ROUTES.teamList, this.teamData, this.config)
-        .then(() => {
-          router.push({ name: 'TeamDetail'})
+        .then(res => {
+          router.push({ name: 'TeamDetail', params: {teamId: res.data.id}})
         })
         .catch(err => console.log(err.response.data))
     },
