@@ -138,13 +138,12 @@
     </div>
     
     <!-- 프로젝트 멤버 구해요 -->
-    <div class="d-flex justify-content-between mt-5">
+    <!-- <div class="d-flex justify-content-between mt-5">
       <h4 class="my-4">이번주 멤버 추천</h4>
        <i @click="clickFindMember" class="fas fa-chevron-right fa-2x arrow"></i>
     </div>
     <div>
       <div class="card-deck">
-        <!-- Sample card 1 -->
         <div class="card">
           <div class="card-header">
             <div class="member-name d-flex justify-content-between">
@@ -165,50 +164,8 @@
             <i class="far fa-bookmark"></i>
           </div>
         </div>
-        <!-- Sample card 2 -->
-        <div class="card">
-          <div class="card-header">
-            <div class="member-name d-flex justify-content-between">
-              <p class="col-3 p-0">황수민</p>
-              <p class="position col-9 p-0 text-right">Front End Developer</p>
-            </div>
-            <small>
-              <i class="fas fa-map-marker-alt"></i>
-              서울특별시 강남구/3기
-            </small>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title position-title">프론트엔드 개발자, 웹 개발자</h5>
-            <p class="card-text">1학기 프로젝트 최우수상, 기획 경험, 디자인, 포토샵, Django, Vue 모두 가능 </p>
-          </div>
-          <div class="card-footer d-flex justify-content-between">
-            <small class="text-muted">2시간 전</small>
-            <i class="far fa-bookmark"></i>
-          </div>
-        </div>
-        <!-- sample card 3 -->
-        <div class="card">
-          <div class="card-header">
-            <div class="member-name d-flex justify-content-between">
-              <p class="col-3 p-0">박선환</p>
-              <p class="position col-9 p-0 text-right">Front End Developer</p>
-            </div>
-            <small>
-              <i class="fas fa-map-marker-alt"></i>
-              서울특별시 강남구/3기
-            </small>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title position-title">프론트엔드 개발자, 웹 개발자</h5>
-            <p class="card-text">1학기 프로젝트 최우수상, 기획 경험, 디자인, 포토샵, Django, Vue 모두 가능 </p>
-          </div>
-          <div class="card-footer d-flex justify-content-between">
-            <small class="text-muted">2시간 전</small>
-            <i class="far fa-bookmark"></i>
-          </div>
-        </div>
       </div>
-    </div>
+    </div> -->
 
    
   </div>
