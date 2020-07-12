@@ -95,6 +95,7 @@ export default {
   data() {
     return {
       editorOption: {
+        placeholder: '글을 작성하세요 :)',
         modules: {
           toolbar: [
             ['bold', 'italic', 'underline', 'strike'],

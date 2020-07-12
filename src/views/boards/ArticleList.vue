@@ -26,8 +26,19 @@
       <div class="board-tools border-bottom row mx-0 px-1">
         <div class="col-md-6 col-sm-12">
           <div class="d-flex justify-content-start align-items-center">
-            <label for="searchbar"><h4 class="mb-0"><i class="fas fa-search mb-0"></i></h4></label>
-            <input @keyup.enter="searchArticle(searchData)" v-model="searchData.keyword" type="text" class="form-control ml-2 rounded border w-100" id="searchbar" placeholder="제목, 내용, 태그로 게시물을 검색해보세요 :)">
+            <!-- <label for="searchbar"><h4 class="mb-0"><i class="fas fa-search mb-0"></i></h4></label> -->
+            <div class="dropdown">
+              <button class="btn dropdown-toggle mx-0 px-1" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span v-if="selectedFilter">{{ selectedFilter }}</span>
+                <span v-else>검색</span>
+              </button>
+              <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item px-3" @click="selectFilter('제목')">제목</a>
+                <a class="dropdown-item px-3" @click="selectFilter('내용')">내용</a>
+                <a class="dropdown-item px-3" @click="selectFilter('태그')">태그</a>
+              </div>
+            </div>
+            <input @keyup.enter="searchArticle(searchData)" v-model="searchData.keyword" type="text" class="form-control ml-2 rounded border w-100" id="searchbar" placeholder="검색어를 입력하고 Enter를 누르세요 :)">
           </div>
         </div>
         <div class="col-md-6 col-sm-12">
@@ -113,8 +124,10 @@ export default {
       pageSize: 10,
       searchData: {
         boardName: this.$route.params.board_name,
+        filterName: null,
         keyword: null
-      }
+      },
+      selectedFilter: null
     }
   },
   methods: {
@@ -127,6 +140,10 @@ export default {
     },
     selectArticle(articleId) {
       router.push({ name: 'ArticleDetail', params: { board_name: this.boardName, article_id: articleId }})
+    },
+    selectFilter(filterName) {
+      this.searchData.filterName = filterName
+      this.selectedFilter = filterName
     },
   },
   computed: {
@@ -171,11 +188,14 @@ export default {
   },
   created() {
     this.fetchArticles(this.boardName)
+    this.selectFilter('제목')
   },
   beforeRouteUpdate (to, from, next) {
     this.fetchArticles(to.params.board_name)
     this.boardName = to.params.board_name
     this.searchData.boardName = to.params.board_name
+    this.selectFilter('제목')
+    this.searchData.keyword = null
     next();
   },
 }
@@ -346,4 +366,5 @@ table{
 .custom-height {
   min-height: 75.2px;
 }
+
 </style>

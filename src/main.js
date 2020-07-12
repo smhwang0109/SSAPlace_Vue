@@ -2,9 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import VueCookies from 'vue-cookies'
 import vuetify from './plugins/vuetify'
 import io from 'socket.io-client'
 import SERVER from '@/api/drf'
+
+Vue.use(VueCookies)
 
 const socket = io(SERVER.URL + '/chat/');
 

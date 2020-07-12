@@ -19,7 +19,6 @@
             <small class="text-center custom-width">{{ selectedArticle.hit }}</small>
           </div>
           <div class="like-btn d-flex flex-row align-items-center" @click="likeArticle">
-            <!-- <i class="fas fa-heart mb-0"></i> -->
             <i v-if="isArticleLike" class="fas fa-heart mx-2 mb-0"></i>
             <i v-else class="far fa-heart mx-2 mb-0"></i>
             <small class="text-center">{{ selectedArticle.like_users.length }}</small>
@@ -59,7 +58,8 @@
         <div v-for="comment in comments" :key="comment.id">
           <div class="comments d-flex justify-content-between my-1">
             <!-- 댓글 작성자 -->
-            <strong>{{ comment.author.username }}</strong>
+            <router-link :to="{ name: 'Profile', params: {userId: comment.author.id} }">{{ comment.author.username }}</router-link>
+            
             
             <!-- 댓글 수정/삭제 드롭다운 -->
             <div v-if="comment.author.id === myaccount.id" class="btn-group dropleft comment-padding pr-0">
@@ -108,9 +108,13 @@
               ref="myTextEditor"
               v-model="commentCreateData.content"
               :options="editorOption"
-            />
+            >
+              <div id="toolbar" slot="toolbar">
+                <button class="ql-code-block w-100"></button>
+              </div>
+            </quill-editor>
           </div>
-          <textarea v-else @keyup.enter="saveCreateComment" v-model="commentCreateData.content" class="col-md-11" type="content" placeholder="댓글을 작성해주세요." rows="2" ></textarea>
+          <textarea v-else @keyup.enter="saveCreateComment" v-model="commentCreateData.content" class="col-md-11" type="content" placeholder="댓글을 작성하세요 :)" rows="2" ></textarea>
           <button class="input-group-append btn custom-btn justify-content-center align-items-center col-md-1 text-center" @click="saveCreateComment">작성</button>
         </div>
       </div>
@@ -129,6 +133,11 @@ import 'highlight.js/styles/tomorrow.css'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 
+import Quill from 'quill'
+
+let icons = Quill.import('ui/icons');
+icons['code-block'] = '<span aria-hidden="true">코드 추가</span>';
+
 export default {
   name: 'ArticleDetail',
   components: {
@@ -137,15 +146,25 @@ export default {
   data() {
     return {
       editorOption: {
+        placeholder: '댓글을 작성하세요 :)',
         modules: {
-          toolbar: [
-            ['code-block'],
-          ],
+          toolbar: '#toolbar',
           syntax: {
             highlight: text => hljs.highlightAuto(text).value
           }
         }
       },
+      // editorOption: {
+      //   placeholder: '댓글을 작성하세요 :)',
+      //   modules: {
+      //     toolbar: [
+      //       ['code-block'],
+      //     ],
+      //     syntax: {
+      //       highlight: text => hljs.highlightAuto(text).value
+      //     }
+      //   }
+      // },
       articleData: {
         boardName: this.$route.params.board_name,
         articleId: this.$route.params.article_id,
@@ -387,6 +406,12 @@ textarea {
 
 .article-content {
   min-height: 15rem;
+}
+
+.ql-code-block {
+  text-align: start;
+  margin-bottom: 5px;
+  color: #3596F4;
 }
 
 </style>
