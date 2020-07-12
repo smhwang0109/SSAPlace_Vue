@@ -332,7 +332,7 @@ export default {
       collectTeamList = collectTeamList.concat(this.collectMemberList.slice(0, Number(this.collectTeamData.collect_count)))
       axios.post(SERVER.URL + `/teams/${this.$route.params['teamId']}/collect/`, collectTeamList, this.config)
         .then(() => {
-          router.push({ name: 'Home'})
+          router.push({ name: 'TeamDetail'})
         })
         .catch(err => console.log(err.response.data))
     },

@@ -352,7 +352,7 @@ export default {
       this.teamUpdateData.current_members = this.teamUpdateData.members.length
       axios.put(SERVER.URL + SERVER.ROUTES.teamList + this.team.id + '/', this.teamUpdateData, this.config)
         .then(() => {
-          router.push({ name: 'Home'})
+          router.push({ name: 'TeamDetail'})
         })
         .catch(err => console.log(err.response.data))
     },
