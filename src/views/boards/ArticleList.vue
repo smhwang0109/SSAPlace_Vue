@@ -66,7 +66,7 @@
                 <small v-for="tag in article.tags" :key="`tag_${tag.id}`" class="mr-2 hashtag mb-0">#{{ tag.name }}</small>
               </div>
             </div>
-            <div class="col-lg-6 col-sm-12 d-flex justify-content-end align-items-center">
+            <!-- <div class="col-lg-6 col-sm-12 d-flex justify-content-end align-items-center">
               <small class="mb-0 mr-4 font-weight-bold">{{ article.author.username }}</small>
               <small class="mb-0 mr-4">{{ article.created_at }}</small>
               <div class="hit-btn d-flex flex-row align-items-center mr-3">
@@ -76,8 +76,8 @@
               <div class="like-btn d-flex flex-row align-items-center">
                 <i class="fas fa-heart mb-0"></i>
                 <small class="text-center custom-width">{{ article.like_users.length }}</small>
-              </div>
-            <!-- <div class="col-lg-6 col-sm-12 d-flex flex-column justify-content-center align-items-end">
+              </div> -->
+            <div class="col-lg-6 col-sm-12 d-flex flex-column justify-content-center align-items-end">
               <div>
                 <div class="d-flex justify-content-end align-items-center mr-1 mb-1">
                   <small class="mb-0 mr-4 font-weight-bold">{{ article.author.username }}</small>
@@ -93,8 +93,7 @@
                     <small class="text-center custom-width">{{ article.like_users.length }}</small>
                   </div>
                 </div>
-              </div> -->
-
+              </div>
             </div>
 
             
