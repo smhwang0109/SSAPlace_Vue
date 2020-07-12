@@ -80,7 +80,11 @@
                   ref="myTextEditor"
                   v-model="commentUpdateData.body.content"
                   :options="editorOption"
-                />
+                >
+                  <div id="toolbar" slot="toolbar">
+                    <button class="ql-code-block w-100"></button>
+                  </div>
+                </quill-editor>
               </div>
               <textarea v-else @keyup.enter="saveUpdateComment" v-model="commentUpdateData.body.content" type="content" class="col-xs-8 col-md-11" rows="2"></textarea>
               <button @click="saveUpdateComment" class="input-group-append btn custom-btn justify-content-center align-items-center col-xs-4 col-md-1 text-center">수정</button>
