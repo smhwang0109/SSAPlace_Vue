@@ -31,14 +31,14 @@
                 @click="selectSSAFYArticle(article.id)"
               >
                 <div class="w-100 row">
-                  <div class="col-6">
+                  <div class="col-6 d-flex align-items-center">
                     <h6 class="mb-0 font-weight-bold article-title">{{ article.title }}</h6>
                   </div>
                   <div class="d-flex justify-content-end align-items-center col-6">
                     <p class="mb-0">{{ article.author.username }}</p>
-                    <div class="ml-2 ssafy-color d-flex flex-row">
-                      <i class="far fa-eye mx-1 mb-0 ssafy-color"></i>
-                      <span class="badge text-center custom-width px-0">{{ article.hit }}</span>
+                    <div class="ml-2 ssafy-color d-flex flex-row align-items-center">
+                      <i class="far fa-eye ml-1 mb-0"></i>
+                      <small class="text-center custom-width">{{ article.hit }}</small>
                     </div>
                   </div>
                 </div>
@@ -413,6 +413,7 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 1; 
   -webkit-box-orient: vertical;
+  text-align: start;
 }
 
 
