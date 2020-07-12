@@ -93,7 +93,7 @@
       <h4 class="my-3">기대되는 새로운 팀</h4>
       <i @click="clickFindTeam" class="fas fa-chevron-right fa-2x arrow"></i>
     </div>
-    <div class="container-fluid team-card" v-if="collectThreeTeams">
+    <div class="container-fluid team-card" v-if="collectThreeTeams.length">
       <div class="row">
         <div class="col-4 h-30 p-2" v-for="collectTeam in collectThreeTeams" :key="`collectTeam-${collectTeam.id}`">
           <router-link :to="{ name: 'TeamDetail', params: {teamId: collectTeam.id} }" class="card h-100">
@@ -135,6 +135,9 @@
           </router-link>
         </div>
       </div>
+    </div>
+    <div v-else>
+      <h4>아직 모집공고가 없습니다.</h4>
     </div>
     
     <!-- 프로젝트 멤버 구해요 -->
