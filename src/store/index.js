@@ -39,7 +39,9 @@ export default new Vuex.Store({
     users: null,
     profile: null,
     errorMessages:null,
-    messageGroup: null,
+    messageGroups: null,
+    messages: null,
+    toUserId: null,
 
 
     // teams
@@ -91,8 +93,14 @@ export default new Vuex.Store({
     SET_PROFILE(state, profile) {
       state.profile = profile
     },
-    SET_MESSAGE_GROUP(state, messageGroup) {
-      state.messageGroup = messageGroup
+    SET_MESSAGE_GROUPS(state, messageGroups) {
+      state.messageGroups = messageGroups
+    },
+    SET_MESSAGES(state, messages) {
+      state.messages = messages
+    },
+    SET_TO_USER_ID(state, userId) {
+      state.toUserId = userId
     },
 
     // teams
@@ -253,10 +261,10 @@ export default new Vuex.Store({
         })
         .catch(err => console.log(err.response.data))
     },
-    fetchMessageGroup({ getters, commit }) {
+    fetchMessageGroups({ getters, commit }) {
       axios.get(SERVER.URL + SERVER.ROUTES.userList + 'message-group/', getters.config)
         .then(res => {
-          commit('SET_MESSAGE_GROUP', res.data)
+          commit('SET_MESSAGE_GROUPS', res.data)
         })
         .catch(err => console.log(err.response.data))
     },
@@ -265,6 +273,13 @@ export default new Vuex.Store({
       .then(() => {
       })
       .catch(err => console.log(err.response.data))
+    },
+    fetchMessages({ getters, commit }, toUserId) {
+      axios.get(SERVER.URL + SERVER.ROUTES.userList + 'message/' + toUserId + '/', getters.config)
+        .then(res => {
+          commit('SET_MESSAGES', res.data)
+        })
+        .catch(err => console.log(err.response.data))
     },
 
     // teams
