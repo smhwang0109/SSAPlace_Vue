@@ -5,15 +5,25 @@
       <div class="row">
         <h4 class="mb-0 col-md-6 col-xs-12">{{ selectedArticle.title }}</h4>        
         <div class="mb-1 col-md-6 col-xs-12 d-flex justify-content-end align-items-center">
-          <button type="button" class="btn hit-btn text-white p-1 pr-2 mr-2">
+          <!-- <button type="button" class="btn hit-btn text-white p-1 pr-2 mr-2">
             <i class="far fa-eye mx-2 mb-0"></i>
             <span class="badge">{{ selectedArticle.hit }}</span>
-          </button>
-          <button type="button" class="btn like-btn text-white p-1 pr-2" @click="likeArticle">
+          </button> -->
+          <!-- <button type="button" class="btn like-btn text-white p-1 pr-2" @click="likeArticle">
             <i v-if="isArticleLike" class="far fa-heart mx-2 mb-0"></i>
             <i v-else class="fas fa-heart mx-2 mb-0"></i>
             <span class="badge">{{ selectedArticle.like_users.length }}</span>
-          </button>
+          </button> -->
+          <div class="hit-btn d-flex flex-row align-items-center mr-3">
+            <i class="far fa-eye mx-2 mb-0"></i>
+            <small class="text-center custom-width">{{ selectedArticle.hit }}</small>
+          </div>
+          <div class="like-btn d-flex flex-row align-items-center" @click="likeArticle">
+            <!-- <i class="fas fa-heart mb-0"></i> -->
+            <i v-if="isArticleLike" class="fas fa-heart mx-2 mb-0"></i>
+            <i v-else class="far fa-heart mx-2 mb-0"></i>
+            <small class="text-center">{{ selectedArticle.like_users.length }}</small>
+          </div>
         </div>
       </div>
       <div class="d-flex justify-content-between align-items-center pb-0 review-info">
@@ -29,14 +39,15 @@
     </div>
 
     <div class="card-body py-1">
-      <div>
-        <span v-for="tag in selectedArticle.tags" :key="`tag_${tag.id}`" class="hashtag mr-2">#{{ tag.name }}</span>
-      </div>
       <hr class="my-1">
       <div class="quill-editor">
         <div class="output ql-snow">
-          <div class="ql-editor" v-html="selectedArticle.content"></div>
+          <div class="ql-editor px-0 article-content" v-html="selectedArticle.content"></div>
         </div>
+      </div>
+      <hr class="my-1">
+      <div class="my-2 d-flex justify-content-end">
+        <span v-for="tag in selectedArticle.tags" :key="`tag_${tag.id}`" class="hashtag mr-2">#{{ tag.name }}</span>
       </div>
     </div>
 
@@ -177,11 +188,7 @@ export default {
     saveCreateComment() {
       this.createComment(this.commentCreateData)
         .then(() => {
-          if (this.$route.params.board_name === 'code') {
-            this.commentCreateData.content = '<pre class="ql-syntax" spellcheck="false">write your code here\n</pre>'
-          } else {
-            this.commentCreateData.content = null
-          }
+          this.commentCreateData.content = null
         })
     },
     initUpdateComment(comment) {
@@ -206,9 +213,6 @@ export default {
   created() {
     this.selectArticle(this.articleData)
     this.fetchComments(this.articleData)
-    if (this.$route.params.board_name === 'code') {
-      this.commentCreateData.content = '<pre class="ql-syntax" spellcheck="false">write your code here\n</pre>'
-    }
   },
   beforeRouteUpdate (to, from, next) {
     this.boardName = to.params.board_name
@@ -331,22 +335,23 @@ textarea {
 }
 
 .hit-btn {
-  background-color:#4aa5ff;
-  color: white;
+  /* background-color:#4aa5ff; */
+  color: #4aa5ff;
 }
 
 .hit-btn:hover {
-  cursor: default;
+  /* cursor: default; */
 }
 
 .like-btn {
-  background-color:#ff5252;
-  color: white;
+  /* background-color:#ff5252; */
+  color:#ff5252;
   transition: color 0.2;
 }
 
 .like-btn:hover {
-  background-color:#e00000;
+  /* background-color:#e00000; */
+  cursor: pointer;
 }
 
 .quill-editor {
@@ -380,5 +385,8 @@ textarea {
   background-color: white;
 }
 
+.article-content {
+  min-height: 15rem;
+}
 
 </style>
