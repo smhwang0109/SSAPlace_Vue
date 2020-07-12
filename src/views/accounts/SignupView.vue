@@ -17,7 +17,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
         </div>
-        <input @keypress.enter="signup" v-model="signupData.password2" type="password" id="password2" class="inputs form-control" placeholder="Password Confirmation">
+        <input @keypress.enter="signup(signupData)" v-model="signupData.password2" type="password" id="password2" class="inputs form-control" placeholder="Password Confirmation">
       </div>
       <div class="row mr-1 justify-content-end">
         <button class="btn" @click="signup(signupData)">회원가입</button>

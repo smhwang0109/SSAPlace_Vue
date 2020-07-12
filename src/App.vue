@@ -247,6 +247,10 @@ export default {
   margin-top: 4%;
 }
 
+.login {
+  float: right !important;
+}
+
 .message:hover, .login:hover {
   color: #3596F4;
 }
