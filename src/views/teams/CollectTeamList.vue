@@ -4,7 +4,7 @@
     <div class="container-fluid mt-4">
       <div class="row">
         <div class="col-4 h-30 p-2" v-for="collectTeam in collectTeams" :key="`collectTeam-${collectTeam.id}`">
-          <router-link :to="{ name: 'TeamDetail', params: { teamId: collectTeam.id } }" class="card h-100" >
+          <router-link :to="{ name: 'TeamDetail', params: { teamId: collectTeam.team.id } }" class="card h-100" >
           <img :src="randomImage(images)" class="card-img-top" alt="image" width="400" height="120">
           <div class="card-body d-flex flex-column">
             <div class="header d-flex flex-column">
