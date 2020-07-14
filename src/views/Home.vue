@@ -289,6 +289,7 @@ export default {
 
 .arrow:hover {
   color: #3596F4;
+  cursor: pointer;
 }
 
 .banner {
