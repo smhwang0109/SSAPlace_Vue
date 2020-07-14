@@ -193,7 +193,7 @@
                 hide-selected
                 color="blue-grey lighten-2"
                 :rules="[v => !!v || '필수항목입니다.']"
-                label="Front-end 사용 언어"
+                label="Front-end 기술 스택"
                 item-text="language"
                 item-value="id"
                 multiple
@@ -234,7 +234,7 @@
                 hide-selected                
                 color="blue-grey lighten-2"
                 :rules="[v => !!v || '필수항목입니다.']"
-                label="Back-end 사용 언어"
+                label="Back-end 기술 스택"
                 item-text="language"
                 item-value="id"
                 multiple

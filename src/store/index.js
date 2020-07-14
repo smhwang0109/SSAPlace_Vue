@@ -201,6 +201,8 @@ export default new Vuex.Store({
             this.errorMessages = '비밀번호는 8자 이상이어야 합니다.'
           } else if (err.response.data.non_field_errors[0] === "제공된 인증데이터(credentials)로는 로그인할 수 없습니다.") {
             this.errorMessages = "아이디 혹은 비밀번호를 확인해주세요."
+          } else {
+            this.errorMessages = "아이디가 존재하지 않습니다."
           }
           Toast.fire({
             icon: 'error',
