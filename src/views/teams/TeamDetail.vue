@@ -8,7 +8,7 @@
     <div class="intro">
       <div class="d-flex justify-content-between">
         <h6 class="font-weight-bold">팀 정보</h6>
-        <router-link v-if="team.leader.username===user.username" :to="{ name: 'TeamUpdate', params: {teamId: team.id} }" class="btn btn-sm update">팀 수정</router-link>
+        <router-link v-if="team.leader.username===myaccount.username" :to="{ name: 'TeamUpdate', params: {teamId: team.id} }" class="btn btn-sm update">팀 수정</router-link>
       </div>
       <hr class="mt-2">
       <p class="description">{{ team.description }}</p>
@@ -89,7 +89,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'TeamDetail',
   computed: {
-    ...mapState(['team','interests', 'languages', 'collectTeam'])
+    ...mapState(['myaccount', 'team','interests', 'languages', 'collectTeam']),
   },
   methods: {
     ...mapActions(['getTeam', 'getCollectTeam']),

@@ -157,6 +157,11 @@ export default {
     this.getProfile(this.userId)
     this.fetchTeams(this.userId)
   },
+  beforeRouteUpdate (to, from, next) {
+    this.getProfile(to.params.userId)
+    this.fetchTeams(this.userId)
+    next();
+  },
 }
 </script>
 

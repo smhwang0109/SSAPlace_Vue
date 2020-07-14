@@ -72,10 +72,10 @@ export default {
   created() {
     if (this.isLoggedIn) {
       this.getMyAccount()
-      this.fetchUsers()
-      this.fetchInterests()
-      this.fetchLanguages()
     }
+    this.fetchUsers()
+    this.fetchInterests()
+    this.fetchLanguages()
   }
 }
 </script>
