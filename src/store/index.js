@@ -482,7 +482,6 @@ export default new Vuex.Store({
       if (searchData.keyword) {
         axios.get(SERVER.URL + SERVER.ROUTES.boards + searchData.boardName + '/search/' + searchData.filterName + '/' + searchData.keyword + '/')
           .then(res => {
-            console.log(res.data)
             commit('SET_ARTICLES', res.data)
           })
           .catch(err => console.log(err.repsonse.data))

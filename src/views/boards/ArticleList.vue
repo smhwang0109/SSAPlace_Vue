@@ -33,9 +33,9 @@
                 <span v-else>검색</span>
               </button>
               <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item px-3" @click="selectFilter('제목')">제목</a>
-                <a class="dropdown-item px-3" @click="selectFilter('내용')">내용</a>
-                <a class="dropdown-item px-3" @click="selectFilter('태그')">태그</a>
+                <a class="dropdown-item px-3" @click="selectFilter('title')">제목</a>
+                <a class="dropdown-item px-3" @click="selectFilter('content')">내용</a>
+                <a class="dropdown-item px-3" @click="selectFilter('tag')">태그</a>
               </div>
             </div>
             <input @keyup.enter="searchArticle(searchData)" v-model="searchData.keyword" type="text" class="form-control ml-2 rounded border w-100" id="searchbar" placeholder="검색어를 입력하고 Enter를 누르세요 :)">
@@ -100,6 +100,11 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
+      <div v-if="articles.length===0" class="my-5">
+        <h5 class="mb-0">
+          게시물이 없습니다 ㄴ(°0°)ㄱ
+        </h5>
+      </div>
     </v-card>
     <div>
       <div class="btn-cover" v-if="paginatedData">
@@ -142,7 +147,13 @@ export default {
     },
     selectFilter(filterName) {
       this.searchData.filterName = filterName
-      this.selectedFilter = filterName
+      if (filterName === 'title') {
+        this.selectedFilter = '제목'
+      } else if (filterName === 'content') {
+        this.selectedFilter = '내용'
+      } else {
+        this.selectedFilter = '태그'
+      }
     },
   },
   computed: {
@@ -187,13 +198,13 @@ export default {
   },
   created() {
     this.fetchArticles(this.boardName)
-    this.selectFilter('제목')
+    this.selectFilter('title')
   },
   beforeRouteUpdate (to, from, next) {
     this.fetchArticles(to.params.board_name)
     this.boardName = to.params.board_name
     this.searchData.boardName = to.params.board_name
-    this.selectFilter('제목')
+    this.selectFilter('title')
     this.searchData.keyword = null
     next();
   },
