@@ -12,7 +12,7 @@
     "core-js": "^3.6.5",
     "dedent": "^0.7.0",
     "highlight.js": "^10.1.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "sweetalert2": "^9.15.2",
     "vue": "^2.6.11",
     "vue-cookies": "^1.7.0",
