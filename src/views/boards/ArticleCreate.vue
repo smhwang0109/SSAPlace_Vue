@@ -125,7 +125,7 @@ export default {
           title: null,
           content: null,
         },
-        tags: [],
+        tags: null,
       },
     }
   },
